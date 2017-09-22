@@ -87,3 +87,9 @@ Use Case 2: Swap a meeting with another meeting
 * **Delete** : Only a meeting's organizer can delete the meeting.
 * **Creation**: Unless all attendees agree, the meeting cannot be created.
 * **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
+
+### Design & Architectural Patterns
+1. [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern): This creational design pattern is used for ensuring that only a single instance of the DAO object exists at the moment ensuring consistency and upholding the lock. 
+2. [Template Pattern](https://en.wikipedia.org/wiki/Template_method_pattern): We use this beahvioral design pattern to model the server's component layers as abstract classes and the eventual implementation can be used as plug and play modules. This allows us to freely change the implementation as long as it complies with the abstract class' template.
+3. [Iterator Pattern](https://en.wikipedia.org/wiki/Iterator_pattern): The iterator pattern can be used in the implementation of the business logic to iteratively resolve conflicts for each attendee.
+4. [MVC Pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller): The datamodel, client and server respectively form the model, view and controller components of the MVC design pattern.
