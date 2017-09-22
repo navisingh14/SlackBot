@@ -1,6 +1,7 @@
 ## Use Cases:
 
-```Use Case 1: Create a meeting
+```
+Use Case 1: Create a meeting
 1 Preconditions
    All the participating users must have Google Calendar API tokens in the system.
 2 Main Flow
@@ -14,6 +15,20 @@
   [E1] Meeting cannot be set as no team members are available.
 ```
 
+```
+Use Case 2: Swap a meeting with another meeting
+1 Preconditions
+   All the participating users must have Google Calendar API tokens in the system.
+2 Main Flow
+   User will request a meeting to be swapped with another meeting [S1]. Bot checks for conflicts with the new timings for the users involved in both the meetings and suggests possible times [S2]. The user confirms the time slots [S3]. Bot creates the meeting and posts the link to the event [S4].
+3 Subflows
+  [S1] User gives the command to swap two meetings - $bot swap my 2pm meeting today with 4pm meeting tomorrow.
+  [S2] Bot returns a list of possible meeting times for both the meetings in case of conflicts or asks for a confirmation if there's no conflict.
+  [S3] User chooses possible times for both the meetings and confirms to the Bot.
+  [S4] Bot swaps the meetings and posts the link for both the events.
+4 Alternative Flows
+  [E1] Meeting cannot be swapped because of conflicts.
+```
 
 
 
