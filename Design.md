@@ -4,16 +4,16 @@ In this fast moving software world, the success of a software company can be rel
 
 Secondly, once the meeting is planned, if a particular attendant of the meeting later notifies about his unavailability, more time is wasted for rescheduling and requesting all other attendees for approval of a rescheduled time. Human effort is also another valuable resource that is invested in this unproductive job of rescheduling meetings which can affect the business negatively. 
 
-So if the process of planning, resolving conflicts and rescheduling is automated using a bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same. 
+So if the process of planning, resolving conflicts and rescheduling is automated using an interactive bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same. 
 
 
 # Bot Description
 
-Our bot automates the entire process of managing meetings right from finding suitable time slots to resolving schedule conflicts. It can be triggered through a message in slack. Ms. Pepper Bots helps an employee to plan a meeting with employees or teams of his choice. The bot goes through the Google Calendars of all listed employees and finds a time slot which is suitable for all. It will either check their availability for the specified time frame or suggest other possible times where all attendees are available. It will also ask the attendees for confirmation. Once confirmed, Ms. Pepper Bots will notify all employees about the meeting through slack and put in reminders before the meeting.
+Ms.Pepper Bots automates the entire process of managing meetings right from finding suitable time slots to resolving schedule conflicts. It can be triggered through a message in slack. Ms.Pepper Bots helps an manager to plan a meeting with employees or teams of his choice. The bot goes through the Google Calendars of all listed employees and finds a suitable time slot where everyone list is available. It will either check their availability for the specified time frame or suggest next possible time slots where all attendees are available. It will also ask the attendees for confirmation. Once confirmed, Ms. Pepper Bots will notify all employees about the meeting through a slack notification and put in reminders for the meeting.
 
-In case there is a situation where the meeting is in place but an attendee has some other important work, he can inform the bot about his unavailability. The bot will notify the manager about the problem. The manager can then decide whether to go ahead with the meeting anyway or request the bot to reschedule or cancel the meeting. If cancelled, all other attendees will get notified by the bot about the cancellation and that time slot on their google calendar will be open for other appointments. If a reschedule is requested, the bot will then scan all google calendars for the next available slot for all attendees and suggest it. It can also suggest other ideas to the unavailable candidate to make changes to his schedule so that he can make time for the meeting. 
+In case there is a situation where the meeting is in place but an attendee has some other important work, he can inform Ms.Pepper about his unavailability. The bot will notify the manager about the problem. The manager can then decide whether to go ahead with the meeting anyway or request Ms.Pepper to reschedule or cancel the meeting. If cancelled, all other attendees will get notified by the bot about the cancellation and that time slot on their google calendar will be opened up for other appointments. If a reschedule is requested, Ms.Pepper will then scan all google calendars for the next available slot for all attendees and suggest that to the manager. It can also suggest other ideas to the unavailable candidate to make changes to his schedule so that he can make time for the meeting. 
 
-This bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired for planning and rescheduling meetings. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, this bot can benefit the company monetarily and also save time.
+Such an interactive bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired just for planning and rescheduling meetings of the employees. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, Ms.Pepper can function as a universal secretary for the company and provide huge monetary benefits.
 
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
@@ -47,21 +47,6 @@ Use Case 2: Swap a meeting with another meeting
   [S4] Bot swaps the meetings and posts the link for both the events.
 4 Alternative Flows
   [E1] Meeting cannot be swapped because of conflicts.
-```
-
-```
-Use Case 3: Cancel a scheduled meeting
-1 Preconditions
-   All the participating users must have Google Calendar API tokens in the system.
-2 Main Flow
-   User will request to cancel a scheduled meeting [S1]. If the request came from the organizer, Bot cancels the meeting on confirmation [S2]. Otherwise, Bot asks the organizer to either reschedule, cancel, or ignore the changes to the meeting [S3, S4, S5, S6]. The use case ends when the requested user's meeting has been cancelled.
-3 Subflows
-  [S1] User asks the Bot to cancel a meeting - @Bot cancel my meeting at 2pm.
-  [S2] If the user is the organizer, Bot cancels the meeting after confirmation.
-  [S3] If the user is not the organizer, Bot asks the user to either reschedule, cancel, or ignore any change to the scheduled meeting.
-  [S4] Reschedule: Bot suggests possible meeting times and reschedules the meeting.
-  [S5] Cancel: If the organizer asks to cancel, Bot cancels the meeting after confirmation [S2].
-  [S6] Ignore: If the organizer asks to ignore any changes to the meeting, Bot cancels the requested user's meeting.
 ```
 
 
