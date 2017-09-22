@@ -142,7 +142,6 @@ Use Case 4: Send a meeting reminder/ View Agenda
 ### Constraints  
 
 * **Signup**: All members should signup and give permission for google calendar read/write/delete access
-* **Creation**: Unless all attendees agree, the meeting cannot be created.
 * **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
 
 ### Design & Architectural Patterns
