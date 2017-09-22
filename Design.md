@@ -1,6 +1,6 @@
 # Problem Statement
 
-In this fast moving software world, the success of a software company can be related to how efficiently the employees use their time. Scheduling meetings is one of the few important things that the employees need to do on a daily basis. Hence, the time invested in planning meetings is a lot. 
+In this fast moving software world, the success of a software company can be related to how efficiently the employees use their time. Scheduling meetings is one of the many important things that the employees need to do on a daily basis. Hence, the time invested in planning meetings is a lot. 
 
 Secondly, once the meeting is planned, if a particular attendant of the meeting later notifies about his unavailability, more time is wasted for rescheduling and requesting all other attendees for approval of a rescheduled time. Human effort is also another valuable resource that is invested in this unproductive job of rescheduling meetings which can affect the business negatively. 
 
