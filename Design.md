@@ -48,8 +48,20 @@ Use Case 2: Swap a meeting with another meeting
 4 Alternative Flows
   [E1] Meeting cannot be swapped because of conflicts.
 ```
-
-
+```
+Use Case 3: Cancel a scheduled meeting
+1 Preconditions
+   All the participating users must have Google Calendar API tokens in the system.
+2 Main Flow
+   User will request to cancel a scheduled meeting [S1]. If the request came from the organizer, Bot cancels the meeting on confirmation [S2]. Otherwise, Bot asks the organizer to either reschedule, cancel, or ignore the changes to the meeting [S3, S4, S5, S6]. The use case ends when the requested user's meeting has been cancelled.
+3 Subflows
+  [S1] User asks the Bot to cancel a meeting - @Bot cancel my meeting at 2pm.
+  [S2] If the user is the organizer, Bot cancels the meeting after confirmation.
+  [S3] If the user is not the organizer, Bot asks the user to either reschedule, cancel, or ignore any change to the scheduled meeting.
+  [S4] Reschedule: Bot suggests possible meeting times and reschedules the meeting.
+  [S5] Cancel: If the organizer asks to cancel, Bot cancels the meeting after confirmation [S2].
+  [S6] Ignore: If the organizer asks to ignore any changes to the meeting, Bot cancels the requested user's meeting.
+```
 
 
 ## Architectural Design:
