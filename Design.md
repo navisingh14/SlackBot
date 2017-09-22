@@ -15,11 +15,6 @@ In case there is a situation where the meeting is in place but an attendee has s
 
 Such an interactive bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired just for planning and rescheduling meetings of the employees. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, Ms.Pepper can function as a universal secretary for the company and provide huge monetary benefits.
 
-## Wireframe
-![Wireframe](img/PepperBots.png)
-
-## Storyboard
-![Storyboard](img/storyboard.gif)
 
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
@@ -104,11 +99,18 @@ Use Case 4: Send a meeting reminder/ View Agenda
   [E2] User enters an invalid membername or wants to view a non-registered member’s schedule.
 ```
 
-## Architectural Design:
+
+## Wireframe
+![Wireframe](img/PepperBots.png)
+
+## Storyboard
+![Storyboard](img/storyboard.gif)
+
+# Architectural Design:
 
 ![Architecture](img/Architecture.png)
 
-### Architecture Components  
+## Architecture Components  
 
 * **UI & Client**
   - **#Slack**: The UI for the bot resides in [Slack](https://slack.com/features), which is a cloud based chat app which is typically used by members of a Software Engineering Team. Members can communicate with each other through common chanels or direct messaging. An interesting feature in slack is the provision to add external tools and bots capable of aiding members of the slack team. Few common examples of bots are [WeatherBot](https://slack.com/features), [a list of TODOs](https://ai-se.slack.com/apps/A0HBTUUPK-to-do). Each member of the team needs to register with the bot to assist him/her in creating conflict free meetings.
@@ -142,12 +144,12 @@ Use Case 4: Send a meeting reminder/ View Agenda
   - Primary Server: Container runnning the master instance of the server stack. This will be the server addressing all the requests from the client.
   - Secondary: Container runnning the slave instance of Server. This will act as a back up to the primary server and if the primary server goes down, it will become the primary server.
   
-### Constraints  
+## Constraints  
 
 * **Signup**: All members should signup and give permission for google calendar read/write/delete access
 * **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
 
-### Design & Architectural Patterns
+## Design & Architectural Patterns
 1. [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern): This creational design pattern is used for ensuring that only a single instance of the DAO object exists at the moment ensuring consistency and upholding the lock. 
 2. [Template Pattern](https://en.wikipedia.org/wiki/Template_method_pattern): We use this beahvioral design pattern to model the server's component layers as abstract classes and the eventual implementation can be used as plug and play modules. This allows us to freely change the implementation as long as it complies with the abstract class' template.
 3. [Iterator Pattern](https://en.wikipedia.org/wiki/Iterator_pattern): The iterator pattern can be used in the implementation of the business logic to iteratively resolve conflicts for each attendee.
