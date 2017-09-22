@@ -81,4 +81,9 @@ Use Case 2: Swap a meeting with another meeting
   - Primary Server: Container runnning the master instance of the server stack. This will be the server addressing all the requests from the client.
   - Secondary: Container runnning the slave instance of Server. This will act as a back up to the primary server and if the primary server goes down, it will become the primary server.
   
-  
+### Constraints  
+
+* **Signup**: All members should signup and give permission for google calendar read/write/delete access
+* **Delete** : Only a meeting's organizer can delete the meeting.
+* **Creation**: Unless all attendees agree, the meeting cannot be created.
+* **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
