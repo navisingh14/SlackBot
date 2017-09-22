@@ -13,18 +13,23 @@
     - ***REST***: The API for this layer is exposed via REST which allows the client to communicate with the server via HTTP requests. The choice of REST was made over other contemprories like [SOAP](https://en.wikipedia.org/wiki/SOAP) and [GraphQL](http://graphql.org/) due to the following reasons
       * **Stateless**: Since REST is stateless, it makes each request to the server independent of each other thus limiting the data shared and additional bookkeeping.
       * **HTTP based**: Since REST is built on HTTP, it enables users to follow standard HTTP methods like *GET*, *POST* etc and easier validation over the webbrowser.
-    - ***Caching (optional)***: This is an optional feature we plan on implementing if the base features of our project is completed on time. Here we cache the frequent requests made by the user using [MemCache](https://www.npmjs.com/package/node-cache) or [Redis](https://redis.io/) to help the user with auto complete and thus give him a better chat experience.
+    - ***Caching***(optional): This is an optional feature we plan on implementing if the base features of our project is completed on time. Here we cache the frequent requests made by the user using [MemCache](https://www.npmjs.com/package/node-cache) or [Redis](https://redis.io/) to help the user with auto complete and thus give him a better chat experience.
   - **Management layer**: This layer is primarily responsible for data Processing and the business logic of the application.
-    - Google Calendar API
-    - Wit.ai: Parts of speech processing and semantic parsing
-    - Conflict resolution and other business logic
-  - **DAO layer**: Database Access Object(DAO) layer is responsible for interactions of the server with the database.
-    - Retrieve and store data from DB
+    - ***Wit.ai***: [wit.ai](https://wit.ai/) takes in text or voice and extracts intents and entities from them. It helps in parts of speech recognizing and semantic parsing of the text which can be further used to power the business logic of the application.
+    - ***Google Calendar API***: [Google's calendar API](https://developers.google.com/google-apps/calendar/) gives access to a registered user's google calendar. The calendar can be accessed via REST calls.
+    - ***Business Logic***: Intent extracted from the text and corresponding data fetched from the Google Calendar API is used to help create meetings and automatically resolve conflicts based on the schedules of the participants. 
+  - **DAO layer**: Database Access Object(DAO) layer is responsible for interactions of the server with the database. This layer is responsible for access the database for fetching and updating the information. This is again an implementation based on the Template Design Pattern coupled with the Singleton Design Pattern.
+    - ***Template***: This allows us to plugin a different choice of database by simply changing the connector.
+    - ***Singleton***: Only a single instance of the database connector should exist to ensure that the write lock on the database is maintained such that the consistency of the database is not violated.
 * **Database**
-  - NoSQL database: To store temporary calendars, signed up users
+  - **MongoDB**: The choice of the database is a NoSQL key value store primarily because 
+      1. It ensures flexibility of storage 
+      2. More of a temporary store during the period of conflict resolution 
+      3. Good community support with NodeJS
 * **Deploy**
-  - Database Container: Hosted on an instance of DB
-  - Primary Server: Container runnning the master instance of Server
-  - Secondary: Container runnning the slave instance of Server. Becomes master if the Primary instance fails.
+  The server and database would be deployed on [digitalocean](https://www.digitalocean.com/) which is part of the [github student plan](https://education.github.com/pack). Each container will be run on Linux Ububtu 16.04 and will be independent of each another
+  - Database Container: The database will have an independent container such that if the server goes down the database should not be affected.
+  - Primary Server: Container runnning the master instance of the server stack. This will be the server addressing all the requests from the client.
+  - Secondary: Container runnning the slave instance of Server. This will act as a back up to the primary server and if the primary server goes down, it will become the primary server.
   
   
