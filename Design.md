@@ -1,5 +1,7 @@
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
+
+![Flow Chart](img/use_case.png)
 ```
 Use Case 1: Create a meeting
 1 Preconditions
