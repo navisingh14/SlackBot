@@ -7,6 +7,13 @@ Secondly, once the meeting is planned, if a particular attendant of the meeting 
 So if the process of planning, resolving conflicts and rescheduling is automated using a bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same. 
 
 
+# Bot Description
+
+Our bot automates the entire process of managing meetings right from finding suitable time slots to resolving schedule conflicts. It can be triggered through a message in slack. Ms. Pepper Bots helps an employee to plan a meeting with employees or teams of his choice. The bot goes through the Google Calendars of all listed employees and finds a time slot which is suitable for all. It will either check their availability for the specified time frame or suggest other possible times where all attendees are available. It will also ask the attendees for confirmation. Once confirmed, Ms. Pepper Bots will notify all employees about the meeting through slack and put in reminders before the meeting.
+
+In case there is a situation where the meeting is in place but an attendee has some other important work, he can inform the bot about his unavailability. The bot will notify the manager about the problem. The manager can then decide whether to go ahead with the meeting anyway or request the bot to reschedule or cancel the meeting. If cancelled, all other attendees will get notified by the bot about the cancellation and that time slot on their google calendar will be open for other appointments. If a reschedule is requested, the bot will then scan all google calendars for the next available slot for all attendees and suggest it. It can also suggest other ideas to the unavailable candidate to make changes to his schedule so that he can make time for the meeting. 
+
+This bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired for planning and rescheduling meetings. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, this bot can benefit the company monetarily and also save time.
 
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
@@ -64,6 +71,8 @@ Use Case 3: Cancel a scheduled meeting
 
 ![Architecture](img/Architecture.png)
 
+### Architecture Components  
+
 * **UI & Client**
   - **#Slack**: The UI for the bot resides in [Slack](https://slack.com/features), which is a cloud based chat app which is typically used by members of a Software Engineering Team. Members can communicate with each other through common chanels or direct messaging. An interesting feature in slack is the provision to add external tools and bots capable of aiding members of the slack team. Few common examples of bots are [WeatherBot](https://slack.com/features), [a list of TODOs](https://ai-se.slack.com/apps/A0HBTUUPK-to-do). Each member of the team needs to register with the bot to assist him/her in creating conflict free meetings.
   - **Google Signup**: Each member while registering with the bot will signup with his/her Google Account via the [Google OAuth UI](https://developers.google.com/google-apps/calendar/auth). This is to enable access to his/her calendar to check for meetings, resolve conflicts and schedule them once resolved.
@@ -96,4 +105,15 @@ Use Case 3: Cancel a scheduled meeting
   - Primary Server: Container runnning the master instance of the server stack. This will be the server addressing all the requests from the client.
   - Secondary: Container runnning the slave instance of Server. This will act as a back up to the primary server and if the primary server goes down, it will become the primary server.
   
-  
+### Constraints  
+
+* **Signup**: All members should signup and give permission for google calendar read/write/delete access
+* **Delete** : Only a meeting's organizer can delete the meeting.
+* **Creation**: Unless all attendees agree, the meeting cannot be created.
+* **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
+
+### Design & Architectural Patterns
+1. [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern): This creational design pattern is used for ensuring that only a single instance of the DAO object exists at the moment ensuring consistency and upholding the lock. 
+2. [Template Pattern](https://en.wikipedia.org/wiki/Template_method_pattern): We use this beahvioral design pattern to model the server's component layers as abstract classes and the eventual implementation can be used as plug and play modules. This allows us to freely change the implementation as long as it complies with the abstract class' template.
+3. [Iterator Pattern](https://en.wikipedia.org/wiki/Iterator_pattern): The iterator pattern can be used in the implementation of the business logic to iteratively resolve conflicts for each attendee.
+4. [MVC Pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller): The datamodel, client and server respectively form the model, view and controller components of the MVC design pattern.
