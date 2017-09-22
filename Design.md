@@ -7,6 +7,13 @@ Secondly, once the meeting is planned, if a particular attendant of the meeting 
 So if the process of planning, resolving conflicts and rescheduling is automated using a bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same. 
 
 
+# Bot Description
+
+Our bot automates the entire process of managing meetings right from finding suitable time slots to resolving schedule conflicts. It can be triggered through a message in slack. Ms. Pepper Bots helps an employee to plan a meeting with employees or teams of his choice. The bot goes through the Google Calendars of all listed employees and finds a time slot which is suitable for all. It will either check their availability for the specified time frame or suggest other possible times where all attendees are available. It will also ask the attendees for confirmation. Once confirmed, Ms. Pepper Bots will notify all employees about the meeting through slack and put in reminders before the meeting.
+
+In case there is a situation where the meeting is in place but an attendee has some other important work, he can inform the bot about his unavailability. The bot will notify the manager about the problem. The manager can then decide whether to go ahead with the meeting anyway or request the bot to reschedule or cancel the meeting. If cancelled, all other attendees will get notified by the bot about the cancellation and that time slot on their google calendar will be open for other appointments. If a reschedule is requested, the bot will then scan all google calendars for the next available slot for all attendees and suggest it. It can also suggest other ideas to the unavailable candidate to make changes to his schedule so that he can make time for the meeting. 
+
+This bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired for planning and rescheduling meetings. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, this bot can benefit the company monetarily and also save time.
 
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
