@@ -18,6 +18,9 @@ Such an interactive bot is a really good solution as it will reduce the manual e
 ## Wireframe
 ![Wireframe](img/PepperBots.png)
 
+## Storyboard
+![Storyboard](img/storyboard.gif)
+
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
 
