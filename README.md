@@ -1,6 +1,6 @@
 # Ms.Pepper Bots
 
-## Meeting Rescheduler
+## Meeting Planner and Rescheduler
 
 **Team Members :**
 
