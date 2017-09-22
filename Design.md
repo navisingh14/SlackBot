@@ -56,7 +56,7 @@ Use Case 2: Swap a meeting with another meeting
    [S1.1]   Bot returns a list of possible meeting times for both the meetings in case of conflicts or asks for a confirmation if there's no conflict.
    [S1.2] User chooses possible times for both the meetings and confirms to the Bot.
    [S1.3] Bot swaps the meetings and posts the link for both the events.
-  [S2] User gives the command to swap two meetings - @ bot swap my meeting
+  [S2] User gives the command to swap two meetings - @bot swap my meeting
 	[S2.1] Bot asks for which day and time, meeting to swap.
 	[S2.2] User enters the <day> and <time> of the meeting to swap.
 	[S2.3] Bot asks for which day and time meeting to swap with.
