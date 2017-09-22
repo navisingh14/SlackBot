@@ -98,6 +98,7 @@ Use Case 4: Send a meeting reminder/ View Agenda
   [S4] Bot sends the reminder to everyone for the meeting that the user chooses.
 4 Alternative Flows
   [E1] Invalid meeting entry is provided. Thus bot rejects and replies with invalid meeting entered.
+  [E2] User enters an invalid membername or wants to view a non-registered member’s schedule.
 ```
 
 ## Architectural Design:
