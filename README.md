@@ -1,4 +1,4 @@
-# CSC510-Bot
+# Ms.Pepper Bots
 
 ## Meeting Rescheduler
 
