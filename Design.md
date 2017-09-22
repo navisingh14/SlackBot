@@ -119,7 +119,6 @@ Use Case 4: Send a meeting reminder
 ### Constraints  
 
 * **Signup**: All members should signup and give permission for google calendar read/write/delete access
-* **Delete** : Only a meeting's organizer can delete the meeting.
 * **Creation**: Unless all attendees agree, the meeting cannot be created.
 * **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
 
