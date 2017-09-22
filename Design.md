@@ -15,6 +15,9 @@ In case there is a situation where the meeting is in place but an attendee has s
 
 Such an interactive bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired just for planning and rescheduling meetings of the employees. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, Ms.Pepper can function as a universal secretary for the company and provide huge monetary benefits.
 
+## Wireframe
+![Wireframe](img/PepperBots.png)
+
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
 
@@ -119,7 +122,6 @@ Use Case 4: Send a meeting reminder
 ### Constraints  
 
 * **Signup**: All members should signup and give permission for google calendar read/write/delete access
-* **Delete** : Only a meeting's organizer can delete the meeting.
 * **Creation**: Unless all attendees agree, the meeting cannot be created.
 * **Conflicting**: A meeting cannot be booked in a slot if another meeting already exists in the slot.  
 
