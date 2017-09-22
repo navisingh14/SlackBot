@@ -62,6 +62,20 @@ Use Case 3: Cancel a scheduled meeting
   [S5] Cancel: If the organizer asks to cancel, Bot cancels the meeting after confirmation [S2].
   [S6] Ignore: If the organizer asks to ignore any changes to the meeting, Bot cancels the requested user's meeting.
 ```
+```
+Use Case 4: Send a meeting reminder
+1 Preconditions
+   All the participating users must have Google Calendar API tokens in the system.
+2 Main Flow
+   The user can directly ask Bot to send a reminder for the specific meeting [S1]. Or the user can request the Bot to view his/her agenda [S2]. Bot fetches the calendar meetings and shows it on screen, and sends the reminder to the attendees for the meeting that the user chooses [S3, S4].
+3 Subflows
+  [S1] User asks the Bot to send a reminder for the specific meeting - @Bot send a reminder to everyone for 2pm meeting.
+  [S2] User asks the Bot to view his/her agenda to select a meeting - @Bot show me today's agenda.
+  [S3] Bot fetches the meetings from the calendar and shows it to the user.
+  [S4] Bot sends the reminder to everyone for the meeting that the user chooses.
+```
+
+
 
 
 ## Architectural Design:
