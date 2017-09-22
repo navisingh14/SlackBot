@@ -1,3 +1,13 @@
+# Problem Statement
+
+In this fast moving software world, the success of a software company can be related to how efficiently the employees use their time. Scheduling meetings is one of the many important things that the employees need to do on a daily basis. Hence, the time invested in planning meetings is a lot. 
+
+Secondly, once the meeting is planned, if a particular attendant of the meeting later notifies about his unavailability, more time is wasted for rescheduling and requesting all other attendees for approval of a rescheduled time. Human effort is also another valuable resource that is invested in this unproductive job of rescheduling meetings which can affect the business negatively. 
+
+So if the process of planning, resolving conflicts and rescheduling is automated using a bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same. 
+
+
+
 ## Use Cases:
 The use cases have been designed to cover the CURD functionality alongwith the additional feature of being able to send a reminder to the attendees.
 
@@ -47,7 +57,7 @@ Use Case 2: Swap a meeting with another meeting
   - **Node**: [Node](https://nodejs.org/) is an asynchronous event driven JavaScript runtime framework which primarily is used for server side programming and is one of the first frameworks to break the notion of JavaScript as a client side programming language.
   - **ExpressJS**: [ExpressJS](https://expressjs.com/) is an additional minimal framework on Node primarily for web based applications that reduces and simplifies REST based calls and caters to an [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) architecture.
   
-  Since the server is the layer of the framework with most fuctionality, we granularize it into three essential components based on its responsibilities. This further complies with the *Template Design Pattern* where there is placeholder for each layer and each layer which can be chosen based on the developers just has to adhere to the template's placeholder.
+  Since the server is that part of the framework with most fuctionality, we granularize it into three essential components based on its responsibilities. This further complies with the *Template Design Pattern* where there is placeholder for each layer and each layer which can be chosen based on the developers just has to adhere to the template's placeholder.
   - **API layer**: To and from communications with the client happens in this layer.
     - ***REST***: The API for this layer is exposed via REST which allows the client to communicate with the server via HTTP requests. The choice of REST was made over other contemprories like [SOAP](https://en.wikipedia.org/wiki/SOAP) and [GraphQL](http://graphql.org/) due to the following reasons
       * **Stateless**: Since REST is stateless, it makes each request to the server independent of each other thus limiting the data shared and additional bookkeeping.
