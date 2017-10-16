@@ -22,7 +22,7 @@ npm install
 
    Currently, you cannot all use the class slack team because there is a limit in
    current users:
-   
+
    > You should only be able to create 16 connections from the same API token.  
      Unfortunately, that's a general limit across all of Slack's RTM APIs.
 
@@ -35,7 +35,7 @@ npm install
 5. Update your environment variables.
 
    You do not want to store sensitive information like api tokens in public locations. Instead, you can store these in configuration files or environment variables.
-   
+
    In windows, you can run:
    ```
    setx FORECASTTOKEN "<forecast.io.token>"
@@ -60,7 +60,7 @@ Your goal is to be able to run your bot and get the current weather:
 ![image](https://cloud.githubusercontent.com/assets/742934/18172392/2e9a333c-7033-11e6-8dcd-81df6031b0ab.png)
 
 * If you can run `node bot.js` and it outputs something and waits, that's good.
-* Check if you have a green light in your slack team for your bot. If not, make sure you properly registered bot. 
+* Check if you have a green light in your slack team for your bot. If not, make sure you properly registered bot.
 * See if you can get to have the bot reply to a message. Make sure bot is invited to that channel.
 
 ### Getting weather
@@ -73,7 +73,7 @@ function getWeather()
 {
 	var latitude = "48.208579"
 	var longitude = "16.374124"
-	forecast.get(latitude, longitude, function (err, res, data) 
+	forecast.get(latitude, longitude, function (err, res, data)
 	{
       if (err) throw err;
       //console.log('res: ' + JSON.stringify(res));
