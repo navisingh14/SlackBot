@@ -1,4 +1,4 @@
-# Ms.Pepper Bots
+# BotBai
 
 ## Meeting Planner and Rescheduler
 
