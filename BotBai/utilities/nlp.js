@@ -12,6 +12,15 @@ const client = new Wit({
 const Schedule = sched.Schedule;
 const DateTime = sched.DateTime;
 
+var create_date_time = function(date_time_json) {
+    dt = new DateTime();
+    dt.date_set = true;
+    if (['hour', 'minute', 'second'].includes(date_time_json.grain)) {
+        dt.time_set = true;       
+    }
+    dt.set_timestamp(date_time_json.value);
+    return dt;
+};
 
 var parse = function(message, cb) {
     client.message(message, {}).then(function(data){
@@ -21,29 +30,15 @@ var parse = function(message, cb) {
         }
         var datetimes = [];
         if (data.entities.datetime && data.entities.datetime.length > 0) {
-            for (var e_i in data.entities.datetime) {
-                var entity = data.entities.datetime[e_i];
-                dt = new DateTime();
-                console.log(entity);
-                for (var v_i in entity.values) {
-                    var value = entity.values[v_i];
-                    dt.date_set = true;
-                    if (['hour', 'minute', 'second'].includes(value.grain)) {
-                        dt.time_set = true;       
-                    }
-                    console.log(value.value);
-                    dt.set_timestamp(value.value);
-                }
-                datetimes.push(dt);
+            entity = data.entities.datetime[0];
+            if (entity.type == "value") {
+                schedule.start = create_date_time(entity);
+            } else if (entity.type == "interval") {
+                schedule.start = create_date_time(entity.from);
+                schedule.end = create_date_time(entity.to);
             }
         }
-        if (datetimes.length == 1) {
-            schedule.start = datetimes[0];
-        } else if (datetimes.length > 1) {
-            schedule.start = datetimes[0];
-            schedule.end = datetimes[1];
-        }
-        schedule.users = extract_user_ids(message);
+        schedule.participants = extract_user_ids(message);
         cb && cb(schedule);
     });
 };
@@ -53,9 +48,9 @@ var extract_user_ids = function(msg) {
     var m;
     var users = []
     do {
-        m = re.exec(s);
+        m = reg.exec(msg);
         if (m) {
-            users.push(m);
+            users.push(m[1]);
         }
     } while (m);
     return users;
