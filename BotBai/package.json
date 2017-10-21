@@ -14,7 +14,10 @@
     "google-auth-library": "^0.11.0",
     "googleapis": "^22.2.0",
     "mocha": "^4.0.0",
+    "moment": "^2.19.1",
     "mongoose": "^4.12.3",
+    "node-wit": "^4.3.0",
+    "requests": "^0.2.2",
     "selenium-webdriver": "^3.6.0",
     "sinon": "^4.0.1",
     "slackbots": "^1.1.0"
