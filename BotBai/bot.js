@@ -1,4 +1,4 @@
-var db = require('./db/mongo/mongo').db;
+// var db = require('./db/mongo/mongo').db;
 var config = require('./utilities/config');
 var controller = require('./controllers/bot_controller')
 
