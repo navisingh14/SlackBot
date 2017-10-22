@@ -19,19 +19,23 @@ controller.hears('hello',['mention', 'direct_mention','direct_message'], functio
 });
 
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
-  // console.log(message);
+  console.log(message);
 
   nlp.parse(message.text, function(schedule){
-    // console.log(schedule)
-    process_schedule(schedule, message, bot);
-    // bot.reply(message, "Coming Soon ....");
+    console.log(schedule)
+    if (schedule.intent == nlp.I_SIGN_UP) {
+      // TODO: Register user
+      bot.reply(message, "Registering you!!");
+    } else {
+      process_schedule(schedule, message, bot);
+    }
   });
 });
 
 var update_schedule = function(schedule, user_cache) {
   if (user_cache && user_cache.schedule) {
-    console.log("Input")
-    console.log(schedule)
+    // console.log("Input")
+    // console.log(schedule)
     var cached_schedule = user_cache.schedule;
     schedule.intent = schedule.intent || cached_schedule.intent;
     if (!cached_schedule.start || !cached_schedule.start.time_set){
@@ -50,7 +54,7 @@ var update_schedule = function(schedule, user_cache) {
 
 var process_schedule = function(schedule, message, bot){
   schedule = update_schedule(schedule, cache[message.user]);
-  if (schedule.intent == "meeting_set") {
+  if (schedule.intent == nlp.I_MEETING_SET) {
     // Save in cache
     cache[message.user] = {"schedule":schedule};
     // Validate Start
