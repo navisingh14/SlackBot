@@ -2,6 +2,7 @@ var Botkit = require('botkit');
 var config = require('../utilities/config');
 var request = require('request');
 var nlp = require('../utilities/nlp');
+var google = require('../quickstart.js');
 
 var controller = Botkit.slackbot({
   debug: false
@@ -13,10 +14,20 @@ controller.spawn({
   token: config.slack_token,
 }).startRTM();
 
+
+var res = google.start();
+
+
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
-  console.log(message);
-  bot.reply(message, "Aila!!");
+	var source_user = bot.get_source_user(message);
+	console.log(source_user);
+	bot.reply(message, res);
 });
+
+controller.hears('my token',['mention', 'direct_mention','direct_message'], function(bot,message) {
+  bot.reply(message, "no!!");
+});
+
 
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
   console.log(message);
@@ -104,4 +115,5 @@ controller.get_users = function (cb){
     // console.log(users);
   });
 }
+
 module.exports = controller;
