@@ -11,6 +11,10 @@ const client = new Wit({
 
 const Schedule = sched.Schedule;
 const DateTime = sched.DateTime;
+const I_MEETING_SET = "meeting_set";
+const I_MEETING_UNSET = "meeting_unset";
+const I_SIGN_UP = "sign_up";
+
 
 var create_date_time = function(date_time_json) {
     dt = new DateTime();
@@ -57,3 +61,6 @@ var extract_user_ids = function(msg) {
 }
 
 exports.parse = parse;
+exports.I_MEETING_SET = I_MEETING_SET;
+exports.I_MEETING_UNSET = I_MEETING_UNSET;
+exports.I_SIGN_UP = I_SIGN_UP;
