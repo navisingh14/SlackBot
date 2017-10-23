@@ -21,7 +21,8 @@
     "requests": "^0.2.2",
     "selenium-webdriver": "^3.6.0",
     "sinon": "^4.0.1",
-    "slackbots": "^1.1.0"
+    "slackbots": "^1.1.0",
+    "store": "^2.0.12"
   },
   "devDependencies": {
     "mocha": "^4.0.0"

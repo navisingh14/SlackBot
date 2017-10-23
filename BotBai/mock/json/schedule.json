@@ -1,0 +1,4 @@
+{ "meetingOne" : {
+                     "intnet" : "meeting_set", "start" : "9 AM", "end" : "4 PM", "participants" : ["A, B"], "creator" : "apan25"
+                  }
+ }

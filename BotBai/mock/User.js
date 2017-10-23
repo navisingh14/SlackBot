@@ -1,14 +1,6 @@
-var mongoose = require('./mongo').mongoose;
+var user_json = require('user.json');
 
-var userSchema = function(user_name, email, token, name) {
-  this.user_name = user_name,
-  this.email = email,
-  this.token = token
-};
 
-function testFun() {
-
-  userSchema("Aditya Pandey", "apandey@test.com", "1234567890");
-  
-
+var get_user = function(user_name) {
+  return JSON.parse(user_name);
 }
