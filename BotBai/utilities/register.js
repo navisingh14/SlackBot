@@ -15,7 +15,7 @@ var controller = Botkit.slackbot({
 // at ~/.credentials/calendar-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 
-var register_user  = function(usr, cb){
+var register_user  = function(usr, cb) {
   // Load client secrets from a local file.
   var url = '';
     // Authorize a client with the loaded credentials, then call the

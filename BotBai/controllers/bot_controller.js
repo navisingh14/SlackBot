@@ -2,11 +2,11 @@ var Botkit = require('botkit');
 var config = require('../utilities/config');
 var request = require('request');
 var nlp = require('../utilities/nlp');
-var reg = require('../utilities/register');
+//var reg = require('../utilities/register');
 var http = require("http");
 var mock_schedules = require("../mock/json/schedule.json");
-
-
+var calendar = require("../mock/calendar");
+var reg = require('../mock/register');
 
 var controller = Botkit.slackbot({
   debug: false
@@ -14,7 +14,7 @@ var controller = Botkit.slackbot({
 
 const cache = {}
 
-controller.spawn({
+var root_bot = controller.spawn({
   token: config.slack_token,
 }).startRTM();
 
@@ -22,14 +22,13 @@ controller.spawn({
 
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
 	var source_user = controller.get_source_user(message);
-	console.log(source_user);
+  console.log(source_user);
+  console.log(message);
 	bot.reply(message, "hi");
 });
 
 // create a meeting
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
-  console.log(message);
-
   nlp.parse(message.text, function(schedule){
     console.log(schedule)
     if (schedule.intent == nlp.I_SIGN_UP) {
@@ -116,6 +115,16 @@ var process_schedule = function(schedule, message, bot){
     }
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
+    cache[message.user] = {"schedule":schedule};
+    var start = moment().unix()*1000;
+    if (schedule.start != null) {
+      start = schedule.start.timestamp;
+    }
+    // TODO: Render meetings
+    channel = message.channel;
+    user = message.user;
+    console.log(schedule);
+    bot.reply(message, "We will be deleting soon");
   } else if (schedule.intent == "list") {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
@@ -179,5 +188,6 @@ controller.get_users = function (cb){
     // console.log(users);
   });
 }
+exports.bot = root_bot;
+exports.controller = controller;
 
-module.exports = controller;
