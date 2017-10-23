@@ -4,7 +4,6 @@ var request = require('request');
 var nlp = require('../utilities/nlp');
 var reg = require('../utilities/register');
 var http = require("http");
-var mock_schedules = require("../mock/schedule.json");
 
 var controller = Botkit.slackbot({
   debug: false
@@ -12,7 +11,7 @@ var controller = Botkit.slackbot({
 
 const cache = {}
 
-controller.spawn({
+var root_bot = controller.spawn({
   token: config.slack_token,
 }).startRTM();
 
@@ -20,7 +19,8 @@ controller.spawn({
 
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
 	var source_user = controller.get_source_user(message);
-	console.log(source_user);
+  console.log(source_user);
+  console.log(message);
 	bot.reply(message, "hi");
 });
 
@@ -113,7 +113,11 @@ var process_schedule = function(schedule, message, bot){
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
     cache[message.user] = {"schedule":schedule};
-    calendar.
+    // TODO: Render meetings 
+    var start = null;
+    if (schedule.start != null) {
+      start = schedule.start.timestamp;
+    }
   }
 
   // console.log(cache);
@@ -135,5 +139,6 @@ controller.get_users = function (cb){
     // console.log(users);
   });
 }
+exports.bot = root_bot;
+exports.controller = controller;
 
-module.exports = controller;
