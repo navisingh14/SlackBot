@@ -30,7 +30,12 @@ var list_meetings = function(user, start_time, end_time) {
     meetings.push(Schedule.from_json(mock_calendars[m_i]));
   }
   return meetings;
-}
+};
+
+var delete_meeting = function(meeting_id, user, cb) {
+  cb(null, "Successfully deleted meeting");
+};
 
 exports.create_meeting = create_meeting;
 exports.list_meetings = list_meetings;
+exports.delete_meeting = delete_meeting;

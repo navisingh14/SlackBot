@@ -5,7 +5,7 @@ var calender = require('../mock/calendar')
 var app = express();
 var bot_controller_module = require('../controllers/bot_controller');
 var bot_controller = bot_controller_module.controller;
-var bot = bot_controller.bot;
+var bot = bot_controller_module.bot;
 
 app.get("/", function(req, res){
     res.send('Hello!! You should not be here');
@@ -28,9 +28,9 @@ app.get("/register", function(req, res){
 app.get("/delete", function(req, res){
     const {method, url} = req;
     user_name = req.query.user;
-    channel = res.query, channel;
+    channel = req.query.channel;
     meeting_id = req.query.id;
-    calender.delete(id, user_name, channel, function(err, msg){
+    calender.delete_meeting(meeting_id, user_name, function(err, msg){
         if (err) {
             bot.say({
                 'text': 'Oops!! Error occured: ' + err,
@@ -41,7 +41,9 @@ app.get("/delete", function(req, res){
                 'text': msg,
                 'channel': channel
             });
+            console.log(channel)
         }
+        res.send("<script>window.close();</script>");
     });
 });
 
