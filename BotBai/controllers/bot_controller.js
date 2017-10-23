@@ -18,7 +18,7 @@ controller.spawn({
 
 
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
-	var source_user = bot.get_source_user(message);
+	var source_user = controller.get_source_user(message);
 	console.log(source_user);
 	bot.reply(message, "hi");
 });
@@ -30,26 +30,13 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
   nlp.parse(message.text, function(schedule){
     console.log(schedule)
     if (schedule.intent == nlp.I_SIGN_UP) {
+        console.log(bot);
         bot.reply(message, "Registering you!!");
-        var source_user = bot.get_source_user(message);
+        var source_user = controller.get_source_user(message);
         console.log("\n\n user is " + source_user + "\n\n");
+        // TODO - Check if user is in DB.
         reg.register_user(source_user, function(url) {
-              bot.reply(message, url);  
-              var server = http.createServer(function(request, response) {
-                    response.writeHead(200, {"Content-Type": "text/html"});
-                    response.write("<!DOCTYPE \"html\">");
-                    const {method, url} = request;
-                    //console.log(method);
-                    //console.log(url);
-                    var ind = url.indexOf("code");
-                    console.log("calling store_token token = " + url.substring(ind+5));
-                    reg.store_token(url.substring(ind+5));
-                    response.end("successfully registered");
-                    server.close(function(){console.log('Server closed!'); });
-      });
-
-      server.listen(3000);
-//      server.close(function () { console.log('Server closed!'); });
+              bot.reply(message, url);
         });
     } else {
       process_schedule(schedule, message, bot);
@@ -116,6 +103,10 @@ var process_schedule = function(schedule, message, bot){
 
   // console.log(cache);
 };
+
+controller.get_source_user = function(message) {
+  return message.user;
+}
 
 controller.get_users = function (cb){
   request.post("https://slack.com/api/users.list", {form: {token: config.slack_token}}, function(err, resp, body){
