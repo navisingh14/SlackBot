@@ -4,6 +4,7 @@ var request = require('request');
 var nlp = require('../utilities/nlp');
 var reg = require('../utilities/register');
 var http = require("http");
+var calendar = require("../mock/calendar");
 
 var controller = Botkit.slackbot({
   debug: false
@@ -23,7 +24,7 @@ controller.hears('hello',['mention', 'direct_mention','direct_message'], functio
 	bot.reply(message, "hi");
 });
 
-
+// create a meeting
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
   console.log(message);
 
@@ -107,7 +108,19 @@ var process_schedule = function(schedule, message, bot){
     } else {
       console.log("Meeting will be scheduled soon");
       // TODO: Schedule meeting -- Call Calendar API.
-      bot.reply(message, "Meeting will be scheduled soon");
+      // Mock api
+      calendar.create_meeting(schedule, function(reply) {
+        console.log("Call back from create meeting");
+        console.log(reply.status);
+        console.log(reply.message);
+        if(reply.status) {
+          bot.reply(message, "Meeting will be scheduled soon");
+        } else {
+          bot.reply(message, "Meeting can't be scheduled");
+        }
+        
+      });
+     // bot.reply(message, "Meeting will be scheduled soon");
       delete cache[message.user];
     }
   } else if (schedule.intent == "meeting_unset") {

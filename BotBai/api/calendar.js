@@ -1,4 +1,3 @@
-var mongoose = require('./mongo').mongoose;
 
 var userSchema = function(user_name, email, token, name) {
   this.user_name = user_name,
