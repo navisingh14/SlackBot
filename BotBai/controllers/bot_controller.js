@@ -2,8 +2,11 @@ var Botkit = require('botkit');
 var config = require('../utilities/config');
 var request = require('request');
 var nlp = require('../utilities/nlp');
-var reg = require('../utilities/register');
+//var reg = require('../utilities/register');
 var http = require("http");
+var mock_schedules = require("../mock/json/schedule.json");
+var calendar = require("../mock/calendar");
+var reg = require('../mock/register');
 
 var controller = Botkit.slackbot({
   debug: false
