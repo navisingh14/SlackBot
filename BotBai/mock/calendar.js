@@ -34,3 +34,4 @@ var list_meetings = function(user, start_time, end_time) {
 
 console.log(list_meetings());
 exports.create_meeting = create_meeting;
+exports.list_meetings = list_meetings;
