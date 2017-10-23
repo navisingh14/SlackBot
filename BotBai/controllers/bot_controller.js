@@ -4,7 +4,9 @@ var request = require('request');
 var nlp = require('../utilities/nlp');
 var reg = require('../utilities/register');
 var http = require("http");
-var mock_schedules = require("../mock/schedule.json");
+var mock_schedules = require("../mock/json/schedule.json");
+
+
 
 var controller = Botkit.slackbot({
   debug: false
@@ -116,11 +118,46 @@ var process_schedule = function(schedule, message, bot){
     // TODO: Unset meeting. Follow steps from above here
   } else if (schedule.intent == "list") {
     console.log("inside list");
-    console.log(schedule);
-    bot.reply(message, 'i will be listing your meetings soon');
+    console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
     // TODO: listing all the meetings
     cache[message.user] = {"schedule":schedule};
-    //delete cache[message.user];
+    if (schedule.start == null) {
+      cache[message.user]["status"] == "Start";
+      bot.reply(message, "What day would you like to list the meetings for?");    
+    } else if (!schedule.start.date_set) {
+      cache[message.user]["status"] == "StartDate";
+      bot.reply(message, "Which day would do you want to start the meeting?");    
+    } else if  (!schedule.start.time_set) {
+      cache[message.user]["status"] == "StartTime";
+      bot.reply(message, "Do you have a time-frame in mind?");
+    } else if (schedule.end == null) {
+      cache[message.user]["status"] == "End";
+      bot.reply(message, "When do you want to finish the meeting?");    
+    } else if (!schedule.end.date_set) {
+      cache[message.user]["status"] == "EndDate";
+      bot.reply(message, "Which day would do you want to end the meeting?");    
+    } else if  (!schedule.end.time_set) {
+      cache[message.user]["status"] == "EndTime";
+      bot.reply(message, "When would do you like to finish the meeting?");
+    } else {
+      console.log("Meeting will be listed soon");
+      // TODO: List meeting -- Call Calendar API.
+      // Mock api
+      calendar.list_meetings(message.user, schedule.start, schedule.end, function(reply) {
+        console.log("Call back from list meetings");
+        //console.log(reply.status);
+        //console.log(reply.message);
+/*        if(reply.status) {
+          bot.reply(message, "Meeting will be scheduled soon");
+        } else {
+          bot.reply(message, "Meeting can't be scheduled");
+        }
+*/        
+      });
+
+     // bot.reply(message, "Meeting will be scheduled soon");
+      delete cache[message.user];
+    }
   }
 
   // console.log(cache);
