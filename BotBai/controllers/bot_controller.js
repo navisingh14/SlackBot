@@ -7,6 +7,8 @@ var http = require("http");
 var mock_schedules = require("../mock/json/schedule.json");
 var calendar = require("../mock/calendar");
 var reg = require('../mock/register');
+var moment = require('moment');
+const { URL, URLSearchParams } = require('url');
 
 var controller = Botkit.slackbot({
   debug: false
@@ -123,8 +125,12 @@ var process_schedule = function(schedule, message, bot){
     // TODO: Render meetings
     channel = message.channel;
     user = message.user;
-    console.log(schedule);
-    bot.reply(message, "We will be deleting soon");
+    id = 1;
+    dummy_url = new URL("delete", config.server + ":" + config.port)
+    dummy_url.searchParams.set("user", user);
+    dummy_url.searchParams.set("channel", channel);
+    dummy_url.searchParams.set("id", id);
+    bot.reply(message, "We will be deleting soon. For now click on this: " + dummy_url.href);
   } else if (schedule.intent == "list") {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
