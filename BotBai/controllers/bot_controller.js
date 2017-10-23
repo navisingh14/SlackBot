@@ -114,18 +114,17 @@ var process_schedule = function(schedule, message, bot){
     }
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
-  } else if (schedule.intent == "list") {
-    console.log("inside list");
-    console.log(schedule);
-    bot.reply(message, 'i will be listing your meetings soon');
-    // TODO: listing all the meetings
-    cache[message.user] = {"schedule":schedule};
-
     // TODO: Render meetings 
+    cache[message.user] = {"schedule":schedule};
     var start = null;
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
+    
+  } else if (schedule.intent == "list") {
+    console.log("inside list");
+    console.log(schedule);
+    bot.reply(message, 'i will be listing your meetings soon');
   }
 
   // console.log(cache);
