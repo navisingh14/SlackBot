@@ -26,8 +26,6 @@ controller.hears('hello',['mention', 'direct_mention','direct_message'], functio
 
 // create a meeting
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
-  console.log(message);
-
   nlp.parse(message.text, function(schedule){
     console.log(schedule)
     if (schedule.intent == nlp.I_SIGN_UP) {
@@ -114,13 +112,16 @@ var process_schedule = function(schedule, message, bot){
     }
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
-    // TODO: Render meetings 
     cache[message.user] = {"schedule":schedule};
-    var start = null;
+    var start = moment().unix()*1000;
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    
+    // TODO: Render meetings
+    channel = message.channel;
+    user = message.user;
+    console.log(schedule);
+    bot.reply(message, "We will be deleting soon");
   } else if (schedule.intent == "list") {
     console.log("inside list");
     console.log(schedule);

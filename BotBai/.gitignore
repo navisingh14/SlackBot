@@ -61,4 +61,4 @@ typings/
 .DS_Store
 
 # Settings
-.git_ignore
+utilities/config.js
