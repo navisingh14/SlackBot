@@ -4,7 +4,7 @@ var request = require('request');
 var nlp = require('../utilities/nlp');
 var reg = require('../utilities/register');
 var http = require("http");
-var calendar = require("../mock/calendar");
+var mock_schedules = require("../mock/schedule.json");
 
 var controller = Botkit.slackbot({
   debug: false
@@ -112,6 +112,8 @@ var process_schedule = function(schedule, message, bot){
     }
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
+    cache[message.user] = {"schedule":schedule};
+    calendar.
   }
 
   // console.log(cache);
