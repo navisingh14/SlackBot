@@ -21,20 +21,14 @@ var TOKEN_PATH = TOKEN_DIR;
 var register_user  = function(usr, cb){
   // Load client secrets from a local file.
   var url = '';
-  fs.readFile('client_secret.json', function processClientSecrets(err, content, url) {
-    if (err) {
-      console.log('Error loading client secret file: ' + err);
-      return false;
-    }
     // Authorize a client with the loaded credentials, then call the
     // Google Calendar API.
     TOKEN_PATH += usr;
-    authorize(JSON.parse(content), function(url){
+    authorize(config.client_secret, function(url){
         console.log("url : " + url);
         return cb(url);
         }); 
-  }); 
-};
+  };
 
 
 /**
