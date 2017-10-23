@@ -39,7 +39,8 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
         reg.register_user(source_user, function(url) {
               bot.reply(message, url);
         });
-    } else {
+    }
+     else {
       process_schedule(schedule, message, bot);
     }
   });
@@ -107,11 +108,16 @@ var process_schedule = function(schedule, message, bot){
         }
         
       });
+
      // bot.reply(message, "Meeting will be scheduled soon");
       delete cache[message.user];
     }
   } else if (schedule.intent == "meeting_unset") {
     // TODO: Unset meeting. Follow steps from above here
+  } else if (schedule.intent == "list") {
+    console.log("inside list");
+    bot.reply(message, 'i will be listing your meetings soon');
+    // TODO: listing all the meetings
   }
 
   // console.log(cache);

@@ -65,3 +65,4 @@ exports.parse = parse;
 exports.I_MEETING_SET = I_MEETING_SET;
 exports.I_MEETING_UNSET = I_MEETING_UNSET;
 exports.I_SIGN_UP = I_SIGN_UP;
+exports.I_LIST = I_LIST;

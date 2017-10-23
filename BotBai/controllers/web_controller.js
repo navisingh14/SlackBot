@@ -13,7 +13,7 @@ app.get("/register", function(req, res){
     var ind = url.indexOf("code");
     user_name = req.query.state;
     register.store_token(user_name, url.substring(ind+5));
-    res.send("Thank You for registering. Please colose this window.")
+    res.send("Thank You for registering. Please close this window.")
 });
 
 
