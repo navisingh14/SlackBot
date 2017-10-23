@@ -4,7 +4,7 @@ var request = require('request');
 var nlp = require('../utilities/nlp');
 var reg = require('../utilities/register');
 var http = require("http");
-var calendar = require("../mock/calendar");
+var mock_schedules = require("../mock/schedule.json");
 
 var controller = Botkit.slackbot({
   debug: false
@@ -118,6 +118,7 @@ var process_schedule = function(schedule, message, bot){
     console.log("inside list");
     bot.reply(message, 'i will be listing your meetings soon');
     // TODO: listing all the meetings
+    cache[message.user] = {"schedule":schedule};
   }
 
   // console.log(cache);
