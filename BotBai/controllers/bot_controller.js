@@ -143,7 +143,7 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "Do you have a time-frame in mind?");
     } else if (schedule.end == null) {
       cache[message.user]["status"] == "End";
-      bot.reply(message, "When do you want to finish the meeting?");    
+      bot.reply(message, "Till what time do you want me to check the calendars for?");    
     } else if (!schedule.end.date_set) {
       cache[message.user]["status"] == "EndDate";
       bot.reply(message, "Which day would do you want to end the meeting?");    
@@ -154,25 +154,20 @@ var process_schedule = function(schedule, message, bot){
       console.log("Meeting will be listed soon");
       // TODO: List meeting -- Call Calendar API.
       // Mock api
-      calendar.list_meetings(message.user, schedule.start, schedule.end, function(reply) {
-        console.log("Call back from list meetings");
-        //console.log(reply.status);
-        //console.log(reply.message);
-/*        if(reply.status) {
-          bot.reply(message, "Meeting will be scheduled soon");
-        } else {
-          bot.reply(message, "Meeting can't be scheduled");
-        }
-*/        
-      });
+      var meetings = calendar.list_meetings(message.user, schedule.start, schedule.end);
+      var mssg = {
+              username: "botbai", 
+              text: 'Here is the list of meetings',
+              attachments: slacker.render_attachments(meetings)
+            }
+      console.log(slacker.render_attachment(meetings[0]))
+      bot.reply(message, mssg);
+      delete cache[message.user];
+      };
 
      // bot.reply(message, "Meeting will be scheduled soon");
-      delete cache[message.user];
     }
-  }
-
-  // console.log(cache);
-};
+  };
 
 controller.get_source_user = function(message) {
   return message.user;
