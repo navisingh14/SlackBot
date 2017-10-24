@@ -21,7 +21,9 @@ var root_bot = controller.spawn({
   token: config.slack_token,
 }).startRTM();
 
-
+controller.on('interactive', function(bot, message){
+  console.log(message);
+});
 
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
 	var source_user = controller.get_source_user(message);
@@ -98,21 +100,15 @@ var process_schedule = function(schedule, message, bot){
       cache[message.user]["status"] == "Participants";
       bot.reply(message, "Whom would you like to invite?");
     } else {
-      console.log("Meeting will be scheduled soon");
       // TODO: Schedule meeting -- Call Calendar API.
       // Mock api
       calendar.create_meeting(schedule, function(reply) {
-        console.log("Call back from create meeting");
-        console.log(reply.status);
-        console.log(reply.message);
         if(reply.status) {
           bot.reply(message, "Meeting will be scheduled soon");
         } else {
           bot.reply(message, "Meeting can't be scheduled");
         }
-        
       });
-
      // bot.reply(message, "Meeting will be scheduled soon");
       delete cache[message.user];
     }
@@ -128,19 +124,9 @@ var process_schedule = function(schedule, message, bot){
     var mssg = {
       username: 'BotBai', 
       text: 'Which of these meetings would you want to remove?',
-      attachments: slacker.render_attachments(meetings)
+      attachments: slacker.render_attachments_for_delete(meetings, message.user, message.channel)
     }
-    console.log(slacker.render_attachment(meetings[0]))
     bot.reply(message, mssg);
-    // TODO: Render meetings
-    // channel = message.channel;
-    // user = message.user;
-    // id = 1;
-    // dummy_url = new URL("delete", config.server + ":" + config.port)
-    // dummy_url.searchParams.set("user", user);
-    // dummy_url.searchParams.set("channel", channel);
-    // dummy_url.searchParams.set("id", id);
-    // bot.reply(message, "We will be deleting soon. For now click on this: " + dummy_url.href);
   } else if (schedule.intent == "list") {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);

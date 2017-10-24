@@ -1,12 +1,24 @@
 const util = require('util');
 const moment = require('moment');
+const { URL, URLSearchParams } = require('url');
+const config = require('../utilities/config');
+
 DATE_FORMAT = "MM/DD/YYYY";
 TIME_FORMAT = "HH:MM";
 DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
 
-var render_schedules = function(schedules) {
 
-};
+var render_attachments_for_delete = function(schedules, user, channel) {
+    return schedules.map(function(sched){
+        var attcmt = render_attachment(sched);
+        var url = new URL("delete", util.format("%s:%s", config.server, config.port));
+        url.searchParams.set("user", user);
+        url.searchParams.set("channel", channel);
+        url.searchParams.set("meeting_id", sched.id);
+        attcmt['fields'].push({"title" : "Do you want to delete this?", "value" : util.format("Click here: %s", url)});
+        return attcmt;
+    });
+}
 
 var render_attachments = function(schedules) {
     return schedules.map(function(sched){
@@ -22,7 +34,7 @@ var render_attachment =  function(schedule) {
     var fallback = util.format("Meeting on %s until %s", start_date_time, end_date_time);
     var title = util.format("Meeting on %s", start_date);
     var participants = schedule.participants.map(function(ptcpt){ return '@' + ptcpt }).join(", ");
-    return {
+    var attachment = {
         "fallback" : fallback,
         "title" : title,
         "color" : "#36a64f",
@@ -33,7 +45,9 @@ var render_attachment =  function(schedule) {
             {"title" : "Participants", "value" : participants, "short": true}
         ]
     };
+    return attachment
 }
 
 exports.render_attachment = render_attachment;
 exports.render_attachments = render_attachments;
+exports.render_attachments_for_delete = render_attachments_for_delete;

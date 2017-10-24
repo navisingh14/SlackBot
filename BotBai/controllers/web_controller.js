@@ -2,7 +2,7 @@ var express = require('express');
 var config = require('../utilities/config');
 //var register = require('../utilities/register');
 var register = require('../mock/register');
-var calendar = require('../mock/calendar')
+var calendar = require('../mock/calendar');
 var app = express();
 var bot_controller_module = require('../controllers/bot_controller');
 var bot_controller = bot_controller_module.controller;
@@ -31,7 +31,7 @@ app.get("/delete", function(req, res){
     user_name = req.query.user;
     channel = req.query.channel;
     meeting_id = req.query.id;
-    calender.delete_meeting(meeting_id, user_name, function(err, msg){
+    calendar.delete_meeting(meeting_id, user_name, function(err, msg){
         if (err) {
             bot.say({
                 'text': 'Oops!! Error occured: ' + err,
@@ -42,7 +42,6 @@ app.get("/delete", function(req, res){
                 'text': msg,
                 'channel': channel
             });
-            console.log(channel)
         }
         res.send("<script>window.close();</script>");
     });
