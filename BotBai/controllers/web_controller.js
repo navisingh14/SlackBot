@@ -1,7 +1,8 @@
 var express = require('express');
 var config = require('../utilities/config');
-var register = require('../utilities/register');
-var calender = require('../mock/calendar')
+//var register = require('../utilities/register');
+var register = require('../mock/register');
+var calendar = require('../mock/calendar')
 var app = express();
 var bot_controller_module = require('../controllers/bot_controller');
 var bot_controller = bot_controller_module.controller;
@@ -23,7 +24,7 @@ app.get("/register", function(req, res){
 });
 
 /**
- * Delete calender
+ * Delete calendar
  */
 app.get("/delete", function(req, res){
     const {method, url} = req;
