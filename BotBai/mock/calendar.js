@@ -26,9 +26,8 @@ var create_meeting = function(schedule, cb) {
 };
 
 
-var list_meetings = function(user, start_time, end_time, cb) {
+var list_meetings = function(user, start_time, end_time) {
   meetings = [];
-  console.log('inside list_meetings');
   for(var m_i in mock_calendars){
         var start_time_check = (parseInt(mock_calendars[m_i].start, 10) >= (parseInt(moment(start_time).unix() * 1000)));
         var end_time_check = (parseInt(mock_calendars[m_i].end, 10) >= (parseInt(moment(end_time).unix() * 1000)));
@@ -38,7 +37,7 @@ var list_meetings = function(user, start_time, end_time, cb) {
         meetings.push(Schedule.from_json(mock_calendars[m_i]));
     }
   }
-  cb && cb(meetings);
+  return meetings;
 };
 
 var delete_meeting = function(meeting_id, user, cb) {

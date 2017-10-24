@@ -168,18 +168,20 @@ var process_schedule = function(schedule, message, bot){
       console.log("Meeting will be listed soon");
       // TODO: List meeting -- Call Calendar API.
       // Mock api
-      calendar.list_meetings(message.user, schedule.start, schedule.end, function(reply) {
-        console.log("Call back from list meetings");
-        console.log("\n length = " + reply.length);
-      });
+      var meetings = calendar.list_meetings(message.user, schedule.start, schedule.end);
+      var mssg = {
+              username: "botbai", 
+              text: 'Here is the list of meetings',
+              attachments: slacker.render_attachments(meetings)
+            }
+      console.log(slacker.render_attachment(meetings[0]))
+      bot.reply(message, mssg);
+      delete cache[message.user];
+      };
 
      // bot.reply(message, "Meeting will be scheduled soon");
-      delete cache[message.user];
     }
-  }
-
-  // console.log(cache);
-};
+  };
 
 controller.get_source_user = function(message) {
   return message.user;
