@@ -1,5 +1,6 @@
 var Botkit = require('botkit');
 var config = require('../utilities/config');
+var slacker = require('../utilities/slacker');
 var request = require('request');
 var nlp = require('../utilities/nlp');
 //var reg = require('../utilities/register');
@@ -122,15 +123,24 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
+    var meetings = calendar.list_meetings();
+
+    var mssg = {
+      username: 'BotBai', 
+      text: 'Which of these meetings would you want to remove?',
+      attachments: slacker.render_attachments(meetings)
+    }
+    console.log(slacker.render_attachment(meetings[0]))
+    bot.reply(message, mssg);
     // TODO: Render meetings
-    channel = message.channel;
-    user = message.user;
-    id = 1;
-    dummy_url = new URL("delete", config.server + ":" + config.port)
-    dummy_url.searchParams.set("user", user);
-    dummy_url.searchParams.set("channel", channel);
-    dummy_url.searchParams.set("id", id);
-    bot.reply(message, "We will be deleting soon. For now click on this: " + dummy_url.href);
+    // channel = message.channel;
+    // user = message.user;
+    // id = 1;
+    // dummy_url = new URL("delete", config.server + ":" + config.port)
+    // dummy_url.searchParams.set("user", user);
+    // dummy_url.searchParams.set("channel", channel);
+    // dummy_url.searchParams.set("id", id);
+    // bot.reply(message, "We will be deleting soon. For now click on this: " + dummy_url.href);
   } else if (schedule.intent == "list") {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
