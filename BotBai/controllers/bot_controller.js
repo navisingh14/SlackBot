@@ -147,7 +147,7 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "Do you have a time-frame in mind?");
     } else if (schedule.end == null) {
       cache[message.user]["status"] == "End";
-      bot.reply(message, "When do you want to finish the meeting?");    
+      bot.reply(message, "Till what time do you want me to check the calendars for?");    
     } else if (!schedule.end.date_set) {
       cache[message.user]["status"] == "EndDate";
       bot.reply(message, "Which day would do you want to end the meeting?");    
@@ -160,14 +160,7 @@ var process_schedule = function(schedule, message, bot){
       // Mock api
       calendar.list_meetings(message.user, schedule.start, schedule.end, function(reply) {
         console.log("Call back from list meetings");
-        //console.log(reply.status);
-        //console.log(reply.message);
-/*        if(reply.status) {
-          bot.reply(message, "Meeting will be scheduled soon");
-        } else {
-          bot.reply(message, "Meeting can't be scheduled");
-        }
-*/        
+        console.log("\n length = " + reply.length);
       });
 
      // bot.reply(message, "Meeting will be scheduled soon");

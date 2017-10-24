@@ -2,7 +2,9 @@ var sinon = require('sinon');
 var nlp = require('../utilities/nlp');
 var Reply = require('../utilities/reply');
 var Schedule = require('../utilities/schedule').Schedule;
-var mock_calendars = require('./json/schedule.json') 
+var mock_calendars = require('./json/schedule.json');
+var moment = require('moment');
+
 
 var create_meeting = function(schedule, cb) {
 
@@ -24,12 +26,19 @@ var create_meeting = function(schedule, cb) {
 };
 
 
-var list_meetings = function(user, start_time, end_time) {
+var list_meetings = function(user, start_time, end_time, cb) {
   meetings = [];
+  console.log('inside list_meetings');
   for(var m_i in mock_calendars){
-    meetings.push(Schedule.from_json(mock_calendars[m_i]));
+        var start_time_check = (parseInt(mock_calendars[m_i].start, 10) >= (parseInt(moment(start_time).unix() * 1000)));
+        var end_time_check = (parseInt(mock_calendars[m_i].end, 10) >= (parseInt(moment(end_time).unix() * 1000)));
+        var creator_check = mock_calendars[m_i].creator == user;
+
+    if (creator_check   && start_time_check && end_time_check ) {
+        meetings.push(Schedule.from_json(mock_calendars[m_i]));
+    }
   }
-  return meetings;
+  cb && cb(meetings);
 };
 
 var delete_meeting = function(meeting_id, user, cb) {
