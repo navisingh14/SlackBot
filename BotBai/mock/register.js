@@ -13,8 +13,8 @@ var register_mock = sinon.mock(require('../utilities/register'));
 var register_user  = function(usr, cb) {
   
   register_mock.expects("register_user").withArgs(usr, cb).returns(cb("https://accounts.google.com/o/oauth2/auth?access_type=offline&state=U7KA4MQ4V&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly&response_type=code&client_id=991892021862-ghhjeae3n671mlu6v8b0omlemi87o76b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister"));
-
-  return registerMock.register_user(source_user, cb);
+  console.log("In resiter user 1");
+  return register_mock.register_user(source_user, cb);
 };
 
 
@@ -26,7 +26,7 @@ var register_user  = function(usr, cb) {
 var store_token = function (user_name, token) {
   register_mock.expects("store_token").withArgs(user_name, token).returns("Token stored");
   
-  return registerMock.store_token(user_name, token);
+  return register_mock.store_token(user_name, token);
 };
 
 /**
