@@ -14,7 +14,8 @@ const DateTime = sched.DateTime;
 const I_MEETING_SET = "meeting_set";
 const I_MEETING_UNSET = "meeting_unset";
 const I_SIGN_UP = "sign_up";
-const I_LIST = "list"
+const I_LIST = "list";
+const I_ABANDON = "abandon";
 
 
 var create_date_time = function(date_time_json) {
@@ -66,3 +67,4 @@ exports.I_MEETING_SET = I_MEETING_SET;
 exports.I_MEETING_UNSET = I_MEETING_UNSET;
 exports.I_SIGN_UP = I_SIGN_UP;
 exports.I_LIST = I_LIST;
+exports.I_ABANDON = I_ABANDON;

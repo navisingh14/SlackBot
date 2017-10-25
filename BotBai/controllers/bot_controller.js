@@ -167,6 +167,9 @@ var process_schedule = function(schedule, message, bot){
 
      // bot.reply(message, "Meeting will be scheduled soon");
     }
+    else if(schedule.intent == "abandon"){
+      delete cache[message.user];
+    }
   };
 
 controller.get_source_user = function(message) {
