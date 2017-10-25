@@ -27,8 +27,7 @@ var register_user  = function(usr, cb) {
  */
 var store_token = function (user_name, token) {
   register_mock.expects("store_token").withArgs(user_name, token).returns("Token stored");
-  
-  return register_mock.store_token(user_name, token);
+  return "Token stored";
 };
 
 /**
