@@ -9,7 +9,6 @@ DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
 
 
 var render_attachments_for_change = function(schedules, user, channel, key) {
-    console.log(123);
     return schedules.map(function(sched){
         var attcmt = render_attachment(sched);
         var url = new URL(key, util.format("%s:%s", config.server, config.port));

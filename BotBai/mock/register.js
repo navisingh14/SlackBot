@@ -11,9 +11,11 @@ var store = require('store');
 var register_mock = sinon.mock(require('../utilities/register'));
 
 var register_user  = function(usr, cb) {
-  
-  register_mock.expects("register_user").withArgs(usr, cb).returns(cb("https://accounts.google.com/o/oauth2/auth?access_type=offline&state=U7KA4MQ4V&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly&response_type=code&client_id=991892021862-ghhjeae3n671mlu6v8b0omlemi87o76b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister"));
-  console.log("In resiter user 1");
+  if (config.mode == "production") {
+    register_mock.expects("register_user").withArgs(usr, cb).returns(cb("https://accounts.google.com/o/oauth2/auth?access_type=offline&state=U7KA4MQ4V&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly&response_type=code&client_id=991892021862-ghhjeae3n671mlu6v8b0omlemi87o76b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Fec2-54-183-96-241.us-west-1.compute.amazonaws.com%3A3000%2Fregister"));
+  } else {
+    register_mock.expects("register_user").withArgs(usr, cb).returns(cb("https://accounts.google.com/o/oauth2/auth?access_type=offline&state=U7KA4MQ4V&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly&response_type=code&client_id=991892021862-ghhjeae3n671mlu6v8b0omlemi87o76b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister"));
+  }
   return register_mock.register_user(source_user, cb);
 };
 

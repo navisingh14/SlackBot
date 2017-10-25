@@ -1,9 +1,16 @@
 var express = require('express');
 var config = require('../utilities/config');
 var Schedule = require('../utilities/schedule').Schedule;
-//var register = require('../utilities/register');
-var register = require('../mock/register');
-var calendar = require('../mock/calendar');
+var register, calendar;
+if (config.mode == "production") {
+    // TODO: change to utilities in service milestone
+    register = require('../mock/register');
+    calendar = require('../mock/calendar');
+} else {
+    register = require('../mock/register');
+    calendar = require('../mock/calendar');   
+}
+
 var app = express();
 var bot_controller_module = require('../controllers/bot_controller');
 var nlp = require('../utilities/nlp');
