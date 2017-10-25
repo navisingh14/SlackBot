@@ -35,18 +35,25 @@ controller.hears('hello',['mention', 'direct_mention','direct_message'], functio
 // create a meeting
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
   nlp.parse(message.text, function(schedule){
-    console.log(schedule)
-    if (schedule.intent == nlp.I_SIGN_UP) {
-        console.log(bot);
-        bot.reply(message, "Registering you!!");
-        var source_user = controller.get_source_user(message);
-        console.log("\n\n user is " + source_user + "\n\n");
-        // TODO - Check if user is in DB.
-        reg.register_user(source_user, function(url) {
-              bot.reply(message, url);
-        });
-    }
-     else {
+    console.log(schedule);
+    user_cache = cache[controller.get_source_user(message)];
+    if (user_cache && user_cache['editing']) {
+      if (schedule.intent == nlp.I_YES) {
+        process_schedule(user_cache.schedule, message, bot);
+      } else {
+        bot.reply(message, "Cancelling edit!!")
+        delete cache[message.user];
+      }
+    } else if (schedule.intent == nlp.I_SIGN_UP) {
+      console.log(bot);
+      bot.reply(message, "Registering you!!");
+      var source_user = controller.get_source_user(message);
+      console.log("\n\n user is " + source_user + "\n\n");
+      // TODO - Check if user is in DB.
+      reg.register_user(source_user, function(url) {
+            bot.reply(message, url);
+      });
+    } else {
       process_schedule(schedule, message, bot);
     }
   });
@@ -112,7 +119,7 @@ var process_schedule = function(schedule, message, bot){
      // bot.reply(message, "Meeting will be scheduled soon");
       delete cache[message.user];
     }
-  } else if (schedule.intent == "meeting_unset") {
+  } else if (schedule.intent == nlp.I_MEETING_UNSET) {
     // TODO: Unset meeting. Follow steps from above here
     cache[message.user] = {"schedule":schedule};
     var start = moment().unix()*1000;
@@ -120,14 +127,14 @@ var process_schedule = function(schedule, message, bot){
       start = schedule.start.timestamp;
     }
     var meetings = calendar.list_meetings();
-
+    console.log(meetings);
     var mssg = {
       username: 'BotBai', 
       text: 'Which of these meetings would you want to remove?',
-      attachments: slacker.render_attachments_for_delete(meetings, message.user, message.channel)
+      attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "delete")
     }
     bot.reply(message, mssg);
-  } else if (schedule.intent == "list") {
+  } else if (schedule.intent == nlp.I_LIST) {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
     // TODO: listing all the meetings
@@ -152,22 +159,32 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "When would do you like to finish the meeting?");
     } else {
       console.log("Meeting will be listed soon");
-      // TODO: List meeting -- Call Calendar API.
-      // Mock api
       var meetings = calendar.list_meetings(message.user, schedule.start, schedule.end);
       var mssg = {
-              username: "botbai", 
-              text: 'Here is the list of meetings',
-              attachments: slacker.render_attachments(meetings)
-            }
+        username: "botbai", 
+        text: 'Here is the list of meetings',
+        attachments: slacker.render_attachments(meetings)
+      }
       console.log(slacker.render_attachment(meetings[0]))
       bot.reply(message, mssg);
       delete cache[message.user];
-      };
-
+    };
      // bot.reply(message, "Meeting will be scheduled soon");
+  } else if (schedule.intent == nlp.I_MEETING_MODIFY) {
+    cache[message.user] = {"schedule":schedule};
+    var start = moment().unix()*1000;
+    if (schedule.start != null) {
+      start = schedule.start.timestamp;
     }
-  };
+    var meetings = calendar.list_meetings();
+    var mssg = {
+      username: 'BotBai', 
+      text: 'Which of these meetings would you want to modify?',
+      attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
+    }
+    bot.reply(message, mssg);
+  }
+};
 
 controller.get_source_user = function(message) {
   return message.user;
@@ -182,9 +199,17 @@ controller.get_users = function (cb){
       users[member.id] = member;
     }
     cb && cb(users);
-    // console.log(users);
   });
 }
+
+controller.set_cache = function(usr, obj) {
+  cache[usr] = obj;
+};
+
+controller.get_cache = function(usr) {
+  return cache[usr];
+}
+
 exports.bot = root_bot;
 exports.controller = controller;
 

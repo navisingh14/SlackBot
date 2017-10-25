@@ -8,14 +8,16 @@ TIME_FORMAT = "HH:MM";
 DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
 
 
-var render_attachments_for_delete = function(schedules, user, channel) {
+var render_attachments_for_change = function(schedules, user, channel, key) {
+    console.log(123);
     return schedules.map(function(sched){
         var attcmt = render_attachment(sched);
-        var url = new URL("delete", util.format("%s:%s", config.server, config.port));
+        var url = new URL(key, util.format("%s:%s", config.server, config.port));
         url.searchParams.set("user", user);
         url.searchParams.set("channel", channel);
         url.searchParams.set("meeting_id", sched.id);
-        attcmt['fields'].push({"title" : "Do you want to delete this?", "value" : util.format("Click here: %s", url)});
+        attcmt['fields'].push({"title" : util.format("Do you want to %s this?", key), "value" : util.format("Click here: %s", url)});
+        console.log(attcmt);
         return attcmt;
     });
 }
@@ -45,9 +47,9 @@ var render_attachment =  function(schedule) {
             {"title" : "Participants", "value" : participants, "short": true}
         ]
     };
-    return attachment
+    return attachment;
 }
 
 exports.render_attachment = render_attachment;
 exports.render_attachments = render_attachments;
-exports.render_attachments_for_delete = render_attachments_for_delete;
+exports.render_attachments_for_change = render_attachments_for_change;

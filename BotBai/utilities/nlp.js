@@ -15,6 +15,8 @@ const I_MEETING_SET = "meeting_set";
 const I_MEETING_UNSET = "meeting_unset";
 const I_SIGN_UP = "sign_up";
 const I_LIST = "list"
+const I_MEETING_MODIFY = "meeting_modify";
+const I_YES = "yes";
 
 
 var create_date_time = function(date_time_json) {
@@ -66,3 +68,5 @@ exports.I_MEETING_SET = I_MEETING_SET;
 exports.I_MEETING_UNSET = I_MEETING_UNSET;
 exports.I_SIGN_UP = I_SIGN_UP;
 exports.I_LIST = I_LIST;
+exports.I_MEETING_MODIFY = I_MEETING_MODIFY;
+exports.I_YES = I_YES;

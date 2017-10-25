@@ -1,6 +1,6 @@
 var sinon = require('sinon');
 var nlp = require('../utilities/nlp');
-var Reply = require('../utilities/reply');
+var Reply = require('../utilities/reply').Reply;
 var Schedule = require('../utilities/schedule').Schedule;
 var mock_calendars = require('./json/schedule.json');
 var moment = require('moment');
@@ -29,13 +29,7 @@ var create_meeting = function(schedule, cb) {
 var list_meetings = function(user, start_time, end_time) {
   meetings = [];
   for(var m_i in mock_calendars){
-        var start_time_check = (parseInt(mock_calendars[m_i].start, 10) >= (parseInt(moment(start_time).unix() * 1000)));
-        var end_time_check = (parseInt(mock_calendars[m_i].end, 10) >= (parseInt(moment(end_time).unix() * 1000)));
-        var creator_check = mock_calendars[m_i].creator == user;
-
-    if (creator_check   && start_time_check && end_time_check ) {
-        meetings.push(Schedule.from_json(mock_calendars[m_i]));
-    }
+    meetings.push(Schedule.from_json(mock_calendars[m_i]));
   }
   return meetings;
 };
@@ -44,6 +38,12 @@ var delete_meeting = function(meeting_id, user, cb) {
   cb(null, "Successfully deleted meeting");
 };
 
+var update_meeting = function(meeting_id, user, cb) {
+  var meeting = mock_calendars[0];
+  cb(null, meeting);
+}
+
 exports.create_meeting = create_meeting;
 exports.list_meetings = list_meetings;
 exports.delete_meeting = delete_meeting;
+exports.update_meeting = update_meeting;
