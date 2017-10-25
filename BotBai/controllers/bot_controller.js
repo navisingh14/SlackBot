@@ -128,7 +128,7 @@ var process_schedule = function(schedule, message, bot){
       // Mock api
       calendar.create_meeting(schedule, function(reply) {
         if(reply.status) {
-          bot.reply(message, "Meeting will be scheduled soon");
+          bot.reply(message, "Success! Meeting has been scheduled");
         } else {
           bot.reply(message, "Meeting can't be scheduled");
         }
