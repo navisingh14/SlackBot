@@ -93,7 +93,7 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "Which day would do you want to start the meeting?");    
     } else if  (!schedule.start.time_set) {
       cache[message.user]["status"] == "StartTime";
-      bot.reply(message, "When would do you like to start the meeting?");
+      bot.reply(message, "What time would do you like to start the meeting?");
     } else if (schedule.end == null) {
       cache[message.user]["status"] == "End";
       bot.reply(message, "When do you want to finish the meeting?");    
@@ -102,7 +102,12 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "Which day would do you want to end the meeting?");    
     } else if  (!schedule.end.time_set) {
       cache[message.user]["status"] == "EndTime";
-      bot.reply(message, "When would do you like to finish the meeting?");
+      bot.reply(message, "What time would do you like to finish the meeting?");
+    } else if  (schedule.end.timestamp <= schedule.start.timestamp) {
+      
+      cache[message.user]["status"] == "EndTimeInvalid";
+      cache[message.user]["schedule"].end = null;
+      bot.reply(message, "The meeting cannot finish before it starts. What time would do you like to finish the meeting?");
     } else if (!schedule.participants || !schedule.participants.length) {
       cache[message.user]["status"] == "Participants";
       bot.reply(message, "Whom would you like to invite?");
