@@ -183,6 +183,8 @@ var process_schedule = function(schedule, message, bot){
       attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
     }
     bot.reply(message, mssg);
+  } else if(schedule.intent == "abandon"){
+    delete cache[message.user];
   }
 };
 
