@@ -1,6 +1,6 @@
 const util = require('util');
 const moment = require('moment');
-const { URL, URLSearchParams } = require('url');
+const buildURL = require('build-url');
 const config = require('../utilities/config');
 
 DATE_FORMAT = "MM/DD/YYYY";
@@ -11,10 +11,15 @@ DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
 var render_attachments_for_change = function(schedules, user, channel, key) {
     return schedules.map(function(sched){
         var attcmt = render_attachment(sched);
-        var url = new URL(key, util.format("%s:%s", config.server, config.port));
-        url.searchParams.set("user", user);
-        url.searchParams.set("channel", channel);
-        url.searchParams.set("meeting_id", sched.id);
+        var url = buildURL(util.format("%s:%s", config.server, config.port),
+                    {
+                        path: key,
+                        queryParams: {
+                            user: user,
+                            channel: channel,
+                            meeting_id: sched.id
+                        }
+                    });
         attcmt['fields'].push({"title" : util.format("Do you want to %s this?", key), "value" : util.format("<%s|YES>", url)});
         console.log(attcmt);
         return attcmt;
