@@ -16,7 +16,7 @@ var render_attachments_for_change = function(schedules, user, channel, key) {
         url.searchParams.set("user", user);
         url.searchParams.set("channel", channel);
         url.searchParams.set("meeting_id", sched.id);
-        attcmt['fields'].push({"title" : util.format("Do you want to %s this?", key), "value" : util.format("Click here: %s", url)});
+        attcmt['fields'].push({"title" : util.format("Do you want to %s this?", key), "value" : util.format("<%s|YES>", url)});
         console.log(attcmt);
         return attcmt;
     });
