@@ -26,7 +26,6 @@ var register_user  = function(usr, cb) {
  * @param {Object} token The token to store to disk.
  */
 var store_token = function (user_name, token) {
-  register_mock.expects("store_token").withArgs(user_name, token).returns("Token stored");
   return "Token stored";
 };
 
