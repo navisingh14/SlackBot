@@ -1,7 +1,7 @@
 ### Task Tracking
 
 
-##### Week 1
+### Week 1
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -17,12 +17,7 @@ We started working on our bot by creating initial repos and issues and dividing 
 We started working on the modules- User registration, context tokenization and use case 1.
 
 
-
-
-
 ### Week 2
-
-
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -34,6 +29,11 @@ We started working on the modules- User registration, context tokenization and u
 | Subflow 1         | Completed         |  #11
 | Subflow 2         | In progress       |  Making changes in time, members
 
-We completed the first use case entirely this week. Our bot is now able to create meetings efficiently.
+We completed the first use case entirely this week. Our bot is now able to properly create meetings. 
+We started creating mock calendar values that members can have so as to test efficiency of our bot.
+We completed tokenization of input using Intents, wit.ai.
+We also worked on the module- Modify meeting.
+
+
 
 
