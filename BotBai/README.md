@@ -44,7 +44,8 @@ Such an interactive bot is a really good solution as it will reduce the manual e
 
 ### Test
 * Install selenium
-* Run `test_selenium.java` using an editor.
+* Run `test/WebTest.java` using an editor. (or)
+* Run `npm run selenium`
 
 
 #### Note:
