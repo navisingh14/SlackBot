@@ -1,109 +1,39 @@
-# Slack bot
-[![Build Status](https://travis-ci.org/CSC-510/SlackBot.svg?branch=master)](https://travis-ci.org/CSC-510/SlackBot)
-[![Greenkeeper badge](https://badges.greenkeeper.io/CSC-510/SlackBot.svg)](https://greenkeeper.io/)
-[![dependencies Status](https://david-dm.org/CSC-510/SlackBot/status.svg)](https://david-dm.org/CSC-510/SlackBot)
-[![devDependencies Status](https://david-dm.org/CSC-510/SlackBot/dev-status.svg)](https://david-dm.org/CSC-510/SlackBot?type=dev)
+# BotBai
 
-We will write a simple slack bot that will tell us the current weather.
+BotBai automates the entire process of managing meetings right from finding suitable time slots to resolving schedule conflicts. It can be triggered through a message in slack. BotBai helps a manager to plan a meeting with employees or teams of his choice. The bot goes through the Google Calendars of all listed employees and finds a suitable time slot where everyone listed is available. It will either check their availability for the specified time frame or suggest next possible time slots where all attendees are available. BotBai will also notify all employees about the meeting through a slack notification and put in reminders for the same.
 
-We will use [botkit](https://github.com/howdyai/botkit) for helping connect with slack, and [forecast.io](https://developer.forecast.io/) for weather info.
+In case there is a situation where the meeting is in place but an attendee has some other important work at the same time, he can inform BotBai about his unavailability. The bot will notify the manager about the problem. The manager can then decide whether to go ahead with the meeting anyway or request BotBai to reschedule or cancel the meeting. If cancelled, all other attendees will get notified by the bot about the cancellation and that time slot on their google calendar will be opened up for other appointments. If a reschedule is requested, BotBai will then scan all google calendars for the next available slot for all attendees and suggest that to the manager. It can also suggest ideas to the unavailable candidate to make changes to his schedule so that he can make time for the meeting.
 
-### Prereq
+Such an interactive bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired just for planning and rescheduling meetings of the employees. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, BotBai can function as a universal secretary for the company and provide huge monetary benefits.
 
-Install code.
 
-```bash
-git clone https://github.com/CSC-510/SlackBot
-cd SlackBot
-npm install
-```
+### Prerequisites
 
-1. Create a new slack team. You may want to use this team for your fellow project teammates.
+* `git >= 2.13.6`
+* `npm >= 3.10.10` 
+* `node >= v6.11.5`
+* `mongo >= 3.20` Not required now
 
-   Currently, you cannot all use the class slack team because there is a limit in
-   current users:
+### Setup
+* Clone the repo
+* Navigate to BotBai. `cd BotBai`
+* Copy `utilities/config_example.js` to `utilities/config.js`
+* Run `npm install`
 
-   > You should only be able to create 16 connections from the same API token.  
-     Unfortunately, that's a general limit across all of Slack's RTM APIs.
+### Run
+* Start server
+	`npm start`
+* Stop server
+	`sh scripts/stop.sh`
 
-2. Create a bot team member. Click [/services/new/bot](https://my.slack.com/services/new/bot). For more information about bot-users, see [documentation](https://api.slack.com/bot-users).
+### Test
+* Install selenium
+* Run `test_selenium.java` using an editor.
 
-3. Copy slack bot token.
 
-4. Get [forecast.io token](https://darksky.net/dev). First 1000 api calls are free.
+#### Note:
+* Replace tabs with soft tabs while commiting
+* Do not commit `utilities/config.js`
+* To deploy on production set environment variable export NODE_ENV=production
 
-5. Update your environment variables.
-
-   You do not want to store sensitive information like api tokens in public locations. Instead, you can store these in configuration files or environment variables.
-
-   In windows, you can run:
-   ```
-   setx FORECASTTOKEN "<forecast.io.token>"
-   setx SLACKTOKEN "<slack-token>"
-   # You will then need to close the cmd window and reopen.
-   ```
-   In other systems, you can set them in your shell, like in `.bash_profile`:
-   ```
-   # Edit .bash_profile to have:
-   export FORECASTTOKEN="<token>"
-   export SLACKTOKEN="<slacktoken>"
-   # Then reload
-   $ source ~/.bash_profile
-   ```
-
-   Confirm you have properly set your tokens. Run `node envTest.js`. You should see your tokens properly printed out.
-
-### Running the bot
-
-Your goal is to be able to run your bot and get the current weather:
-
-![image](https://cloud.githubusercontent.com/assets/742934/18172392/2e9a333c-7033-11e6-8dcd-81df6031b0ab.png)
-
-* If you can run `node bot.js` and it outputs something and waits, that's good.
-* Check if you have a green light in your slack team for your bot. If not, make sure you properly registered bot.
-* See if you can get to have the bot reply to a message. Make sure bot is invited to that channel.
-
-### Getting weather
-
-Lets' make a call to the weather API. See the code inside weatherTest.js. You can run `node weatherTest.js` and confirm you can properly read the weather information.
-
-```javascript
-// example for calling weather api
-function getWeather()
-{
-	var latitude = "48.208579"
-	var longitude = "16.374124"
-	forecast.get(latitude, longitude, function (err, res, data)
-	{
-      if (err) throw err;
-      //console.log('res: ' + JSON.stringify(res));
-      //console.log('data: ' + JSON.stringify(data));
-      var w = data.currently.summary + " and feels like " + data.currently.apparentTemperature;
-   });
-}
-```
-
-### Understanding Callbacks...
-
-Let's integrate the weather call with our bot reply. But wait. There is a problem. These function calls run asychronously. That means if we did the following, it would not work...
-
-```
-w = getWeather();
-bot.reply(w)
-```
-
-Instead, we need to introduce a callback to the getWeather function, which is telling it what fuction to callback when weather information is ready:
-
-```
-getWeather(callback)
-{
-  onWeather(function(w)
-  {
-    callback(w);
-  });
-}
-```
-
-### Enhance your bot.
-
-See if you can extend the bot to be able to get the current location as part of a conversation. If you get that working, add some other crazy ideas!
+### Happy Coding :)
