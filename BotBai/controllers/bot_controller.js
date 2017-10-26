@@ -181,13 +181,18 @@ var process_schedule = function(schedule, message, bot){
     } else {
       console.log("Meeting will be listed soon");
       var meetings = calendar.list_meetings(message.user, schedule.start, schedule.end);
-      var mssg = {
-        username: "botbai", 
-        text: 'Here is the list of meetings',
-        attachments: slacker.render_attachments(meetings)
+      if (meetings.length == 0){
+        bot.reply(message, "You don't have any scheduled meeting");
       }
-      console.log(slacker.render_attachment(meetings[0]))
-      bot.reply(message, mssg);
+      else{
+          var mssg = {
+            username: "botbai", 
+            text: 'Here is the list of meetings',
+            attachments: slacker.render_attachments(meetings)
+          }
+          console.log(slacker.render_attachment(meetings[0]))
+          bot.reply(message, mssg);        
+      }
       delete cache[message.user];
     };
      // bot.reply(message, "Meeting will be scheduled soon");
@@ -198,12 +203,19 @@ var process_schedule = function(schedule, message, bot){
       start = schedule.start.timestamp;
     }
     var meetings = calendar.list_meetings(message.user);
-    var mssg = {
-      username: 'BotBai', 
-      text: 'Which of these meetings would you want to modify?',
-      attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
+    if(meetings.length == 0){
+        console.log("inside modify");
+        bot.reply(message, "You don't have any scheduled meeting");
     }
-    bot.reply(message, mssg);
+    else{
+        var mssg = {
+          username: 'BotBai', 
+          text: 'Which of these meetings would you want to modify?',
+          attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
+        }
+        bot.reply(message, mssg);
+
+    }
   } else if(schedule.intent == "abandon"){
     delete cache[message.user];
   }
