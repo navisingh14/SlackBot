@@ -28,8 +28,10 @@ var create_meeting = function(schedule, cb) {
 
 var list_meetings = function(user, start_time, end_time) {
   meetings = [];
+  console.log(user);
   for(var m_i in mock_calendars){
-    meetings.push(Schedule.from_json(mock_calendars[m_i]));
+    if(user == mock_calendars[m_i].creator)
+      meetings.push(Schedule.from_json(mock_calendars[m_i]));
   }
   return meetings;
 };

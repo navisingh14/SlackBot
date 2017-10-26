@@ -126,14 +126,18 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    var meetings = calendar.list_meetings();
+    var meetings = calendar.list_meetings(message.user);
     console.log(meetings);
-    var mssg = {
-      username: 'BotBai', 
-      text: 'Which of these meetings would you want to remove?',
-      attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "delete")
+    if (meetings.length == 0)
+      bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+    else {
+      var mssg = {
+        username: 'BotBai', 
+        text: 'Which of these meetings would you want to remove?',
+        attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "delete")
+      }
+      bot.reply(message, mssg);
     }
-    bot.reply(message, mssg);
   } else if (schedule.intent == nlp.I_LIST) {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
@@ -176,7 +180,7 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    var meetings = calendar.list_meetings();
+    var meetings = calendar.list_meetings(message.user);
     var mssg = {
       username: 'BotBai', 
       text: 'Which of these meetings would you want to modify?',
