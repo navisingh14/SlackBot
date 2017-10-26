@@ -13,8 +13,8 @@
 | Subflow 1         | In progress       |  #9, Creating meeting- time, members
 
 Firstly, we changed our name to BotBai after receiving feedback from you about the Design.
-We started working on our bot by creating initial repos and issues and dividing the tasks into modules.
-We started working on the modules- User registration, context tokenization and use case 1
+We started working on our bot by creating initial repository and issues and dividing the tasks into modules.
+We started working on the modules- User registration, context tokenization and use case 1.
 
 
 ### Week 2
@@ -24,7 +24,7 @@ We started working on the modules- User registration, context tokenization and u
 | Use Case 1        | Create Meeting    
 | Subflow 1 (Happy) | Completed         |  #9, Meeting creation module
 | Subflow 2 (Alternative) | Completed        |  #9, Wrong Timing input
-| Mock testing      | In progress       |  #7
+| Mocking      | In progress       |  #7
 | NLP Parsing       | Completed         |  #6, Keyword matching
 | Selenium Testing  | Use Case 1 Completed |  #9
 | Use Case 3        | Modify Meeting    
@@ -50,19 +50,19 @@ We started working on use case 3- Modify meeting.
 | Use Case 3        | Modify Meeting    
 | Subflow 2 (Alternative)        | Completed         |  #11, if no meetings
 | Selenium Testing  | Use Case 2,3 Completed |  #12, #11
-| Mock Testing      | Completed         |  #7
+| Mocking      | Completed         |  #7
 | Abandon Feature   | Completed         |  For abandoning the session
 | Use Case 4        | Delete Meeting    |  
 | Subflow 1         | Completed         |  #9, for deleting a meeting
 | Selenium Testing  | Use Case 4 Completed |  #9
-| Milestone 1       | Completed
+| Milestone: Bot       | Completed
 
 
-In week 3, we managed to complete Milestone 1 : BOT.
+In week 3, we managed to complete Milestone : BOT.
 We completed use case 2,3 (all subflows).
 We added an abandon meeting feature to exit the session altogether.
 We also finished adding mock data for tests. These mock values will be replaced by google calendar values of users.
-We completed use case 4 and ran selenium tests for all use cases successfully.
+We completed use case 4 and ran selenium tests for all 4 use cases successfully.
 
 
 
