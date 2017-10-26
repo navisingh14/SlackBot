@@ -5,7 +5,8 @@
   "main": "bot.js",
   "scripts": {
     "test": "mocha --exit",
-    "start": "sh scripts/start.sh"
+    "start": "sh scripts/start.sh",
+    "selenium": "java -jar test/BotBai.jar"
   },
   "author": "",
   "license": "ISC",
