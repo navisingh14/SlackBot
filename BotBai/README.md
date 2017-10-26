@@ -19,7 +19,9 @@ Such an interactive bot is a really good solution as it will reduce the manual e
 [Worksheet](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/WORKSHEET.md)
 
 ### Screencast
-[Link to the video]()
+[Selenium Testing and UI](https://www.youtube.com/watch?v=99zUMRw1sk0)
+
+[Code walk-through (example)](https://www.youtube.com/watch?v=zxc_hiRo5JI)
 
 ### Prerequisites
 
