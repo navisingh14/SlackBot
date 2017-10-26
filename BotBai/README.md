@@ -21,7 +21,7 @@ Such an interactive bot is a really good solution as it will reduce the manual e
 ### Screencast
 [Selenium Testing and UI](https://www.youtube.com/watch?v=99zUMRw1sk0)
 
-[Code walk-through (example)](https://www.youtube.com/watch?v=zxc_hiRo5JI)
+[Code walk-through (example)](https://www.youtube.com/watch?v=zxc_hiRo5JI&t)
 
 ### Prerequisites
 
