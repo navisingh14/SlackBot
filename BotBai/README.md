@@ -6,6 +6,20 @@ In case there is a situation where the meeting is in place but an attendee has s
 
 Such an interactive bot is a really good solution as it will reduce the manual effort and time required for rescheduling. In big companies, separate secretaries are hired just for planning and rescheduling meetings of the employees. This bot will automate this function and hence, eliminate the overall need to hire secretaries. Hence, BotBai can function as a universal secretary for the company and provide huge monetary benefits.
 
+### Use Cases
+[See the use cases here](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/Design.md#use-cases)
+
+### Mocking
+[Mock folder](https://github.ncsu.edu/nsingh9/CSC510-Bot/tree/master/BotBai/mock)
+
+### Selenium testing of each use case
+[Test](https://github.ncsu.edu/nsingh9/CSC510-Bot/tree/master/BotBai/test)
+
+### Task Tracking
+[Worksheet](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/WORKSHEET.md)
+
+### Screencast
+[Link to the video]()
 
 ### Prerequisites
 
