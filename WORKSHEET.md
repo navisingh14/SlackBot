@@ -23,13 +23,13 @@ We started working on the modules- User registration, context tokenization and u
 | -------------     | ------------      |  ------------
 | Use Case 1        | Create Meeting    
 | Subflow 1 (Happy) | Completed         |  #9, Meeting creation module
-| Subflow 2 (Alternative) | In Progress        |  #9, Wrong Timing input
+| Subflow 2 (Alternative) | Completed        |  #9, Wrong Timing input
 | Mock testing      | In progress       |  #7
 | NLP Parsing       | Completed         |  #6, Keyword matching
 | Selenium Testing  | Use Case 1 Completed |  #9
 | Use Case 3        | Modify Meeting    
-| Subflow 1 (Happy) | Completed         |  #11
-| Subflow 2         | In progress       |  Making changes in time, members
+| Subflow 1 (Happy) | Completed         |  #11, Making changes in time, members
+| Subflow 2 (Alternative)       | In progress       |  If no meetings
 
 We completed the first use case entirely this week. Our bot is now able to properly create meetings. 
 We started creating mock calendar values that members can have so as to test efficiency of our bot.
@@ -42,15 +42,16 @@ We also worked on the module- Modify meeting.
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
 | Use Case 2        | List Meetings   
-| Subflow 1         | Completed         |  #12
-| Mock Testing      | Completed         |  #7
-| NLP Parsing       | Completed         |  #6, Keyword matching
+| Subflow 1 (Happy)        | Completed         |  #12, List all meetings
+| Subflow 2 (Alternative)        | Completed         |  #12, if no meetings
 | Use Case 3        | Modify Meeting    
-| Subflow 2         | Completed         |  #11
+| Subflow 2 (Alternative)        | Completed         |  #11, if no meetings
+| Selenium Testing  | Use Case 2,3 Completed |  #12, #11
+| Mock Testing      | Completed         |  #7
 | Abandon Feature   | Completed         |  For abandoning the session
 | Use Case 4        | Delete Meeting    |  
-| Subflow 1         |  |  #9
-| Selenium Testing  | Use Case 1 Completed |  #9
+| Subflow 1         | Completed         |  #9, for deleting a meeting
+| Selenium Testing  | Use Case 4 Completed |  #9
 
 
 We completed the first use case entirely this week. Our bot is now able to properly create meetings. 
