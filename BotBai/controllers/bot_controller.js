@@ -3,13 +3,18 @@ var config = require('../utilities/config');
 var slacker = require('../utilities/slacker');
 var request = require('request');
 var nlp = require('../utilities/nlp');
-//var reg = require('../utilities/register');
 var http = require("http");
-var mock_schedules = require("../mock/json/schedule.json");
-var calendar = require("../mock/calendar");
-var reg = require('../mock/register');
 var moment = require('moment');
 const { URL, URLSearchParams } = require('url');
+var reg, calendar;
+if (config.mode == "production") {
+  // TODO: change to utilities in service milestone
+  reg = require('../mock/register');
+  calendar = require('../mock/calendar');
+} else {
+  reg = require('../mock/register');
+  calendar = require('../mock/calendar');   
+}
 
 var controller = Botkit.slackbot({
   debug: false
@@ -83,35 +88,47 @@ var process_schedule = function(schedule, message, bot){
   schedule = update_schedule(schedule, cache[message.user]);
   if (schedule.intent == nlp.I_MEETING_SET) {
     // Save in cache
+    status = cache[message.user] && cache[message.user]["status"]
     cache[message.user] = {"schedule":schedule};
+    if (status) {
+      cache[message.user]["status"] = status;
+    }
     // Validate Start
     if (schedule.start == null) {
-      cache[message.user]["status"] == "Start";
+      cache[message.user]["status"] = "Start";
       bot.reply(message, "When do you want to start the meeting?");    
     } else if (!schedule.start.date_set) {
-      cache[message.user]["status"] == "StartDate";
+      cache[message.user]["status"] = "StartDate";
       bot.reply(message, "Which day would do you want to start the meeting?");    
     } else if  (!schedule.start.time_set) {
-      cache[message.user]["status"] == "StartTime";
-      bot.reply(message, "When would do you like to start the meeting?");
+      cache[message.user]["status"] = "StartTime";
+      bot.reply(message, "What time would do you like to start the meeting?");
     } else if (schedule.end == null) {
-      cache[message.user]["status"] == "End";
+      cache[message.user]["status"] = "End";
       bot.reply(message, "When do you want to finish the meeting?");    
     } else if (!schedule.end.date_set) {
-      cache[message.user]["status"] == "EndDate";
+      cache[message.user]["status"] = "EndDate";
       bot.reply(message, "Which day would do you want to end the meeting?");    
     } else if  (!schedule.end.time_set) {
-      cache[message.user]["status"] == "EndTime";
-      bot.reply(message, "When would do you like to finish the meeting?");
+      cache[message.user]["status"] = "EndTime";
+      bot.reply(message, "What time would do you like to finish the meeting?");
+    } else if  (schedule.end.timestamp <= schedule.start.timestamp) {
+      cache[message.user]["status"] ="EndTimeInvalid";
+      cache[message.user]["schedule"].end = null;
+      bot.reply(message, "The meeting cannot finish before it starts. What time would do you like to finish the meeting?");
     } else if (!schedule.participants || !schedule.participants.length) {
-      cache[message.user]["status"] == "Participants";
-      bot.reply(message, "Whom would you like to invite?");
+      if (cache[message.user]["status"] == "Participants") {
+        bot.reply(message, "They are not valid participants.");
+      } else {
+        cache[message.user]["status"] = "Participants";
+        bot.reply(message, "Whom would you like to invite?");
+      }
     } else {
       // TODO: Schedule meeting -- Call Calendar API.
       // Mock api
       calendar.create_meeting(schedule, function(reply) {
         if(reply.status) {
-          bot.reply(message, "Meeting will be scheduled soon");
+          bot.reply(message, "Success! Meeting has been scheduled");
         } else {
           bot.reply(message, "Meeting can't be scheduled");
         }
@@ -144,22 +161,22 @@ var process_schedule = function(schedule, message, bot){
     // TODO: listing all the meetings
     cache[message.user] = {"schedule":schedule};
     if (schedule.start == null) {
-      cache[message.user]["status"] == "Start";
+      cache[message.user]["status"] = "Start";
       bot.reply(message, "What day would you like to list the meetings for?");    
     } else if (!schedule.start.date_set) {
-      cache[message.user]["status"] == "StartDate";
+      cache[message.user]["status"] = "StartDate";
       bot.reply(message, "Which day would do you want to start the meeting?");    
     } else if  (!schedule.start.time_set) {
-      cache[message.user]["status"] == "StartTime";
+      cache[message.user]["status"] = "StartTime";
       bot.reply(message, "Do you have a time-frame in mind?");
     } else if (schedule.end == null) {
-      cache[message.user]["status"] == "End";
+      cache[message.user]["status"] = "End";
       bot.reply(message, "Till what time do you want me to check the calendars for?");    
     } else if (!schedule.end.date_set) {
-      cache[message.user]["status"] == "EndDate";
+      cache[message.user]["status"] = "EndDate";
       bot.reply(message, "Which day would do you want to end the meeting?");    
     } else if  (!schedule.end.time_set) {
-      cache[message.user]["status"] == "EndTime";
+      cache[message.user]["status"] = "EndTime";
       bot.reply(message, "When would do you like to finish the meeting?");
     } else {
       console.log("Meeting will be listed soon");
@@ -218,4 +235,3 @@ controller.get_cache = function(usr) {
 
 exports.bot = root_bot;
 exports.controller = controller;
-
