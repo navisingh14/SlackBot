@@ -14,7 +14,7 @@
 
 Firstly, we changed our name to BotBai after receiving feedback from you about the Design.
 We started working on our bot by creating initial repos and issues and dividing the tasks into modules.
-We started working on the modules- User registration, context tokenization and use case 1.
+We started working on the modules- User registration, context tokenization and use case 1
 
 
 ### Week 2
@@ -29,15 +29,18 @@ We started working on the modules- User registration, context tokenization and u
 | Selenium Testing  | Use Case 1 Completed |  #9
 | Use Case 3        | Modify Meeting    
 | Subflow 1 (Happy) | Completed         |  #11, Making changes in time, members
-| Subflow 2 (Alternative)       | In progress       |  If no meetings
+| Subflow 2 (Alternative)       | In progress       | #11, if no meetings
 
 We completed the first use case entirely this week. Our bot is now able to properly create meetings. 
 We started creating mock calendar values that members can have so as to test efficiency of our bot.
+We completed selenium testing for use case 1 (both subflows).
+We completed NLP parsing and tested our tokens.
 We completed tokenization of input using Intents, wit.ai.
-We also worked on the module- Modify meeting.
+We started working on use case 3- Modify meeting.
 
 
-### Week 2
+
+### Week 3
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -52,12 +55,15 @@ We also worked on the module- Modify meeting.
 | Use Case 4        | Delete Meeting    |  
 | Subflow 1         | Completed         |  #9, for deleting a meeting
 | Selenium Testing  | Use Case 4 Completed |  #9
+| Milestone 1       | Completed
 
 
-We completed the first use case entirely this week. Our bot is now able to properly create meetings. 
-We started creating mock calendar values that members can have so as to test efficiency of our bot.
-We completed tokenization of input using Intents, wit.ai.
-We also worked on the module- Modify meeting.
+In week 3, we managed to complete Milestone 1 : BOT.
+We completed use case 2,3 (all subflows).
+We added an abandon meeting feature to exit the session altogether.
+We also finished adding mock data for tests. These mock values will be replaced by google calendar values of users.
+We completed use case 4 and ran selenium tests for all use cases successfully.
+
 
 
 
