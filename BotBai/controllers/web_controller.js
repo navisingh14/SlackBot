@@ -55,7 +55,6 @@ app.get("/register", function(req, res){
                     }
                 });
             })
-            
         });
     });
 });

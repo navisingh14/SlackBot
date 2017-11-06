@@ -15,6 +15,7 @@ if (config.mode == "production") {
   reg = require('../utilities/register');
   calendar = require('../mock/calendar');   
 }
+var User = require('../db/mongo/User');
 
 var controller = Botkit.slackbot({
   debug: false
@@ -26,10 +27,6 @@ var root_bot = controller.spawn({
   token: config.slack_token,
 }).startRTM();
 
-controller.on('interactive', function(bot, message){
-  console.log(message);
-});
-
 controller.hears('hello',['mention', 'direct_mention','direct_message'], function(bot,message) {
 	var source_user = controller.get_source_user(message);
   console.log(source_user);
@@ -40,26 +37,33 @@ controller.hears('hello',['mention', 'direct_mention','direct_message'], functio
 // create a meeting
 controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(bot,message) {
   nlp.parse(message.text, function(schedule){
-    console.log(schedule);
-    user_cache = cache[controller.get_source_user(message)];
-    if (user_cache && user_cache['editing']) {
-      if (schedule.intent == nlp.I_YES) {
-        process_schedule(user_cache.schedule, message, bot);
-      } else {
-        bot.reply(message, "Cancelling edit!!")
-        delete cache[message.user];
-      }
-    } else if (schedule.intent == nlp.I_SIGN_UP) {
-      bot.reply(message, "Registering you!!");
-      var source_user = controller.get_source_user(message);
-      console.log("\n\n user is " + source_user + "\n\n");
-      // TODO - Check if user is in DB.
-      reg.register_user(source_user, function(url) {
+    var source_user = controller.get_source_user(message); 
+    var user_cache = cache[controller.get_source_user(message)];
+    User.user_exists(source_user, function(err, is_user){
+      if (err) {
+        bot.reply(message, "Error: " + err);
+      } else if (!is_user && schedule.intent != nlp.I_SIGN_UP) {
+        bot.reply(message, "You have not registered. Please register!");
+        return;
+      } else if (user_cache && user_cache['editing']) {
+        if (schedule.intent == nlp.I_YES) {
+          process_schedule(user_cache.schedule, message, bot);
+        } else {
+          bot.reply(message, "Cancelling edit!")
+          delete cache[message.user];
+        }
+      } else if (schedule.intent == nlp.I_SIGN_UP) {
+        if (is_user) {
+          bot.reply(message, "You have already registered.");
+        } else {
+          reg.register_user(source_user, function(url) {
             bot.reply(message, url);
-      });
-    } else {
-      process_schedule(schedule, message, bot);
-    }
+          });
+        }
+      } else {
+        process_schedule(schedule, message, bot);
+      }
+    });
   });
 });
 
