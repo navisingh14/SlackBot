@@ -2,6 +2,7 @@ const util = require('util');
 const moment = require('moment');
 const buildURL = require('build-url');
 const config = require('../utilities/config');
+const request = require('request');
 
 DATE_FORMAT = "MM/DD/YYYY";
 TIME_FORMAT = "HH:MM";
@@ -54,6 +55,37 @@ var render_attachment =  function(schedule) {
     return attachment;
 }
 
+var get_slack_users = function(cb) {
+    request.post("https://slack.com/api/users.list", {form: {token: config.slack_token}}, function(err, resp, body){
+        body = JSON.parse(body);
+        users = {}
+        for(var i in body.members) {
+          member = body.members[i];
+          users[member.id] = member;
+        }
+        cb && cb(users);
+    });
+}
+
+var get_slack_user = function(user_id, cb) {
+    request.post("https://slack.com/api/users.info", {form: {token: config.slack_token, user: user_id}}, function(err, resp, body){
+        if (err) {
+            cb && cb(err, null);
+            console.error(err);
+            return;
+        }
+        body = JSON.parse(body);
+        if (!body.ok) {
+            cb && cb(body.error, null);
+            console.error(body.error);
+            return;
+        }
+        return cb(null, body.user);
+    });
+};
+
 exports.render_attachment = render_attachment;
 exports.render_attachments = render_attachments;
 exports.render_attachments_for_change = render_attachments_for_change;
+exports.get_slack_users = get_slack_users;
+exports.get_slack_user = get_slack_user;

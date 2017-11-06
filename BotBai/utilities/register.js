@@ -7,24 +7,29 @@ var Botkit = require('botkit');
 var config = require('../utilities/config');
 var request = require('request');
 
-var controller = Botkit.slackbot({
-  debug: false
-});
+
+var credentials = config.client_secret;
+var clientSecret = credentials.web.client_secret;
+var clientId = credentials.web.client_id;
+var redirectUrl = credentials.web.redirect_uris[0];
+var auth = new googleAuth();
+var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/calendar-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
+var SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/gmail.readonly'];
 
 var register_user  = function(usr, cb) {
   // Load client secrets from a local file.
   var url = '';
-    // Authorize a client with the loaded credentials, then call the
-    // Google Calendar API.
-    authorize(usr, config.client_secret, function(url){
-        console.log("url : " + url);
-        return cb(url);
-    }); 
-  };
+  // Authorize a client with the loaded credentials, then call the
+  // Google Calendar API.
+  console.log("Slack User : " + usr)
+  authorize(usr, function(url){
+      console.log("url : " + url);
+      return cb(url);
+  });
+};
 
 
 /**
@@ -34,33 +39,13 @@ var register_user  = function(usr, cb) {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(user_name, credentials, cb) {
-  var clientSecret = credentials.web.client_secret;
-  var clientId = credentials.web.client_id;
-  var redirectUrl = credentials.web.redirect_uris[0];
-  var auth = new googleAuth();
-  var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-  var url = getNewToken(oauth2Client, user_name);
-  return cb(url);
-};
-
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- *
- * @param {google.auth.OAuth2} oauth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback to call with the authorized
- *     client.
- */
-function getNewToken(oauth2Client, user_name) {
-  var authUrl = oauth2Client.generateAuthUrl({
+function authorize(user_name, cb) {
+  var url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     state: user_name,
     scope: SCOPES
   });
-//console.log('Authorize this app by visiting this url: ', authUrl);
-//  bot.reply('Please allow this bot to access your calendar: ' + authUrl);
-  return authUrl;
+  return cb(url);
 };
 
 /**
@@ -75,15 +60,28 @@ var store_token = function (user_name, token) {
   console.log('Token stored to db: ' + token);
 };
 
+var get_access_tokens = function(access_code, cb) {
+  oauth2Client.getToken(access_code, function (err, tokens) {
+    // Now tokens contains an access_token and an optional refresh_token. Save them.
+    // if (!err) {
+    //   oauth2Client.setCredentials(tokens);
+    // }
+    cb && cb(null, tokens);
+  });
+}
+
 /**
  * Lists the next 10 events on the user's primary calendar.
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listEvents(auth) {
+function listEvents(authclnt) {
+  var authclnt = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+  authclnt.credentials = { access_token: 'ya29.Glv8BMsh1C3qxUX7xlHlwTVUtf6NviFHDfRYdxEwdifs5pqxM9BSXSU64fD6C1TNdINxxMf-3gQtsVvhwBig20pVtDlzFo5dT71MpMXrjgtYnEZfvZCUZWP9aYjD',
+  expiry_date: 1510002974068 }
   var calendar = google.calendar('v3');
   calendar.events.list({
-    auth: auth,
+    auth: authclnt,
     calendarId: 'primary',
     timeMin: (new Date()).toISOString(),
     maxResults: 10,
@@ -95,6 +93,7 @@ function listEvents(auth) {
       return;
     }
     var events = response.items;
+    console.log(response);
     if (events.length == 0) {
       console.log('No upcoming events found.');
     } else {
@@ -108,5 +107,29 @@ function listEvents(auth) {
   });
 };
 
+var get_user_email = function(access_token, expiry_date, cb) {
+  var authclnt = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+  authclnt.credentials = { 
+    access_token: access_token,
+    expiry_date: expiry_date 
+  };
+  var gmail = google.gmail({
+    auth: authclnt,
+    version: 'v1'
+  });
+  gmail.users.getProfile({
+    auth: authclnt,
+    userId: 'me'
+    }, function(err, res) {
+      if (err) {
+        cb && cb(err);
+      } else {
+        cb && cb(null, res.emailAddress);
+      }
+  });
+}
+
 exports.register_user = register_user;
 exports.store_token = store_token;
+exports.get_access_tokens = get_access_tokens;
+exports.get_user_email =  get_user_email;

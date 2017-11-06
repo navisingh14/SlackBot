@@ -9,10 +9,10 @@ const { URL, URLSearchParams } = require('url');
 var reg, calendar;
 if (config.mode == "production") {
   // TODO: change to utilities in service milestone
-  reg = require('../mock/register');
+  reg = require('../utilities/register');
   calendar = require('../mock/calendar');
 } else {
-  reg = require('../mock/register');
+  reg = require('../utilities/register');
   calendar = require('../mock/calendar');   
 }
 
@@ -50,7 +50,6 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
         delete cache[message.user];
       }
     } else if (schedule.intent == nlp.I_SIGN_UP) {
-      console.log(bot);
       bot.reply(message, "Registering you!!");
       var source_user = controller.get_source_user(message);
       console.log("\n\n user is " + source_user + "\n\n");

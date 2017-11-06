@@ -4,12 +4,14 @@ var Schedule = require('../utilities/schedule').Schedule;
 var register, calendar;
 if (config.mode == "production") {
     // TODO: change to utilities in service milestone
-    register = require('../mock/register');
+    register = require('../utilities/register');
     calendar = require('../mock/calendar');
 } else {
-    register = require('../mock/register');
+    register = require('../utilities/register');
     calendar = require('../mock/calendar');   
 }
+var slacker = require('../utilities/slacker');
+var User = require('../db/mongo/User');
 
 var app = express();
 var bot_controller_module = require('../controllers/bot_controller');
@@ -27,9 +29,35 @@ app.get("/", function(req, res){
 app.get("/register", function(req, res){
     const {method, url} = req;
     const ind = url.indexOf("code");
-    user_name = req.query.state;
-    register.store_token(user_name, url.substring(ind+5));
-    res.send("Thank You for registering. Please close this window.")
+    user_id = req.query.state;
+    // register.store_token(user_name, url.substring(ind+5));
+    register.get_access_tokens(url.substring(ind+5), function(err, tokens){
+        register.get_user_email(tokens.access_token, tokens.expiry_date, function(err, email){
+            console.log("Email : " + email);
+            slacker.get_slack_user(user_id, function(err, slack_user) {
+                if (err) {
+                    console.error(err)
+                    return;
+                }
+                var user = new User({
+                    slack_id: user_id,
+                    user_name: slack_user.name,
+                    email: email,
+                    token: tokens.access_token,
+                    token_expiry: tokens.expiry_date,
+                    name: slack_user.real_name
+                });
+                user.save(function(err){
+                    if (err) {
+                        res.send(err)
+                    } else {
+                        res.send("Thanks for registering. Please close this window");
+                    }
+                });
+            })
+            
+        });
+    });
 });
 
 /**
