@@ -4,9 +4,6 @@ const googleAuth = require('google-auth-library');
 const config = require('../utilities/config');
 
 var shorten = function(long_url, callback) {
-    // var authclnt = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-    // authclnt.apiKey = config.api_key;
-    // console.log(long_url)
     urlshortener.url.insert({resource: {longUrl: long_url}, key: config.api_key}, function(err, resp){
         console.error(err);
         console.log(resp);
