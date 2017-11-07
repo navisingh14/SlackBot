@@ -1,6 +1,7 @@
 var Botkit = require('botkit');
 var config = require('../utilities/config');
 var slacker = require('../utilities/slacker');
+var shorten = require('../utilities/shortner');
 var request = require('request');
 var nlp = require('../utilities/nlp');
 var http = require("http");
@@ -58,6 +59,14 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
         } else {
           reg.register_user(source_user, function(url) {
             bot.reply(message, url);
+            // shorten(url, function(err, shortened) {
+            //   if (err) {
+            //     console.error(err);
+            //     bot.reply(message, url);
+            //   } else {
+            //     bot.reply(message, shortened);
+            //   }
+            // });
           });
         }
       } else {

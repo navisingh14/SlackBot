@@ -76,9 +76,6 @@ var get_access_tokens = function(access_code, cb) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function listEvents(authclnt) {
-  var authclnt = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-  authclnt.credentials = { access_token: 'ya29.Glv8BMsh1C3qxUX7xlHlwTVUtf6NviFHDfRYdxEwdifs5pqxM9BSXSU64fD6C1TNdINxxMf-3gQtsVvhwBig20pVtDlzFo5dT71MpMXrjgtYnEZfvZCUZWP9aYjD',
-  expiry_date: 1510002974068 }
   var calendar = google.calendar('v3');
   calendar.events.list({
     auth: authclnt,
