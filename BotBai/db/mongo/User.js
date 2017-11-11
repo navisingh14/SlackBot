@@ -22,4 +22,15 @@ User.user_exists = function(slack_id, cb) {
   });
 };
 
+User.get_all_handles = function(cb) {
+  User.find({}, function(err, users){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      slack_ids = users.map(function(user){return user.slack_id});
+      cb && cb(null, slack_ids);
+    }
+  });
+}
+
 module.exports = User;

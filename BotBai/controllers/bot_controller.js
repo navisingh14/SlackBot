@@ -40,6 +40,10 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
   nlp.parse(message.text, function(schedule){
     var source_user = controller.get_source_user(message); 
     var user_cache = cache[controller.get_source_user(message)];
+    if (schedule.participants.indexOf(source_user) >= 0) {
+      schedule.participants.splice(schedule.participants.indexOf(source_user), 1);
+    }
+    console.log(schedule)
     User.user_exists(source_user, function(err, is_user){
       if (err) {
         bot.reply(message, "Error: " + err);

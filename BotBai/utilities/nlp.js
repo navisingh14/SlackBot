@@ -4,6 +4,7 @@
 const {Wit, log} = require('node-wit');
 var config = require('../utilities/config');
 var sched = require('../utilities/schedule');
+var User = require('../db/mongo/User');
 
 const client = new Wit({
     accessToken: config.wit_token
@@ -32,6 +33,7 @@ var create_date_time = function(date_time_json) {
 
 var parse = function(message, cb) {
     client.message(message, {}).then(function(data){
+        tokens = message.toLowerCase().split(/[ ,;]+/);
         var schedule = new Schedule();
         if (data.entities.intent && data.entities.intent.length > 0) {
             schedule.intent = data.entities.intent[0].value;
@@ -47,7 +49,24 @@ var parse = function(message, cb) {
             }
         }
         schedule.participants = extract_user_ids(message);
-        cb && cb(schedule);
+        if (tokens.indexOf('@all') >= 0 || tokens.indexOf('@everyone') >= 0) {
+            User.get_all_handles(function(err, user_ids){
+                if (err) {
+                    console.error(err);
+                    cb && cb(schedule);
+                } else {
+                    participants = new Set(schedule.participants);
+                    user_ids.forEach(function(user_id){
+                        participants.add(user_id);
+                    });
+                    schedule.participants = Array.from(user_ids);
+                    cb && cb(schedule);
+                }
+            });
+        } else {
+            cb && cb(schedule);
+        }
+        
     });
 };
 
