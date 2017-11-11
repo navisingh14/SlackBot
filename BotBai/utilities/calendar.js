@@ -28,16 +28,18 @@ var delete_meeting = function(meeting_id, user, cb) {
     });
 };
 
-var list_all_meeting = function(usr, cb) {
+var list_meetings = function(usr, start_time, end_time) {
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: usr.access_token,
         expiry_date: usr.token_expiry 
     };
+    meetings = [];
     google_calendar.events.list({
         auth: auth_client,
         calendarId: 'primary',
         timeMin: (new Date()).toISOString(),
+        //timeMax: (),
         maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime'
@@ -53,15 +55,23 @@ var list_all_meeting = function(usr, cb) {
         } else {
             console.log('Upcoming 10 events:');
             for (var i = 0; i < events.length; i++) {
-            var event = events[i];
-            var start = event.start.dateTime || event.start.date;
-            console.log('%s: %s - %s', event.id, start, event.summary);
+                var event = events[i];
+                var start = event.start.dateTime || event.start.date;
+                console.log('%s: %s - %s', event.id, start, event.summary);
+                var meeting = event + start + event.summary;
+                meetings.push(meeting);
             }
         }
+        return meetings;
     });
+
 }
 
+
+
+
 exports.delete_meeting = delete_meeting;
+exports.list_all_meeting = list_all_meeting;
 
 // user = new Object()
 // user.access_token = "ya29.Glz9BPj--hjNnMIBc_3NIOvcdnXzVhgqvx71Z6i918ZBR6OfNp9PUeGzRrdgeu_bmvyne8GooN-xC24iHE8uypwNpzSph6HV42d03PV5wPP_WG2PYvnLMf31HGdhjg"

@@ -177,7 +177,7 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "What day would you like to list the meetings for?");    
     } else if (!schedule.start.date_set) {
       cache[message.user]["status"] = "StartDate";
-      bot.reply(message, "Which day would do you want to start the meeting?");    
+      bot.reply(message, "Which day would you want to start the meeting?");    
     } else if  (!schedule.start.time_set) {
       cache[message.user]["status"] = "StartTime";
       bot.reply(message, "Do you have a time-frame in mind?");
