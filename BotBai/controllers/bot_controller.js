@@ -11,10 +11,10 @@ var reg, calendar;
 if (config.mode == "production") {
   // TODO: change to utilities in service milestone
   reg = require('../utilities/register');
-  calendar = require('../mock/calendar');
+  calendar = require('../utilities/calendar');   
 } else {
   reg = require('../utilities/register');
-  calendar = require('../mock/calendar');   
+  calendar = require('../utilities/calendar');   
 }
 var User = require('../db/mongo/User');
 
@@ -93,9 +93,9 @@ var update_schedule = function(schedule, user_cache) {
       schedule.end = schedule.end || cached_schedule.end || schedule.start;
       schedule.start = cached_schedule.start;
     }
-    // schedule.start = schedule.start || cached_schedule.start;
-    // schedule.end = schedule.end || cached_schedule.end || cached_schedule.start;
-    schedule.participants = schedule.participants || cached_schedule.participants;
+    if (cached_schedule.participants.length) {
+      schedule.participants = cached_schedule.participants;  
+    }
   }
   return schedule;
 };
@@ -142,11 +142,18 @@ var process_schedule = function(schedule, message, bot){
     } else {
       // TODO: Schedule meeting -- Call Calendar API.
       // Mock api
-      calendar.create_meeting(schedule, function(reply) {
-        if(reply.status) {
-          bot.reply(message, "Success! Meeting has been scheduled");
+      schedule.creator = message.user;
+      User.get_by_slack_id(message.user, function(err, user){
+        if (err) {
+          bot.reply(message, "Oops! Error occurred: " + err);
         } else {
-          bot.reply(message, "Meeting can't be scheduled");
+          calendar.create_meeting(schedule, user, function(err, reply) {
+            if(err) {
+              bot.reply(message, "Oops! Error occured: " + err);
+            } else {
+              bot.reply(message, reply);
+            }
+          });
         }
       });
      // bot.reply(message, "Meeting will be scheduled soon");

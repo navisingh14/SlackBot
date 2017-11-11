@@ -19,6 +19,7 @@
     "googleapis": "^22.2.0",
     "mocha": "^4.0.0",
     "moment": "^2.19.1",
+    "moment-timezone": "^0.5.14",
     "mongoose": "^4.12.3",
     "node-wit": "^4.3.0",
     "requests": "^0.2.2",

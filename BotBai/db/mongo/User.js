@@ -44,4 +44,15 @@ User.get_all_handles = function(cb) {
   });
 }
 
+User.get_emails = function(slack_ids, cb) {
+  User.find({slack_id: {$in: slack_ids}})
+  .select('email').exec(function(err, emails){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      cb && cb(null, emails);
+    }
+  });
+}
+
 module.exports = User;

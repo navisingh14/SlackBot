@@ -42,8 +42,13 @@ class DateTime {
             return obj;
         } else {
             var dt = new DateTime();
-            dt.time_set = true, dt.date_set = true;
-            dt.timestamp = moment(obj).unix() * 1000;
+            dt.time_set = obj.time_set && true
+            dt.date_set = obj.date_set && true
+            if (obj.timestamp) {
+                dt.timestamp = moment(obj.timestamp).unix() * 1000;    
+            } else {
+                dt.timestamp = moment(obj).unix() * 1000;
+            }
             return dt;
         }
     }
