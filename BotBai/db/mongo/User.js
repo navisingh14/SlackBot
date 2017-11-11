@@ -22,6 +22,17 @@ User.user_exists = function(slack_id, cb) {
   });
 };
 
+User.get_by_slack_id = function(slack_id, cb) {
+  User.findOne({slack_id: slack_id}, function(err, user){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      cb && cb(null, user);
+    }
+  });
+};
+
+
 User.get_all_handles = function(cb) {
   User.find({}, function(err, users){
     if (err) {

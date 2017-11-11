@@ -64,23 +64,33 @@ app.get("/register", function(req, res){
  */
 app.get("/delete", function(req, res){
     const {method, url} = req;
-    user_name = req.query.user;
+    slack_id = req.query.user;
     channel = req.query.channel;
     meeting_id = req.query.id;
-    calendar.delete_meeting(meeting_id, user_name, function(err, msg){
+    User.get_by_slack_id(slack_id, function(err, user) {
+        res.send("<script>window.close();</script>");
         if (err) {
             bot.say({
                 'text': 'Oops!! Error occured: ' + err,
                 'channel': channel
             });
-        } else {
-            bot.say({
-                'text': msg,
-                'channel': channel
-            });
+            return;
         }
-        res.send("<script>window.close();</script>");
-    });
+        calendar.delete_meeting(meeting_id, slack_id, function(err, msg){
+            if (err) {
+                bot.say({
+                    'text': 'Oops!! Error occured: ' + err,
+                    'channel': channel
+                }); 
+            } else {
+                bot.say({
+                    'text': msg,
+                    'channel': channel
+                });
+            }
+        });
+    })
+    
 });
 
 app.get("/update", function(req, res){
