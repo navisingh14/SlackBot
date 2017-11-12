@@ -22,4 +22,37 @@ User.user_exists = function(slack_id, cb) {
   });
 };
 
+User.get_by_slack_id = function(slack_id, cb) {
+  User.findOne({slack_id: slack_id}, function(err, user){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      cb && cb(null, user);
+    }
+  });
+};
+
+
+User.get_all_handles = function(cb) {
+  User.find({}, function(err, users){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      slack_ids = users.map(function(user){return user.slack_id});
+      cb && cb(null, slack_ids);
+    }
+  });
+}
+
+User.get_emails = function(slack_ids, cb) {
+  User.find({slack_id: {$in: slack_ids}})
+  .select('email').exec(function(err, emails){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      cb && cb(null, emails);
+    }
+  });
+}
+
 module.exports = User;

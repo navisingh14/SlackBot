@@ -16,4 +16,3 @@ var shorten = function(long_url, callback) {
 }
 
 module.exports = shorten;
-shorten("https://accounts.google.com/o/oauth2/auth?access_type=offline&state=U6WGEDA2G&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.readonly&response_type=code&client_id=991892021862-ghhjeae3n671mlu6v8b0omlemi87o76b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister")

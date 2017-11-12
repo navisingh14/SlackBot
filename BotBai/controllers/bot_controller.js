@@ -11,10 +11,10 @@ var reg, calendar;
 if (config.mode == "production") {
   // TODO: change to utilities in service milestone
   reg = require('../utilities/register');
-  calendar = require('../mock/calendar');
+  calendar = require('../utilities/calendar');   
 } else {
   reg = require('../utilities/register');
-  calendar = require('../mock/calendar');   
+  calendar = require('../utilities/calendar');   
 }
 var User = require('../db/mongo/User');
 
@@ -40,6 +40,10 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
   nlp.parse(message.text, function(schedule){
     var source_user = controller.get_source_user(message); 
     var user_cache = cache[controller.get_source_user(message)];
+    if (schedule.participants.indexOf(source_user) >= 0) {
+      schedule.participants.splice(schedule.participants.indexOf(source_user), 1);
+    }
+    console.log(schedule)
     User.user_exists(source_user, function(err, is_user){
       if (err) {
         bot.reply(message, "Error: " + err);
@@ -89,9 +93,9 @@ var update_schedule = function(schedule, user_cache) {
       schedule.end = schedule.end || cached_schedule.end || schedule.start;
       schedule.start = cached_schedule.start;
     }
-    // schedule.start = schedule.start || cached_schedule.start;
-    // schedule.end = schedule.end || cached_schedule.end || cached_schedule.start;
-    schedule.participants = schedule.participants || cached_schedule.participants;
+    if (cached_schedule.participants.length) {
+      schedule.participants = cached_schedule.participants;  
+    }
   }
   return schedule;
 };
@@ -138,11 +142,18 @@ var process_schedule = function(schedule, message, bot){
     } else {
       // TODO: Schedule meeting -- Call Calendar API.
       // Mock api
-      calendar.create_meeting(schedule, function(reply) {
-        if(reply.status) {
-          bot.reply(message, "Success! Meeting has been scheduled");
+      schedule.creator = message.user;
+      User.get_by_slack_id(message.user, function(err, user){
+        if (err) {
+          bot.reply(message, "Oops! Error occurred: " + err);
         } else {
-          bot.reply(message, "Meeting can't be scheduled");
+          calendar.create_meeting(schedule, user, function(err, reply) {
+            if(err) {
+              bot.reply(message, "Oops! Error occured: " + err);
+            } else {
+              bot.reply(message, reply);
+            }
+          });
         }
       });
      // bot.reply(message, "Meeting will be scheduled soon");
@@ -155,7 +166,7 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    var meetings = calendar.list_meetings(message.user);
+    var meetings = calendar.list_meeting(message.user);
     console.log(meetings);
     if (meetings.length == 0)
       bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
@@ -192,7 +203,7 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "When would do you like to finish the meeting?");
     } else {
       console.log("Meeting will be listed soon");
-      var meetings = calendar.list_meetings(message.user, schedule.start, schedule.end);
+      var meetings = calendar.list_meeting(message.user, schedule.start, schedule.end);
       if (meetings.length == 0){
         bot.reply(message, "You don't have any scheduled meeting");
       }
@@ -214,7 +225,7 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    var meetings = calendar.list_meetings(message.user);
+    var meetings = calendar.list_meeting(message.user);
     if(meetings.length == 0){
         console.log("inside modify");
         bot.reply(message, "You don't have any scheduled meeting");
