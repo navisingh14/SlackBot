@@ -235,7 +235,7 @@ var process_schedule = function(schedule, message, bot){
                 }
                 bot.reply(message, mssg);
               }
-
+              delete cache[message.user];
           });
           console.log();
 //          console.log(meetings);
@@ -248,6 +248,7 @@ var process_schedule = function(schedule, message, bot){
           });*/
         }
       });
+
   }
 /*    var meetings = calendar.list_meeting(message.user);
     console.log("after calling list meeting");

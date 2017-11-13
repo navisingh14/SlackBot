@@ -5,7 +5,7 @@ const config = require('../utilities/config');
 const request = require('request');
 
 DATE_FORMAT = "MM/DD/YYYY";
-TIME_FORMAT = "HH:MM";
+TIME_FORMAT = "hh:mm";
 DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
 
 
