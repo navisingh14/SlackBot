@@ -72,7 +72,7 @@ var create_meeting = function(schedule, user, cb) {
     console.log(user);
     auth_client.credentials = {
         access_token: user.token,
-        refresh_token: usr.refresh_token,
+        refresh_token: user.refresh_token,
         expiry_date: user.token_expiry 
     };
     User.get_emails(schedule.participants, function(err, users){
@@ -83,7 +83,7 @@ var create_meeting = function(schedule, user, cb) {
                 return {'email': user.email};
             });
             var event = {
-                // summary: 'Google I/O 2015',
+                summary: 'Botbai Event',
                 start: {
                     dateTime: moment(schedule.start.timestamp).format(),
                     timeZone: tz.tz.guess()
