@@ -7,6 +7,8 @@ var nlp = require('../utilities/nlp');
 var http = require("http");
 var moment = require('moment');
 const { URL, URLSearchParams } = require('url');
+const Schedule = require('../utilities/schedule').Schedule;
+const DateTime = require('../utilities/schedule').DateTime;
 var reg, calendar;
 if (config.mode == "production") {
   // TODO: change to utilities in service milestone
@@ -43,7 +45,7 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
     if (schedule.participants.indexOf(source_user) >= 0) {
       schedule.participants.splice(schedule.participants.indexOf(source_user), 1);
     }
-    console.log(schedule)
+    // console.log(schedule)
     User.user_exists(source_user, function(err, is_user){
       if (err) {
         bot.reply(message, "Error: " + err);
@@ -80,22 +82,52 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
   });
 });
 
+var get_date_timestamp = function(unix_time) {
+  return moment(moment(unix_time).format("MM/DD/YYYY")).unix()*1000;
+}
+
+var get_time_timestamp = function(unix_time) {
+  return unix_time - moment(unix_time).subtract(0, "days").startOf('day').unix()*1000;
+}
+
 var update_schedule = function(schedule, user_cache) {
   if (user_cache && user_cache.schedule) {
-    // console.log("Input")
-    // console.log(schedule)
     var cached_schedule = user_cache.schedule;
+    var status = user_cache.status;
     schedule.intent = schedule.intent || cached_schedule.intent;
-    if (!cached_schedule.start || !cached_schedule.start.time_set){
-      schedule.start = schedule.start || cached_schedule.start;
-      schedule.end = schedule.end || cached_schedule.end;
-    } else {
-      schedule.end = schedule.end || cached_schedule.end || schedule.start;
+    if (!status || (status!="StartTime" && status !="EndTime")) {
+      if (!cached_schedule.start || !cached_schedule.start.time_set){
+        schedule.start = schedule.start || cached_schedule.start;
+        schedule.end = schedule.end || cached_schedule.end;
+      } else {
+        schedule.end = schedule.end || cached_schedule.end || schedule.start;
+        schedule.start = cached_schedule.start;
+      }
+      if (cached_schedule.participants.length) {
+        schedule.participants = cached_schedule.participants;  
+      }
+    } else if (status == "StartTime") {
+      // schedule.start = Process date from cached and time from uncached
+      if (schedule.start) {
+        schedule.start.timestamp = get_date_timestamp(cached_schedule.start.timestamp) +  get_time_timestamp(schedule.start.timestamp);
+        schedule.start.date_set = true;
+        schedule.start.time_set = true;
+      } else {
+        schedule.start = cached_schedule.start;
+      }
+    } else if (status == "EndTime") {
+      // schedule.end = Process date from cached and time from uncached
+      if (schedule.start) {
+        schedule.end = new DateTime()
+        schedule.end.timestamp = get_date_timestamp(cached_schedule.end.timestamp) +  get_time_timestamp(schedule.start.timestamp);
+        schedule.end.date_set = true;
+        schedule.end.time_set = true;
+      } else {
+        schedule.end = cached_schedule.end;
+      }
       schedule.start = cached_schedule.start;
     }
-    if (cached_schedule.participants.length) {
-      schedule.participants = cached_schedule.participants;  
-    }
+    
   }
   return schedule;
 };

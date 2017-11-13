@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   user_name: {type: String, unique: true},
   email: {type: String, unique: true},
   token: {type: String, unique: true},
+  refresh_token: {type: String, unique: true},
   token_expiry : {type: Number},
   name: {type: String},
 });

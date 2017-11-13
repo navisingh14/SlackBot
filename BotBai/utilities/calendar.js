@@ -17,6 +17,7 @@ var delete_meeting = function(meeting_id, user, cb) {
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: user.token,
+        refresh_token: usr.refresh_token,
         expiry_date: user.token_expiry 
     };
     google_calendar.events.delete({
@@ -36,6 +37,7 @@ var list_meeting = function(usr, start_time, end_time, cb) {
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: usr.token,
+        refresh_token: usr.refresh_token,
         expiry_date: usr.token_expiry 
     };
     meetings = [];
@@ -78,6 +80,7 @@ var create_meeting = function(schedule, user, cb) {
     console.log(user);
     auth_client.credentials = {
         access_token: user.token,
+        refresh_token: usr.refresh_token,
         expiry_date: user.token_expiry 
     };
     User.get_emails(schedule.participants, function(err, users){
@@ -128,8 +131,9 @@ exports.delete_meeting = delete_meeting;
 exports.list_meeting = list_meeting;
 
 // user = new Object()
-// user.token = "ya29.GlwBBTWXu6TvVxKBICFh8mVjHDOCl-4qXF2fX4gWja8GE0kEGtzoeMVGSslHy1wRKlDZ4GUoZjhNNqqb0UofwSh-qqzYdyv_Q9XremX2MA1kl_zxSxk3eqXczjZGLg"
-// user.token_expiry = 1510378823843;
+// user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";
+// user.refresh_token = "1/s8UW1Wxa7OY9sxuA7NUHBt9feOwzkfWgCpM9gwoGfmw";
+// user.token_expiry = 1510537080372;
 // meeting_id = "035l4tfo952ogmaeg750ccf2p7"
 // list_all_meeting(user)
 // delete_meeting(meeting_id, user, function(err, msg){
