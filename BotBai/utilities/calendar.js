@@ -121,12 +121,12 @@ var create_meeting = function(schedule, user, cb) {
 exports.create_meeting = create_meeting;
 exports.delete_meeting = delete_meeting;
 
-user = new Object()
-user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";
-user.refresh_token = "1/s8UW1Wxa7OY9sxuA7NUHBt9feOwzkfWgCpM9gwoGfmw";
-user.token_expiry = 1510537080372;
+// user = new Object()
+// user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";
+// user.refresh_token = "1/s8UW1Wxa7OY9sxuA7NUHBt9feOwzkfWgCpM9gwoGfmw";
+// user.token_expiry = 1510537080372;
 // meeting_id = "035l4tfo952ogmaeg750ccf2p7"
-list_all_meeting(user)
+// list_all_meeting(user)
 // delete_meeting(meeting_id, user, function(err, msg){
 //     console.error(err);
 //     console.log(msg)
