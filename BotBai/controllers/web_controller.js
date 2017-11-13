@@ -99,24 +99,26 @@ app.get("/update", function(req, res){
     user_name = req.query.user;
     channel = req.query.channel;
     meeting_id = req.query.id;
-    calendar.update_meeting(meeting_id, user_name, function(err, meeting){
-        if (err) {
-            bot.say({
-                'text': 'Oops!! Error occured: ' + err,
-                'channel': channel
-            });
-        } else {
-            var new_meeting = new Schedule();
-            new_meeting.id = meeting.id;
-            new_meeting.intent = nlp.I_MEETING_SET;
-            bot_controller.set_cache(user_name, {"schedule": new_meeting, "editing": true});
-            bot.say({
-                'text': "Are you sure you would like to change this meeting?",
-                'channel': channel
-            });
-        }
-        res.send("<script>window.close();</script>");
+    var new_meeting = new Schedule();
+    new_meeting.id = meeting.id;
+    new_meeting.intent = nlp.I_MEETING_SET;
+    bot_controller.set_cache(user_name, {"schedule": new_meeting, "editing": true});
+    bot.say({
+        'text': "Are you sure you would like to change this meeting?",
+        'channel': channel
     });
+    res.send("<script>window.close();</script>");
+    // calendar.update_meeting(meeting_id, user_name, function(err, meeting){
+    //     if (err) {
+    //         bot.say({
+    //             'text': 'Oops!! Error occured: ' + err,
+    //             'channel': channel
+    //         });
+    //     } else {
+            
+    //     }
+        
+    // });
 });
 
 

@@ -94,6 +94,7 @@ var update_schedule = function(schedule, user_cache) {
   if (user_cache && user_cache.schedule) {
     var cached_schedule = user_cache.schedule;
     var status = user_cache.status;
+    schedule.id = cached_schedule.id;
     schedule.intent = schedule.intent || cached_schedule.intent;
     if (!status || (status!="StartTime" && status !="EndTime")) {
       if (!cached_schedule.start || !cached_schedule.start.time_set){
@@ -102,9 +103,6 @@ var update_schedule = function(schedule, user_cache) {
       } else {
         schedule.end = schedule.end || cached_schedule.end || schedule.start;
         schedule.start = cached_schedule.start;
-      }
-      if (cached_schedule.participants.length) {
-        schedule.participants = cached_schedule.participants;  
       }
     } else if (status == "StartTime") {
       // schedule.start = Process date from cached and time from uncached
@@ -126,6 +124,9 @@ var update_schedule = function(schedule, user_cache) {
         schedule.end = cached_schedule.end;
       }
       schedule.start = cached_schedule.start;
+    }
+    if (cached_schedule.participants.length) {
+      schedule.participants = cached_schedule.participants;  
     }
     
   }
