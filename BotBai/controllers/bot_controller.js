@@ -210,11 +210,6 @@ var process_schedule = function(schedule, message, bot){
     // TODO: Unset meeting. Follow steps from above here
     cache[message.user] = {"schedule":schedule};
     var start = moment().unix()*1000;
-/*    if (schedule.start != null) {
-      start = schedule.start.timestamp;
-    }
-*/    
-  console.log("before calling list meeting");
     if (schedule.start == null) {
       cache[message.user]["status"] = "Start";
       bot.reply(message, "What duration do you want to see the calendar for to choose a meeting to delete?");    
