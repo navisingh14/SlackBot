@@ -56,4 +56,16 @@ User.get_emails = function(slack_ids, cb) {
   });
 }
 
+User.get_slack_ids_by_emails = function(emails, cb) {
+  User.find({email: {$in: emails}}, function(err, users){
+    if (err) {
+      cb && cb(err, null);
+    } else {
+      slack_ids = users.map(function(user){return user.slack_id});
+      cb && cb(null, slack_ids);
+    }
+  });
+}
+
+
 module.exports = User;

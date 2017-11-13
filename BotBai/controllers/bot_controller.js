@@ -54,7 +54,7 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
         return;
       } else if (user_cache && user_cache['editing']) {
                
-        if (schedule.intent == nlp.I_YES || user_cache.schedule.intent == nlp.I_MEETING_SET) {
+        if (schedule.intent != nlp.I_ABANDON && (schedule.intent == nlp.I_YES || user_cache.schedule.intent == nlp.I_MEETING_SET)) {
           schedule.intent = nlp.I_MEETING_SET;
           process_schedule(schedule, message, bot);
         } else {
@@ -279,7 +279,7 @@ var process_schedule = function(schedule, message, bot){
           bot.reply(message, "Oops! Error occurred: " + err);
         } 
         else {
-          calendar.list_meeting(user, schedule.start,schedule.end, function(meetings){
+          calendar.list_meeting(user, schedule.start, schedule.end, function(meetings){
               if (meetings.length == 0)
                 bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
               else {
@@ -325,7 +325,7 @@ var process_schedule = function(schedule, message, bot){
           bot.reply(message, "Oops! Error occurred: " + err);
         } 
         else {
-          calendar.list_meeting(user, '', '', function(meetings){
+          calendar.list_meeting(user, schedule.start, schedule.end, function(meetings){
               if (meetings.length == 0)
                 bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
               else {

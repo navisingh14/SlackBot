@@ -46,7 +46,7 @@ var list_meeting = function(usr, start_time, end_time, cb) {
     google_calendar.events.list({
         auth: auth_client,
         calendarId: 'primary',
-       timeMin: moment(start_time.timestamp).format(),
+        timeMin: moment(start_time.timestamp).format(),
         timeMax: moment(end_time.timestamp).format(),
        //timeMin: (new Date()).toISOString(),
         //timeMax: (),
@@ -160,7 +160,7 @@ var update_meeting = function(schedule, user, cb) {
                       {'method': 'email', 'minutes': 60},
                       {'method': 'popup', 'minutes': 10},
                     ],
-                  },
+                },
             }
             google_calendar.events.update({
                 auth: auth_client,
@@ -179,17 +179,50 @@ var update_meeting = function(schedule, user, cb) {
     });
 };
 
+var get_meeting = function(meeting_id, user, cb) {
+    var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
+    auth_client.credentials = {
+        access_token: user.token,
+        refresh_token: user.refresh_token,
+        expiry_date: user.token_expiry 
+    };
+    google_calendar.events.get({
+        auth: auth_client,
+        calendarId: 'primary',
+        eventId: meeting_id
+    }, function(err, event) {
+        if (err) {
+          cb && cb('There was an error contacting the Calendar service: ' + err, null);
+          return;
+        }
+        Schedule.from_google_json(event, function(err, schedule){
+            if (err) {
+                cb && cb(err, null);
+                return;
+            }
+            cb && cb(null, schedule);
+        });
+    });
+};
+
+
+
 exports.create_meeting = create_meeting;
 exports.delete_meeting = delete_meeting;
 exports.list_meeting = list_meeting;
 exports.update_meeting = update_meeting;
+exports.get_meeting = get_meeting;
 
 // user = new Object()
 // user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";
 // user.refresh_token = "1/s8UW1Wxa7OY9sxuA7NUHBt9feOwzkfWgCpM9gwoGfmw";
 // user.token_expiry = 1510537080372;
-// meeting_id = "035l4tfo952ogmaeg750ccf2p7"
-// list_all_meeting(user)
+// meeting_id = "n0e6b213q8bq55k23oqth7cm18"
+// // list_meeting(user);
+// get_meeting(meeting_id, user, function(err, schedule){
+//     console.error(err);
+//     console.log(schedule);
+// });
 // delete_meeting(meeting_id, user, function(err, msg){
 //     console.error(err);
 //     console.log(msg)

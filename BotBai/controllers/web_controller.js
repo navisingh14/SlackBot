@@ -101,13 +101,32 @@ app.get("/update", function(req, res){
     meeting_id = req.query.meeting_id;
     var new_meeting = new Schedule();
     new_meeting.id = meeting_id;
-    new_meeting.intent = nlp.I_MEETING_SET;
-    bot_controller.set_cache(user_name, {"schedule": new_meeting, "editing": true});
-    bot.say({
-        'text': "Are you sure you would like to change this meeting?",
-        'channel': channel
+    // new_meeting.intent = nlp.I_MEETING_SET;
+    User.get_by_slack_id(user_name, function(err, user) {
+        res.send("<script>window.close();</script>");
+        if (err) {
+            bot.say({
+                'text': "Error!! : " + err,
+                'channel': channel    
+            });
+            return;
+        }
+        calendar.get_meeting(meeting_id, user, function(err, schedule){
+            if (err) {
+                bot.say({
+                    'text': "Error!! : " + err,
+                    'channel': channel    
+                });
+                return;
+            }
+            console.log(schedule);
+            bot_controller.set_cache(user_name, {"schedule": new_meeting, "editing": true});
+            bot.say({
+                'text': "Are you sure you would like to change this meeting?",
+                'channel': channel
+            });
+        });
     });
-    res.send("<script>window.close();</script>");
 });
 
 
