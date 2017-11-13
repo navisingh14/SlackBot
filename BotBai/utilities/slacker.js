@@ -34,9 +34,9 @@ var render_attachments = function(schedules) {
 
 var render_attachment =  function(schedule) {
     var start_date = moment(schedule.start.timestamp).format(DATE_FORMAT);
-    var start_date_time = moment(schedule.start.timestamp).format(DATE_TIME_FORMAT);
+    var start_date_time = moment(schedule.start.dateTime).format(DATE_TIME_FORMAT);
     var end_date = moment(schedule.end.timestamp).format(DATE_FORMAT);
-    var end_date_time = moment(schedule.end.timestamp).format(DATE_TIME_FORMAT);
+    var end_date_time = moment(schedule.end.dateTime).format(DATE_TIME_FORMAT);
     var fallback = util.format("Meeting on %s until %s", start_date_time, end_date_time);
     var title = util.format("Meeting on %s", start_date);
 //    var participants = schedule.participants.map(function(ptcpt){ return '@' + ptcpt }).join(", ");
