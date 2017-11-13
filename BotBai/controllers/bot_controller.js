@@ -138,7 +138,7 @@ var process_schedule = function(schedule, message, bot){
   if (schedule.intent == nlp.I_MEETING_SET) {
     // Save in cache
     status = cache[message.user] && cache[message.user]["status"]
-    cache[message.user] = {"schedule":schedule};
+    cache[message.user] = {"schedule":schedule}
     if (status) {
       cache[message.user]["status"] = status;
     }
