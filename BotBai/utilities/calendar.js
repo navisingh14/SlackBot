@@ -129,10 +129,60 @@ var create_meeting = function(schedule, user, cb) {
     });
 };
 
+var update_meeting = function(schedule, user, cb) {
+    var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
+    auth_client.credentials = {
+        access_token: user.token,
+        refresh_token: user.refresh_token,
+        expiry_date: user.token_expiry 
+    };
+    User.get_emails(schedule.participants, function(err, users){
+        if (err) {
+            cb && cb(err, null);
+        } else {
+            emails = users.map(function(user){
+                return {'email': user.email};
+            });
+            var event = {
+                summary: 'Botbai Event',
+                start: {
+                    dateTime: moment(schedule.start.timestamp).format(),
+                    timeZone: tz.tz.guess()
+                },
+                end: {
+                    dateTime: moment(schedule.end.timestamp).format(),
+                    timeZone: tz.tz.guess()
+                },
+                attendees: emails,
+                reminders: {
+                    'useDefault': false,
+                    'overrides': [
+                      {'method': 'email', 'minutes': 60},
+                      {'method': 'popup', 'minutes': 10},
+                    ],
+                  },
+            }
+            google_calendar.events.update({
+                auth: auth_client,
+                calendarId: 'primary',
+                eventId: schedule.id,
+                resource: event
+            }, function(err, event) {
+                if (err) {
+                    console.error(err);
+                  cb && cb('There was an error contacting the Calendar service: ' + err, null);
+                  return;
+                }
+                cb && cb(null, ('Event created: %s', event.htmlLink));
+            });
+        }
+    });
+};
 
 exports.create_meeting = create_meeting;
 exports.delete_meeting = delete_meeting;
 exports.list_meeting = list_meeting;
+exports.update_meeting = update_meeting;
 
 // user = new Object()
 // user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";

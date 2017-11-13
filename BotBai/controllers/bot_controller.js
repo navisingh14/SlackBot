@@ -53,8 +53,10 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
         bot.reply(message, "You have not registered. Please register!");
         return;
       } else if (user_cache && user_cache['editing']) {
-        if (schedule.intent == nlp.I_YES) {
-          process_schedule(user_cache.schedule, message, bot);
+               
+        if (schedule.intent == nlp.I_YES || user_cache.schedule.intent == nlp.I_MEETING_SET) {
+          schedule.intent = nlp.I_MEETING_SET;
+          process_schedule(schedule, message, bot);
         } else {
           bot.reply(message, "Cancelling edit!")
           delete cache[message.user];
@@ -125,7 +127,7 @@ var update_schedule = function(schedule, user_cache) {
       }
       schedule.start = cached_schedule.start;
     }
-    if (cached_schedule.participants.length) {
+    if (cached_schedule.participants && cached_schedule.participants.length) {
       schedule.participants = cached_schedule.participants;  
     }
     
@@ -138,7 +140,7 @@ var process_schedule = function(schedule, message, bot){
   if (schedule.intent == nlp.I_MEETING_SET) {
     // Save in cache
     status = cache[message.user] && cache[message.user]["status"]
-    cache[message.user] = {"schedule":schedule}
+    cache[message.user] = {"schedule":schedule, editing: cache[message.user] && cache[message.user]["editing"]}
     if (status) {
       cache[message.user]["status"] = status;
     }
@@ -180,17 +182,29 @@ var process_schedule = function(schedule, message, bot){
         if (err) {
           bot.reply(message, "Oops! Error occurred: " + err);
         } else {
-          calendar.create_meeting(schedule, user, function(err, reply) {
-            if(err) {
-              bot.reply(message, "Oops! Error occured: " + err);
-            } else {
-              bot.reply(message, reply);
-            }
-          });
+
+          if(cache[message.user] && cache[message.user]['editing']) {
+            calendar.update_meeting(schedule, user, function(err, reply) {
+              if(err) {
+                bot.reply(message, "Oops! Error occured: " + err);
+              } else {
+                bot.reply(message, reply);
+              }
+            });
+          } else {
+            calendar.create_meeting(schedule, user, function(err, reply) {
+              if(err) {
+                bot.reply(message, "Oops! Error occured: " + err);
+              } else {
+                bot.reply(message, reply);
+              }
+            });
+          }
         }
+        delete cache[message.user];
       });
      // bot.reply(message, "Meeting will be scheduled soon");
-      delete cache[message.user];
+      
     }
   } else if (schedule.intent == nlp.I_MEETING_UNSET) {
     // TODO: Unset meeting. Follow steps from above here
@@ -304,23 +318,48 @@ var process_schedule = function(schedule, message, bot){
 
   else if (schedule.intent == nlp.I_MEETING_MODIFY) {
     cache[message.user] = {"schedule":schedule};
-    var start = moment().unix()*1000;
-    if (schedule.start != null) {
-      start = schedule.start.timestamp;
-    }
-    var meetings = calendar.list_meeting(message.user);
-    if(meetings.length == 0){
-        console.log("inside modify");
-        bot.reply(message, "You don't have any scheduled meeting");
-    }
-    else{
-        var mssg = {
-          username: 'BotBai', 
-          text: 'Which of these meetings would you want to modify?',
-          attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
-        }
-        bot.reply(message, mssg);
 
+    if (schedule.start == null) {
+      cache[message.user]["status"] = "Start";
+      bot.reply(message, "What day would you like to modify the meetings for?");    
+    } else if (!schedule.start.date_set) {
+      cache[message.user]["status"] = "StartDate";
+      bot.reply(message, "Which day would you want to start modifying the meeting?");    
+    } else if  (!schedule.start.time_set) {
+      cache[message.user]["status"] = "StartTime";
+      bot.reply(message, "Do you have a time-frame in mind?");
+    } else if (schedule.end == null) {
+      cache[message.user]["status"] = "End";
+      bot.reply(message, "Till what time do you want me to check the calendars for?");    
+    } else if (!schedule.end.date_set) {
+      cache[message.user]["status"] = "EndDate";
+      bot.reply(message, "Which day would do you want to end the meeting?");    
+    } else if  (!schedule.end.time_set) {
+      cache[message.user]["status"] = "EndTime";
+      bot.reply(message, "When would do you like to finish the meeting?");
+    } else {
+      console.log("Meeting will be modified soon");
+      console.log(message.user);
+      User.get_by_slack_id(message.user, function(err, user){
+        if (err) {
+          bot.reply(message, "Oops! Error occurred: " + err);
+        } 
+        else {
+          calendar.list_meeting(user, '', '', function(meetings){
+              if (meetings.length == 0)
+                bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+              else {
+                var mssg = {
+                  username: 'BotBai', 
+                  text: 'Please select meeting to modify',
+                  attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "update")
+                }
+                bot.reply(message, mssg);
+              }
+            delete cache[message.user];
+          });
+        };
+     });
     }
   } else if(schedule.intent == "abandon"){
     delete cache[message.user];

@@ -100,7 +100,7 @@ app.get("/update", function(req, res){
     channel = req.query.channel;
     meeting_id = req.query.meeting_id;
     var new_meeting = new Schedule();
-    new_meeting.id = meeting.id;
+    new_meeting.id = meeting_id;
     new_meeting.intent = nlp.I_MEETING_SET;
     bot_controller.set_cache(user_name, {"schedule": new_meeting, "editing": true});
     bot.say({
