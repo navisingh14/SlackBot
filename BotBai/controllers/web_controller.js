@@ -8,7 +8,7 @@ if (config.mode == "production") {
     calendar = require('../mock/calendar');
 } else {
     register = require('../utilities/register');
-    calendar = require('../mock/calendar');   
+    calendar = require('../utilities/calendar');   
 }
 var slacker = require('../utilities/slacker');
 var User = require('../db/mongo/User');
