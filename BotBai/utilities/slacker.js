@@ -40,7 +40,8 @@ var render_attachment =  function(schedule) {
     var end_date_time = moment(schedule.end.timestamp).format(DATE_TIME_FORMAT);
     var fallback = util.format("Meeting on %s until %s", start_date_time, end_date_time);
     var title = util.format("Meeting on %s", start_date);
-    var participants = schedule.participants.map(function(ptcpt){ return '@' + ptcpt }).join(", ");
+//    var participants = schedule.participants.map(function(ptcpt){ return '@' + ptcpt }).join(", ");
+    var summary = schedule.summary;
     var attachment = {
         "fallback" : fallback,
         "title" : title,
@@ -49,7 +50,8 @@ var render_attachment =  function(schedule) {
             {"title" : "Creator", "value" : schedule.creator, "short": true},
             {"title" : "Starts", "value" : start_date_time, "short": true},
             {"title" : "Ends", "value" : end_date_time, "short": true},
-            {"title" : "Participants", "value" : participants, "short": true}
+            {"title" : "Summary", "value" : summary, "short" : true},
+//            {"title" : "Participants", "value" : participants, "short": true}
         ]
     };
     return attachment;

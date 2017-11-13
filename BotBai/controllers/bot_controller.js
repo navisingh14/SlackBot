@@ -166,18 +166,38 @@ var process_schedule = function(schedule, message, bot){
     if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    var meetings = calendar.list_meeting(message.user);
-    console.log(meetings);
-    if (meetings.length == 0)
-      bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
-    else {
-      var mssg = {
-        username: 'BotBai', 
-        text: 'Which of these meetings would you want to remove?',
-        attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "delete")
-      }
-      bot.reply(message, mssg);
-    }
+    console.log("before calling list meeting");
+    User.get_by_slack_id(message.user, function(err, user){
+        if (err) {
+          bot.reply(message, "Oops! Error occurred: " + err);
+        } else {
+          calendar.list_meeting(user, '', '', function(meetings){
+              if (meetings.length == 0)
+                bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+              else {
+                var mssg = {
+                  username: 'BotBai', 
+                  text: 'Which of these meetings would you want to remove?',
+                  attachments: slacker.render_attachments_for_change(meetings, message.user, message.channel, "delete")
+                }
+                bot.reply(message, mssg);
+              }
+
+          });
+          console.log();
+//          console.log(meetings);
+          /*, function(err, reply) {
+            if(err) {
+              bot.reply(message, "Oops! Error occured: " + err);
+            } else {
+              bot.reply(message, reply);
+            }
+          });*/
+        }
+      });
+/*    var meetings = calendar.list_meeting(message.user);
+    console.log("after calling list meeting");
+*/   
   } else if (schedule.intent == nlp.I_LIST) {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
@@ -203,23 +223,31 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "When would do you like to finish the meeting?");
     } else {
       console.log("Meeting will be listed soon");
-      var meetings = calendar.list_meeting(message.user, schedule.start, schedule.end);
-      if (meetings.length == 0){
-        bot.reply(message, "You don't have any scheduled meeting");
-      }
-      else{
-          var mssg = {
-            username: "botbai", 
-            text: 'Here is the list of meetings',
-            attachments: slacker.render_attachments(meetings)
-          }
-          console.log(slacker.render_attachment(meetings[0]))
-          bot.reply(message, mssg);        
-      }
-      delete cache[message.user];
-    };
+      User.get_by_slack_id(message.user, function(err, user){
+        if (err) {
+          bot.reply(message, "Oops! Error occurred: " + err);
+        } 
+        else {
+          calendar.list_meeting(user, '', '', function(meetings){
+              if (meetings.length == 0)
+                bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+              else {
+                var mssg = {
+                  username: 'BotBai', 
+                  text: 'Here is a list of meetings',
+                  attachments: slacker.render_attachments(meetings)
+                }
+                bot.reply(message, mssg);
+              }
+            delete cache[message.user];
+          });
+        };
      // bot.reply(message, "Meeting will be scheduled soon");
-  } else if (schedule.intent == nlp.I_MEETING_MODIFY) {
+     });
+  }
+}
+
+  else if (schedule.intent == nlp.I_MEETING_MODIFY) {
     cache[message.user] = {"schedule":schedule};
     var start = moment().unix()*1000;
     if (schedule.start != null) {

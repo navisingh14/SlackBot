@@ -32,7 +32,7 @@ var delete_meeting = function(meeting_id, user, cb) {
     });
 };
 
-var list_meeting = function(usr, start_time, end_time) {
+var list_meeting = function(usr, start_time, end_time, cb) {
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: usr.token,
@@ -49,6 +49,7 @@ var list_meeting = function(usr, start_time, end_time) {
         orderBy: 'startTime'
         }, function(err, response) {
         if (err) {
+            console.log('inside error');
             console.log(err)
             return;
         }
@@ -63,10 +64,10 @@ var list_meeting = function(usr, start_time, end_time) {
                 var start = event.start.dateTime || event.start.date;
                 console.log('%s: %s - %s', event.id, start, event.summary);
                 var meeting = event + start + event.summary;
-                meetings.push(meeting);
+                meetings.push(event);
             }
         }
-        return meetings;
+        cb && cb(meetings);
     });
 
 }

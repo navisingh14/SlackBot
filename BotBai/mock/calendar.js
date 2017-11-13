@@ -25,7 +25,7 @@ var create_meeting = function(schedule, cb) {
 };
 
 
-var list_meetings = function(user, start_time, end_time) {
+var list_meeting = function(user, start_time, end_time) {
   meetings = [];
   console.log(user);
   for(var m_i in mock_calendars){
@@ -53,6 +53,6 @@ var update_meeting = function(meeting_id, user, cb) {
 }
 
 exports.create_meeting = create_meeting;
-exports.list_meetings = list_meetings;
+exports.list_meeting = list_meeting;
 exports.delete_meeting = delete_meeting;
 exports.update_meeting = update_meeting;
