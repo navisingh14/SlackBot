@@ -17,7 +17,7 @@ var delete_meeting = function(meeting_id, user, cb) {
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: user.token,
-        refresh_token: usr.refresh_token,
+        refresh_token: user.refresh_token,
         expiry_date: user.token_expiry 
     };
     google_calendar.events.delete({

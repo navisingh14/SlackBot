@@ -67,7 +67,7 @@ app.get("/delete", function(req, res){
     const {method, url} = req;
     slack_id = req.query.user;
     channel = req.query.channel;
-    meeting_id = req.query.id;
+    meeting_id = req.query.meeting_id;
     User.get_by_slack_id(slack_id, function(err, user) {
         res.send("<script>window.close();</script>");
         if (err) {
@@ -77,7 +77,7 @@ app.get("/delete", function(req, res){
             });
             return;
         }
-        calendar.delete_meeting(meeting_id, slack_id, function(err, msg){
+        calendar.delete_meeting(meeting_id, user, function(err, msg){
             if (err) {
                 bot.say({
                     'text': 'Oops!! Error occured: ' + err,
@@ -98,7 +98,7 @@ app.get("/update", function(req, res){
     const {method, url} = req;
     user_name = req.query.user;
     channel = req.query.channel;
-    meeting_id = req.query.id;
+    meeting_id = req.query.meeting_id;
     var new_meeting = new Schedule();
     new_meeting.id = meeting.id;
     new_meeting.intent = nlp.I_MEETING_SET;
