@@ -196,15 +196,35 @@ var process_schedule = function(schedule, message, bot){
     // TODO: Unset meeting. Follow steps from above here
     cache[message.user] = {"schedule":schedule};
     var start = moment().unix()*1000;
-    if (schedule.start != null) {
+/*    if (schedule.start != null) {
       start = schedule.start.timestamp;
     }
-    console.log("before calling list meeting");
+*/    
+  console.log("before calling list meeting");
+    if (schedule.start == null) {
+      cache[message.user]["status"] = "Start";
+      bot.reply(message, "What duration do you want to see the calendar for to choose a meeting to delete?");    
+    } else if (!schedule.start.date_set) {
+      cache[message.user]["status"] = "StartDate";
+      bot.reply(message, "Which day would you want to delete the meeting?");    
+    } else if  (!schedule.start.time_set) {
+      cache[message.user]["status"] = "StartTime";
+      bot.reply(message, "Do you have a time-frame in mind?");
+    } else if (schedule.end == null) {
+      cache[message.user]["status"] = "End";
+      bot.reply(message, "Till what time do you want me to check the calendars for?");    
+    } else if (!schedule.end.date_set) {
+      cache[message.user]["status"] = "EndDate";
+      bot.reply(message, "Till which day would do you want me to check the meeting?");    
+    } else if  (!schedule.end.time_set) {
+      cache[message.user]["status"] = "EndTime";
+      bot.reply(message, "Till what time?");
+    } else {
     User.get_by_slack_id(message.user, function(err, user){
         if (err) {
           bot.reply(message, "Oops! Error occurred: " + err);
         } else {
-          calendar.list_meeting(user, '', '', function(meetings){
+          calendar.list_meeting(user, schedule.start, schedule.end, function(meetings){
               if (meetings.length == 0)
                 bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
               else {
@@ -228,6 +248,7 @@ var process_schedule = function(schedule, message, bot){
           });*/
         }
       });
+  }
 /*    var meetings = calendar.list_meeting(message.user);
     console.log("after calling list meeting");
 */   
