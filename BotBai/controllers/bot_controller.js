@@ -249,10 +249,10 @@ var process_schedule = function(schedule, message, bot){
       bot.reply(message, "Till what time do you want me to check the calendars for?");    
     } else if (!schedule.end.date_set) {
       cache[message.user]["status"] = "EndDate";
-      bot.reply(message, "Which day would do you want to end the meeting?");    
+      bot.reply(message, "Till which day would do you want me to check the meeting?");    
     } else if  (!schedule.end.time_set) {
       cache[message.user]["status"] = "EndTime";
-      bot.reply(message, "When would do you like to finish the meeting?");
+      bot.reply(message, "Till what time?");
     } else {
       console.log("Meeting will be listed soon");
       User.get_by_slack_id(message.user, function(err, user){
@@ -260,7 +260,7 @@ var process_schedule = function(schedule, message, bot){
           bot.reply(message, "Oops! Error occurred: " + err);
         } 
         else {
-          calendar.list_meeting(user, '', '', function(meetings){
+          calendar.list_meeting(user, schedule.start,schedule.end, function(meetings){
               if (meetings.length == 0)
                 bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
               else {

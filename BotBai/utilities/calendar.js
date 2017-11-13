@@ -34,6 +34,8 @@ var delete_meeting = function(meeting_id, user, cb) {
 };
 
 var list_meeting = function(usr, start_time, end_time, cb) {
+    console.log("start time " , start_time);
+    console.log("end time ", end_time);
     var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
     auth_client.credentials = {
         access_token: usr.token,
@@ -44,7 +46,9 @@ var list_meeting = function(usr, start_time, end_time, cb) {
     google_calendar.events.list({
         auth: auth_client,
         calendarId: 'primary',
-        timeMin: (new Date()).toISOString(),
+       timeMin: (new Date(moment(start_time.timestamp).format())).toISOString(),
+        timeMax: (new Date(moment(end_time.timestamp).format())).toISOString(),
+       //timeMin: (new Date()).toISOString(),
         //timeMax: (),
         maxResults: 10,
         singleEvents: true,
