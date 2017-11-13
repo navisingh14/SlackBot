@@ -42,6 +42,7 @@ var register_user  = function(usr, cb) {
 function authorize(user_name, cb) {
   var url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
+    prompt: 'consent',
     state: user_name,
     scope: SCOPES
   });

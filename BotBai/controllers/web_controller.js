@@ -44,6 +44,7 @@ app.get("/register", function(req, res){
                     user_name: slack_user.name,
                     email: email,
                     token: tokens.access_token,
+                    refresh_token: tokens.refresh_token,
                     token_expiry: tokens.expiry_date,
                     name: slack_user.real_name
                 });
