@@ -234,7 +234,7 @@ var process_schedule = function(schedule, message, bot){
       cache[message.user]["status"] = "EndTime";
       bot.reply(message, "Till what time?");
     } else {
-    User.get_by_slack_id(message.user, function(err, user){
+      User.get_by_slack_id(message.user, function(err, user){
         if (err) {
           bot.reply(message, "Oops! Error occurred: " + err);
         } else {
@@ -251,22 +251,9 @@ var process_schedule = function(schedule, message, bot){
               }
               delete cache[message.user];
           });
-          console.log();
-//          console.log(meetings);
-          /*, function(err, reply) {
-            if(err) {
-              bot.reply(message, "Oops! Error occured: " + err);
-            } else {
-              bot.reply(message, reply);
-            }
-          });*/
         }
       });
-
-  }
-/*    var meetings = calendar.list_meeting(message.user);
-    console.log("after calling list meeting");
-*/   
+    }
   } else if (schedule.intent == nlp.I_LIST) {
     console.log("inside list");
     console.log("\n message user = " + message.user + "\n" + cache + cache[message.user]);
@@ -314,9 +301,7 @@ var process_schedule = function(schedule, message, bot){
      // bot.reply(message, "Meeting will be scheduled soon");
      });
   }
-}
-
-  else if (schedule.intent == nlp.I_MEETING_MODIFY) {
+} else if (schedule.intent == nlp.I_MEETING_MODIFY) {
     cache[message.user] = {"schedule":schedule};
 
     if (schedule.start == null) {

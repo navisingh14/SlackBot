@@ -108,17 +108,6 @@ app.get("/update", function(req, res){
         'channel': channel
     });
     res.send("<script>window.close();</script>");
-    // calendar.update_meeting(meeting_id, user_name, function(err, meeting){
-    //     if (err) {
-    //         bot.say({
-    //             'text': 'Oops!! Error occured: ' + err,
-    //             'channel': channel
-    //         });
-    //     } else {
-            
-    //     }
-        
-    // });
 });
 
 
