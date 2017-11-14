@@ -46,7 +46,7 @@ var render_attachment =  function(schedule) {
         "title" : title,
         "color" : "#36a64f",
         "fields" : [
-            {"title" : "Creator", "value" : schedule.creator, "short": true},
+            {"title" : "Creator", "value" : schedule.organizer.email, "short": true},
             {"title" : "Starts", "value" : start_date_time, "short": true},
             {"title" : "Ends", "value" : end_date_time, "short": true},
             {"title" : "Summary", "value" : summary, "short" : true},
