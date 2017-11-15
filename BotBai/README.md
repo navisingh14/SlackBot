@@ -23,6 +23,8 @@ Such an interactive bot is a really good solution as it will reduce the manual e
 
 [Code walk-through (example)](https://www.youtube.com/watch?v=zxc_hiRo5JI&t)
 
+[Use cases Implementation](https://www.youtube.com/watch?v=ZhdEK4n88nY&feature=em-upload_owner)
+
 ### Prerequisites
 
 * `git >= 2.13.6`
