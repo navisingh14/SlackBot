@@ -1,4 +1,4 @@
-### Task Tracking
+# Task Tracking
 
 
 ## Week 1
@@ -94,7 +94,7 @@ We added the registration functionality and once a user registers, we save the i
 | Workflow         | Completed         |  #11, Modifying time slot in attendee's calendar
 | Use Case 4        | Delete Meeting    |  
 | Debugging      | Completed        |  #10, Minor errors, refactoring
-|  Workflow         | Completed         |  #9, Successful deletion
+|  Workflow         | Completed         |  #10, Successful deletion
 | Use Case 2       | List Meetings   |  
 |  Workflow       | Completed      |  #12, All meetings listed
 
