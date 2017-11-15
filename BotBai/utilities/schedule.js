@@ -43,15 +43,21 @@ class Schedule {
             schedule.end = new DateTime(calender_obj.end.dateTime);
             schedule.end.set_timestamp(calender_obj.end.dateTime);
             schedule.end.date_set = true; schedule.end.time_set = true;
-            var attendees = calender_obj.attendees.map(function(attendee){ return attendee.email;});
-            User.get_slack_ids_by_emails(attendees, function(err, slack_ids){
-                if (err) {
-                    cb && cb(err, null);
-                    return;
-                }
-                schedule.participants = slack_ids;
+            if (calender_obj.attendees) {
+                var attendees = calender_obj.attendees.map(function(attendee){ return attendee.email;});
+                User.get_slack_ids_by_emails(attendees, function(err, slack_ids){
+                    if (err) {
+                        cb && cb(err, null);
+                        return;
+                    }
+                    schedule.participants = slack_ids;
+                    cb && cb(null, schedule);
+                });
+            } else {
+                schedule.participants = [];
                 cb && cb(null, schedule);
-            });
+            }
+            
         });
     }
 }
