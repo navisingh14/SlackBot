@@ -1,7 +1,7 @@
 ### Task Tracking
 
 
-### Week 1
+## Week 1
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -17,7 +17,7 @@ We started working on our bot by creating initial repository and issues and divi
 We started working on the modules- User registration, context tokenization and use case 1.
 
 
-### Week 2
+## Week 2
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -40,7 +40,7 @@ We started working on use case 3- Modify meeting.
 
 
 
-### Week 3
+## Week 3
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
@@ -67,27 +67,39 @@ We completed use case 4 and ran selenium tests for all 4 use cases successfully.
 
 
 
-### Week 4
+## Week 4
 
 | Deliverable       | Item/Status       |  Issues/Tasks
 | -------------     | ------------      |  ------------
 | Feature           | User Registration 
 | User google calendar access token  | Completed         |  #5, Registered user -> Database
 | Use Case 4        | Delete Meeting    |  
-| Subflow 1         | In Progress        |  #10, Remove entry from calendar
+| Workflow         | In Progress        |  #10, Remove entry from attendee's calendar
+|  URL Shortening        | Completed         |  #10, for better UI
 | Use Case 1        | Create Meeting   |  
-| Subflow 1         | Completed         |  #9, Adding entry in attendee's calendar
-| Use Case 2       | List Meeting   |  
-| Subflow 1         | In progress      |  #12, Adding entry in attendee's calendar
+|  Workflow         | Completed         |  #9, Adding entry in attendee's calendar
+| Use Case 2       | List Meetings   |  
+|  Workflow           | In progress      |  #12, Listing entries from attendee's calendar
 
 In week 4, we received feedback about Milestone-BOT and we removed our errors. 
 We needed to replace mock calendar data with google calendars of creator and members of the meeting.
 We added the registration functionality and once a user registers, we save the information and calendar access token in Mongo DB. We started implementation of our use cases with member's google calendar data.
 
 
+## Week 5
+
+| Deliverable       | Item/Status       |  Issues/Tasks
+| -------------     | ------------      |  ------------
+| Use Case 3        | Modify Meeting   |  
+| Workflow         | Completed         |  #11, Modifying time slot in attendee's calendar
+| Use Case 4        | Delete Meeting    |  
+| Debugging      | Completed        |  #10, Minor errors, refactoring
+|  Workflow         | Completed         |  #9, Successful deletion
+| Use Case 2       | List Meetings   |  
+|  Workflow       | Completed      |  #12, All meetings listed
 
 
-
-
-
+In week 5, we completed implementation of all use cases. 
+We have the first working prototype of our bot with successful implementation of proposed use cases.
+We can see appropriate changes taking place in the google calendars. We hence, completed our Mileston : Service.
 
