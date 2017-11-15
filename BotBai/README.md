@@ -26,7 +26,8 @@ MILESTONE : BOT
 [Code walk-through (example)](https://www.youtube.com/watch?v=zxc_hiRo5JI&t)    
 
 
-MILESTONE : SERVICE  
+MILESTONE : SERVICE    
+
 [Use cases Implementation](https://www.youtube.com/watch?v=ZhdEK4n88nY&feature=em-upload_owner)
 
 ### Prerequisites
