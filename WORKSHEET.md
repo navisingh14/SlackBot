@@ -53,8 +53,8 @@ We started working on use case 3- Modify meeting.
 | Mocking      | Completed         |  #7
 | Abandon Feature   | Completed         |  For abandoning the session
 | Use Case 4        | Delete Meeting    |  
-| Subflow 1         | Completed         |  #9, for deleting a meeting
-| Selenium Testing  | Use Case 4 Completed |  #9
+| Subflow 1         | Completed         |  #10, for deleting a meeting
+| Selenium Testing  | Use Case 4 Completed |  #10
 | Milestone: Bot       | Completed
 
 
@@ -63,6 +63,27 @@ We completed use case 2,3 (all subflows).
 We added an abandon meeting feature to exit the session altogether.
 We also finished adding mock data for tests. These mock values will be replaced by google calendar values of users.
 We completed use case 4 and ran selenium tests for all 4 use cases successfully.
+
+
+
+
+### Week 4
+
+| Deliverable       | Item/Status       |  Issues/Tasks
+| -------------     | ------------      |  ------------
+| Feature           | User Registration 
+| User google calendar access token  | Completed         |  #5, Registered user -> Database
+| Use Case 4        | Delete Meeting    |  
+| Subflow 1         | In Progress        |  #10, Remove entry from calendar
+| Use Case 1        | Create Meeting   |  
+| Subflow 1         | Completed         |  #9, Adding entry in attendee's calendar
+| Use Case 2       | List Meeting   |  
+| Subflow 1         | In progress      |  #12, Adding entry in attendee's calendar
+
+In week 4, we received feedback about Milestone-BOT and we removed our errors. 
+We needed to replace mock calendar data with google calendars of creator and members of the meeting.
+We added the registration functionality and once a user registers, we save the information and calendar access token in Mongo DB. We started implementation of our use cases with member's google calendar data.
+
 
 
 
