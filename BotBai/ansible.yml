@@ -1,0 +1,37 @@
+- hosts: localhost
+  vars:
+    - homeDir: /home/ubuntu
+    - appDir: App
+  tasks:
+    - name: "SETUP: Install Packages via apt"
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - build-essential
+        - npm
+        - nodejs-legacy
+        - git
+    
+    - name: "SETUP: Install forever"
+      npm: name=forever global=yes state=present
+    - name: "SETUP: Clone App repo"
+      git: repo=https://github.com/CSC-DevOps/App.git
+           dest={{homeDir}}/{{appDir}}
+           update=yes
+           force=yes
+    - name: "SETUP: Install npm packages"
+      npm: path={{homeDir}}/{{appDir}}
+    - name: "TASK: Start main.js"
+      command: forever start -w --watchDirectory {{homeDir}}/{{appDir}} {{homeDir}}/{{appDir}}/main.js 3000
+    - name: "TASK: Check if Bash is latest version"
+      apt: name=bash state=latest
+      become: yes
+  
+    - name: "TASK: Check if OpenSSL is latest version"
+      apt: name=openssl state=latest
+      become: yes
+    - name: "TASK: Check if OpenSSH-Client is latest version"
+      apt: name=openssh-client state=latest
+      become: yes
+    - name: "TASK: Check if OpenSSH-Server is latest version"
+      apt: name=openssh-server state=latest
+      become: yes
