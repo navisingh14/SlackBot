@@ -4,7 +4,7 @@ if (mode == "production") {
   mongo_path = 'mongodb://localhost:27017/botbai';
   server = "http://ec2-54-183-186-239.us-west-1.compute.amazonaws.com";
   slack_token = 'xoxb-258088752582-QQecuT3lfQgQc9OKNeX7AQvC';
-  redirect_uri="http://ec2-54-183-96-241.us-west-1.compute.amazonaws.com:3000/register"
+  redirect_uri="http://ec2-54-183-186-239.us-west-1.compute.amazonaws.com:3000/register"
 } else {
   mongo_path = 'mongodb://localhost:27017/botbai';
   server = 'http://localhost'; 
