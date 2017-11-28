@@ -45,7 +45,7 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
     if (schedule.participants.indexOf(source_user) >= 0) {
       schedule.participants.splice(schedule.participants.indexOf(source_user), 1);
     }
-    // console.log(schedule)
+    console.log(schedule)
     User.user_exists(source_user, function(err, is_user){
       if (err) {
         bot.reply(message, "Error: " + err);
