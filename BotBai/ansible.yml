@@ -1,37 +1,63 @@
 - hosts: localhost
   vars:
     - homeDir: /home/ubuntu
-    - appDir: App
+    - projDir: CSC510-Bot
+    - appDir: BotBai
+    - dbDir: /data/db
+    - node_version: 6.1.0
+    - temp_folder: /tmp
   tasks:
     - name: "SETUP: Install Packages via apt"
       apt: name={{ item }} update_cache=yes state=latest
       with_items:
         - build-essential
-        - npm
-        - nodejs-legacy
         - git
-    
-    - name: "SETUP: Install forever"
-      npm: name=forever global=yes state=present
+
+    - name: Download the nvm(node version manager) install script
+      get_url: url=https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh dest=/tmp/install.sh
+
+    - name: Install dependencies
+      apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+      with_items:
+        - git
+        - curl
+        - build-essential
+        - libssl-dev
+      become: yes
+      become_user: root
+
+    - name: Execute the nvm install script
+#      shell: bash install.sh chdir=/tmp executable=/bin/bash
+      shell: sudo -iu {{ansible_user_id}} . /tmp/install.sh
+"ansible.yml" 85L, 2997C                                                                                                      9,1           Top
+
+ok: [localhost]
+
+TASK [SETUP: Create database] ******************************************************************************************************************
+
+    - name: "SETUP: Create database"
+      file: path={{dbDir}} state=directory
+
+#    - name: "SETUP: Install forever"
+#      shell: sudo -iu {{ansible_user_id}} npm install -g forever
+
     - name: "SETUP: Clone App repo"
-      git: repo=https://github.com/CSC-DevOps/App.git
-           dest={{homeDir}}/{{appDir}}
-           update=yes
+      git: repo=https://github.ncsu.edu/nsingh9/CSC510-Bot.git
+           dest={{homeDir}}/{{projDir}}
+           update=no
            force=yes
+
     - name: "SETUP: Install npm packages"
-      npm: path={{homeDir}}/{{appDir}}
+      npm: path={{homeDir}}/{{projDir}}/{{appDir}}
+
+#      shell: /home/ubuntu/.nvm/versions/node/v6.1.0/bin/npm install {{homeDir}}/{{projDir}}/{{appDir}}
+
+    - name: "SETUP: Copy configurations"
+      copy: src={{homeDir}}/{{projDir}}/{{appDir}}/utilities/config_example.js
+            dest={{homeDir}}/{{projDir}}/{{appDir}}/utilities/config.js
+
+    - name: "TASK: Start Mongo"
+      command: sudo service mongod start
+
     - name: "TASK: Start main.js"
-      command: forever start -w --watchDirectory {{homeDir}}/{{appDir}} {{homeDir}}/{{appDir}}/main.js 3000
-    - name: "TASK: Check if Bash is latest version"
-      apt: name=bash state=latest
-      become: yes
-  
-    - name: "TASK: Check if OpenSSL is latest version"
-      apt: name=openssl state=latest
-      become: yes
-    - name: "TASK: Check if OpenSSH-Client is latest version"
-      apt: name=openssh-client state=latest
-      become: yes
-    - name: "TASK: Check if OpenSSH-Server is latest version"
-      apt: name=openssh-server state=latest
-      become: yes
+      command: forever start {{homeDir}}/{{projDir}}/{{appDir}}/bot.js
