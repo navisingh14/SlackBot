@@ -96,5 +96,7 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
 	`npm start`
 * Stop server
 	`sh scripts/stop.sh`
+	
+## [WorkSheet](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/WORKSHEET.md)
 
 ### Note: For access to the server and the private key, feel free to contact one of us.
