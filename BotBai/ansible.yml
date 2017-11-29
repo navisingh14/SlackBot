@@ -6,6 +6,7 @@
     - dbDir: /data/db
     - node_version: 6.1.0
     - temp_folder: /tmp
+    - node_env: production
   tasks:
     - name: "SETUP: Install Packages via apt"
       apt: name={{ item }} update_cache=yes state=latest
@@ -16,7 +17,7 @@
     - name: Download the nvm(node version manager) install script
       get_url: url=https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh dest=/tmp/install.sh
 
-    - name: Install dependencies
+    - name: "SETUP: Install dependencies"
       apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
       with_items:
         - git
@@ -26,20 +27,38 @@
       become: yes
       become_user: root
 
-    - name: Execute the nvm install script
-#      shell: bash install.sh chdir=/tmp executable=/bin/bash
+    - name: "SETUP: Execute the nvm install script"
       shell: sudo -iu {{ansible_user_id}} . /tmp/install.sh
-"ansible.yml" 85L, 2997C                                                                                                      9,1           Top
 
-ok: [localhost]
+    - name: "SETUP: source bashrc"
+      shell: sudo -iu {{ansible_user_id}} source ~/.bashrc
 
-TASK [SETUP: Create database] ******************************************************************************************************************
+    - name: "SETUP: Register the NVM_DIR"
+      shell: echo $NVM_DIR
+      register: nvm_dir
+
+    - name: "SETUP: Install the specified node version using the nvm command and set it as default"
+      shell: . ~/.nvm/nvm.sh && nvm install {{ node_version }} && nvm run {{node_version}} --version && nvm alias default {{node_version}} creates=~/.nvm/versions/node/v{{ node_version }}
+
+    - name: "SETUP: Link node"
+      file: dest=/usr/bin/nodejs src=/home/ubuntu/.nvm/versions/node/v6.1.0/bin/node state=link
+
+    - name: "SETUP: Link npm"
+      file: dest=/usr/bin/npm src=/home/ubuntu/.nvm/versions/node/v6.1.0/bin/npm state=link
+
+    - name: Configure NODE_ENV
+      lineinfile: dest=/etc/environment regexp="^NODE_ENV=" line="NODE_ENV={{ node_env }}"
+      when: node_env is defined
+
+    - name: "SETUP: Add Mongo packages repo"
+      apt_key: id=0C49F3730359A14518585931BC711F9BA15703C6  keyserver=keyserver.ubuntu.com
+    - name: "SETUP: Add Mongo repo itself"
+      apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu {{ansible_distribution_release}}/mongodb-org/3.4 multiverse' state=present
+    - name: "SETUP: Install Mongo"
+      apt: pkg=mongodb-org state=present
 
     - name: "SETUP: Create database"
       file: path={{dbDir}} state=directory
-
-#    - name: "SETUP: Install forever"
-#      shell: sudo -iu {{ansible_user_id}} npm install -g forever
 
     - name: "SETUP: Clone App repo"
       git: repo=https://github.ncsu.edu/nsingh9/CSC510-Bot.git
@@ -50,8 +69,6 @@ TASK [SETUP: Create database] **************************************************
     - name: "SETUP: Install npm packages"
       npm: path={{homeDir}}/{{projDir}}/{{appDir}}
 
-#      shell: /home/ubuntu/.nvm/versions/node/v6.1.0/bin/npm install {{homeDir}}/{{projDir}}/{{appDir}}
-
     - name: "SETUP: Copy configurations"
       copy: src={{homeDir}}/{{projDir}}/{{appDir}}/utilities/config_example.js
             dest={{homeDir}}/{{projDir}}/{{appDir}}/utilities/config.js
@@ -60,4 +77,4 @@ TASK [SETUP: Create database] **************************************************
       command: sudo service mongod start
 
     - name: "TASK: Start main.js"
-      command: forever start {{homeDir}}/{{projDir}}/{{appDir}}/bot.js
+      command: /home/ubuntu/.nvm/versions/node/v6.1.0/bin/forever start -o out.log -e err.log {{homeDir}}/{{projDir}}/{{appDir}}/bot.js
