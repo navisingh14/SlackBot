@@ -101,5 +101,31 @@ We added the registration functionality and once a user registers, we save the i
 
 In week 5, we completed implementation of all use cases. 
 We have the first working prototype of our bot with successful implementation of proposed use cases.
-We can see appropriate changes taking place in the google calendars. We hence, completed our Mileston : Service.
+We can see appropriate changes taking place in the google calendars. We hence, completed our Milestone : Service.
+
+
+## Week 6
+
+| Deliverable       | Item/Status       |  Issues/Tasks
+| -------------     | ------------      |  ------------
+| Create Branch Deployment      | Completed  |  #8, for working on deployment of the bot
+| Ansible playbook      | In progress       |  #8, Writing ansible script 
+| Acceptance testing    | In progress       |  Writing Testing Instructions so that TAs can easily run our bot
+| Created AWS EC2 Ubuntu instance | Completed | A cloud instance for remote invocation of the bot
+
+In week 6, we started working on the deployment of the bot. We created AWS EC2 Microsinstance where we will run our bot.
+We start writing ansible scripts for configuration management of the bot. We created DEPLOYMENT.md where we will add Acceptance testing instructions.
+
+
+## Week 7
+
+| Deliverable       | Item/Status       |  Issues/Tasks
+| -------------     | ------------      |  ------------
+| Ansible playbook      | Completed     |  #8, Writing ansible script 
+| Acceptance testing    | Completed      |  Writing Testing Instructions so that TAs can easily run our bot  
+| Debugging      | Completed        |  #8, Minor bugs in deployment
+| Merged Branch      | Completed        |  #8, Merged deployment with main branch
+
+In week 7, we completed successful deployment of our bot. 
+We have our bot running online with 100% success. We pulled the code onto the AWS micro instance so that the bot can remotely keep running. We have successfully running ansible playbook. We hence, completed our Milestone: Deployment.
 
