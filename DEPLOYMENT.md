@@ -21,6 +21,8 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
     0.1 User types "register".
     0.2 botbai returns a URL for user to register.
     0.3 User clicks on URL and chooses a gmail account to register.
+    	* 0.3.1 Note: Since the server is deployed on amazon aws and uses public DNS, you might get safety warning. 
+            * Click on Advanced and select Proceed.
     0.4 User gets registered.
 
 ### Use Case 1: Schedule/create a meeting
