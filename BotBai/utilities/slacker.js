@@ -1,5 +1,5 @@
 const util = require('util');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const buildURL = require('build-url');
 const config = require('../utilities/config');
 const request = require('request');
@@ -7,6 +7,7 @@ const request = require('request');
 DATE_FORMAT = "MM/DD/YYYY";
 TIME_FORMAT = "HH:mm";
 DATE_TIME_FORMAT = util.format("%s %s", DATE_FORMAT, TIME_FORMAT);
+DEFAULT_TIME_ZONE = 'America/New_York';
 
 
 var render_attachments_for_change = function(schedules, user, channel, key) {
@@ -33,10 +34,10 @@ var render_attachments = function(schedules) {
 }
 
 var render_attachment =  function(schedule) {
-    var start_date = moment(schedule.start.dateTime).format(DATE_FORMAT);
-    var start_date_time = moment(schedule.start.dateTime).format(DATE_TIME_FORMAT);
-    var end_date = moment(schedule.end.dateTime).format(DATE_FORMAT);
-    var end_date_time = moment(schedule.end.dateTime).format(DATE_TIME_FORMAT);
+    var start_date = moment(schedule.start.dateTime).tz(schedule.start.timeZone || DEFAULT_TIME_ZONE).format(DATE_FORMAT);
+    var start_date_time = moment(schedule.start.dateTime).tz(schedule.start.timeZone || DEFAULT_TIME_ZONE).format(DATE_TIME_FORMAT);
+    var end_date = moment(schedule.end.dateTime).tz(schedule.end.timeZone || DEFAULT_TIME_ZONE).format(DATE_FORMAT);
+    var end_date_time = moment(schedule.end.dateTime).tz(schedule.end.timeZone || DEFAULT_TIME_ZONE).format(DATE_TIME_FORMAT);
     var fallback = util.format("Meeting on %s until %s", start_date_time, end_date_time);
     var title = util.format("Meeting on %s", start_date);
 //    var participants = schedule.participants.map(function(ptcpt){ return '@' + ptcpt }).join(", ");
