@@ -1,4 +1,19 @@
 ## Acceptance Testing
+#### TA-Credentials
+* ***Sign In Email***: csc510.se.ta@gmail.com
+* ***Sign In Password***: csc510ta
+
+### Use Case 0: Register
+
+### Use Case 1: Schedule a meeting
+
+### Use Case 2: List all meetings
+
+### Use Case 3: Delete a Meeting
+
+### Use Case 4: Update a meeting
+
+
 
 ### Prerequisites
 
