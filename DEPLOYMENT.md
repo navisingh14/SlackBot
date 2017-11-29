@@ -6,10 +6,11 @@
 * Run `ansible-playbook -s ansible.yml`
 * Login to slack: https://csc-510-project.slack.com/messages/D86ARBVK3/
 #### To stop All:
-* Open [stop_all.sh](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/BotBai/scripts/stop_all.sh)
+* Run [stop_all.sh](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/BotBai/scripts/stop_all.sh)
 
 
-Screencast: 
+Screencast:
+[Deployment](https://www.youtube.com/watch?v=qpJOyslLtuM)
 ## Acceptance Testing
 #### TA-Credentials
 * ***Sign In Email***: csc510.se.ta@gmail.com
@@ -60,10 +61,10 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
     4.5 User enters the start and end time. (e.g. 2pm to 6 pm)
     4.6 botbai returns the list of meetings with brief summary of each and a link to delete the meeting.
     4.7 User clicks on link "Yes".
-    4.8 botabai asks for the confirmation "Are you sure you would like to change this meeting?".
+    4.8 botbai asks for the confirmation "Are you sure you would like to change this meeting?".
     4.9 user types "Yes".
     4.10 botbai asks for new start time "When do you want to start the meeting?"
-    4.11 user enters the time. (e.g. 2 PM)
+    4.11 User enters the time. (e.g. 2 PM)
     4.12 botbai asks for new end time "When do you want to finish the meeting?"
     4.13 User enters the end time. (e.g. 3:30 PM).
     4.14 botbai asks for the name of invitees "Whom would you like to invite?"
