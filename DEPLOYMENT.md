@@ -51,3 +51,5 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
 	`npm start`
 * Stop server
 	`sh scripts/stop.sh`
+
+### Note: For access to the server and the private key, feel free to contact one of us.
