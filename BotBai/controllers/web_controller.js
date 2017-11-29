@@ -5,7 +5,7 @@ var register, calendar;
 if (config.mode == "production") {
     // TODO: change to utilities in service milestone
     register = require('../utilities/register');
-    calendar = require('../mock/calendar');
+    calendar = require('../utilities/calendar');
 } else {
     register = require('../utilities/register');
     calendar = require('../utilities/calendar');   
