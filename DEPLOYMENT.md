@@ -5,6 +5,9 @@
 * Edit the `homeDir` variable to the home folder where you wish to install the bot.
 * Run `ansible-playbook -s ansible.yml`
 * Login to slack: https://csc-510-project.slack.com/messages/D86ARBVK3/
+#### To stop All:
+* Open [stop_all.sh](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/BotBai/scripts/stop_all.sh)
+
 
 Screencast: 
 ## Acceptance Testing
