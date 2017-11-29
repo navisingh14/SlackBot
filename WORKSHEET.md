@@ -103,3 +103,16 @@ In week 5, we completed implementation of all use cases.
 We have the first working prototype of our bot with successful implementation of proposed use cases.
 We can see appropriate changes taking place in the google calendars. We hence, completed our Mileston : Service.
 
+
+## Week 6
+
+| Deliverable       | Item/Status       |  Issues/Tasks
+| -------------     | ------------      |  ------------
+| Create Branch Deployment      | Completed  |  #8, for working on deployment of the bot
+| Ansible playbook      | In progress       |  #8, Writing ansible script 
+| Acceptance testing    | In progress       |  Writing Testing Instructions so that TAs can easily run our bot.
+
+In week 6, we started working on the deployment of the bot. 
+We start writing ansible scripts for configuration management of the bot. We created DEPLOYMENT.md where we will add Acceptance testing instructions.
+
+
