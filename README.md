@@ -21,3 +21,5 @@ Link to Design - [Design.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/mas
 Link to MileStone : Bot - [Milestone Bot](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/BotBai/README.md)
 
 Link to Milestone : Service - [Service.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/SERVICE.md)
+
+Link to Milestone : Deployment - [Deployment.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/DEPLOYMENT.md)
