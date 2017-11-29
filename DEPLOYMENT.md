@@ -1,3 +1,12 @@
+### Deployment
+* Logon to the server you wish to deploy.
+* Install ansible on your server if not present
+* Download [ansible.yml](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/BotBai/ansible.yml)
+* Edit the `homeDir` variable to the home folder where you wish to install the bot.
+* Run `ansible-playbook -s ansible.yml`
+* Login to slack: https://csc-510-project.slack.com/messages/D86ARBVK3/
+
+Screencast: 
 ## Acceptance Testing
 #### TA-Credentials
 * ***Sign In Email***: csc510.se.ta@gmail.com
@@ -16,8 +25,7 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
 ### Use Case 4: Update a meeting
 
 
-
-
+## For Development
 
 ### Prerequisites
 
