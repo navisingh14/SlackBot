@@ -129,7 +129,56 @@ app.get("/update", function(req, res){
     });
 });
 
-
+app.get("/swap", function(req, res){
+    slack_id = req.query.user;
+    channel = req.query.channel;
+    meeting_id = req.query.meeting_id;
+    User.get_by_slack_id(slack_id, function(err, user) {
+        res.send("<script>window.close();</script>");
+        if (err) {
+            bot.say({
+                'text': 'Oops!! Error occured: ' + err,
+                'channel': channel
+            });
+            return;
+        }
+        calendar.get_event(meeting_id, user, function(err, event){
+            if (err) {
+                bot.say({
+                    'text': "Error!! : " + err,
+                    'channel': channel    
+                });
+                return;
+            }
+            cached = bot_controller.get_cache(slack_id);
+            if ("s_event_1" in cached) {
+                calendar.swap_events(cached["s_event_1"], event, user, function(err, msg){
+                    if (err) {
+                        bot.say({
+                            'text': "Error!! : " + err,
+                            'channel': channel    
+                        });
+                        return;
+                    }
+                    bot.say({
+                        'text': msg,
+                        'channel': channel
+                    });
+                });
+                bot_controller.delete_cache(slack_id);
+            } else {
+                cached["s_event_1"] = event
+                cached["schedule"] = new Schedule();
+                cached["schedule"].intent = nlp.I_MEETING_SWAP;
+                bot_controller.set_cache(slack_id, cached);
+                bot.say({
+                    'text': "For the second meeting, what day would you like to list the meetings for?",
+                    'channel': channel
+                });
+            }
+        });
+    })
+});
 
 app.listen(config.port, function(){
     console.log('BotBai server listening on port 3000!');

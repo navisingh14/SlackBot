@@ -10,6 +10,7 @@ const clientId = credentials.web.client_id;
 const redirectUrl = credentials.redirect_uri;
 const Schedule = require('../utilities/schedule').Schedule;
 const moment = require('moment');
+const util = require('util');
 const tz = require('moment-timezone');
 var User = require('../db/mongo/User');
 
@@ -205,6 +206,71 @@ var get_meeting = function(meeting_id, user, cb) {
     });
 };
 
+var get_event = function(meeting_id, user, cb) {
+    var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
+    auth_client.credentials = {
+        access_token: user.token,
+        refresh_token: user.refresh_token,
+        expiry_date: user.token_expiry 
+    };
+    google_calendar.events.get({
+        auth: auth_client,
+        calendarId: 'primary',
+        eventId: meeting_id
+    }, function(err, event) {
+        if (err) {
+          cb && cb('There was an error contacting the Calendar service: ' + err, null);
+          return;
+        }
+        cb && cb(null, event);
+    });
+};
+
+var swap_events = function(event1, event2, user, cb) {
+    var auth_client = new google_auth.OAuth2(clientId, clientSecret, redirectUrl);
+    auth_client.credentials = {
+        access_token: user.token,
+        refresh_token: user.refresh_token,
+        expiry_date: user.token_expiry 
+    };
+    var new_event1 = clone_event(event1);
+    var new_event2 = clone_event(event2);
+    new_event1.start = event2.start;
+    new_event1.end = event2.end;
+    new_event2.start = event1.start;
+    new_event2.end = event1.end;
+    google_calendar.events.update({
+        auth: auth_client,
+        calendarId: 'primary',
+        eventId: new_event1.id,
+        resource: new_event1
+    }, function(err, swapped_event1) {
+        if (err) {
+          console.error(err);
+          cb && cb('There was an error contacting the Calendar service: ' + err, null);
+          return;
+        }
+        google_calendar.events.update({
+            auth: auth_client,
+            calendarId: 'primary',
+            eventId: new_event2.id,
+            resource: new_event2
+        }, function(err, swapped_event2) {
+            if (err) {
+              console.error(err);
+              cb && cb('There was an error contacting the Calendar service: ' + err, null);
+              return;
+            }
+            var msg = util.format('Meetings have been swapped. \nEvent #1: %s \nEvent #2: %s', swapped_event1.htmlLink, swapped_event2.htmlLink)
+            cb && cb(null, msg);
+        });
+    });
+};
+
+var clone_event = function(event) {
+    return JSON.parse(JSON.stringify(event));
+}
+
 
 
 exports.create_meeting = create_meeting;
@@ -212,6 +278,8 @@ exports.delete_meeting = delete_meeting;
 exports.list_meeting = list_meeting;
 exports.update_meeting = update_meeting;
 exports.get_meeting = get_meeting;
+exports.get_event = get_event;
+exports.swap_events = swap_events;
 
 // user = new Object()
 // user.token = "ya29.GlsCBQUnFigj8u7udew_-eYqaErcclSntDIzxfOhwCw-hDyS4kU3-vE3BdqwocY5KO9o68GMg1bprOL62kAQ7t1qq8Vl3T1UaNFlzwhRpRYa0K80oR7TU5xkOtvF";

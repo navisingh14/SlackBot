@@ -45,7 +45,6 @@ controller.hears(".*", ['mention', 'direct_mention','direct_message'], function(
     if (schedule.participants.indexOf(source_user) >= 0) {
       schedule.participants.splice(schedule.participants.indexOf(source_user), 1);
     }
-    console.log(schedule)
     User.user_exists(source_user, function(err, is_user){
       if (err) {
         bot.reply(message, "Error: " + err);
@@ -136,6 +135,8 @@ var update_schedule = function(schedule, user_cache) {
 };
 
 var process_schedule = function(schedule, message, bot){
+  console.log(schedule);
+  console.log(cache[message.user]);
   schedule = update_schedule(schedule, cache[message.user]);
   if (schedule.intent == nlp.I_MEETING_SET) {
     // Save in cache
@@ -341,10 +342,69 @@ var process_schedule = function(schedule, message, bot){
         };
      });
     }
+  } else if (schedule.intent == nlp.I_MEETING_SWAP) {
+    if (message.user in cache) {
+      cache[message.user]["schedule"] = schedule
+    } else {
+      cache[message.user] = {"schedule": schedule};  
+    }
+    controller.list_data(schedule, message, bot, function(meetings, user, channel){
+      return slacker.render_attachments_for_change(meetings, user, channel, "swap", false);
+    });
   } else if(schedule.intent == "abandon"){
     delete cache[message.user];
+    bot.reply(message, "Cancelling your action.");
   }
 };
+
+controller.list_data = function(schedule, message, bot, renderer, clear_cache) {
+  if (schedule.start == null) {
+    cache[message.user]["status"] = "Start";
+    bot.reply(message, "What day would you like to list the meetings for?");    
+  } else if (!schedule.start.date_set) {
+    cache[message.user]["status"] = "StartDate";
+    bot.reply(message, "Which day would you want to start the meeting?");    
+  } else if  (!schedule.start.time_set) {
+    cache[message.user]["status"] = "StartTime";
+    bot.reply(message, "Do you have a time-frame in mind?");
+  } else if (schedule.end == null) {
+    cache[message.user]["status"] = "End";
+    bot.reply(message, "Till what time do you want me to check the calendars for?");    
+  } else if (!schedule.end.date_set) {
+    cache[message.user]["status"] = "EndDate";
+    bot.reply(message, "Till which day would do you want me to check the meeting?");    
+  } else if  (!schedule.end.time_set) {
+    cache[message.user]["status"] = "EndTime";
+    bot.reply(message, "Till what time?");
+  } else {
+    console.log("Meeting will be listed soon");
+    User.get_by_slack_id(message.user, function(err, user){
+      if (err) {
+        bot.reply(message, "Oops! Error occurred: " + err);
+      } 
+      else {
+        calendar.list_meeting(user, schedule.start, schedule.end, function(meetings){
+            if (meetings.length == 0)
+              bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+            else {
+              if (renderer) {
+                attachments = renderer(meetings, message.user, message.channel);
+              } else {
+                attachments = slacker.render_attachments(meetings); 
+              }
+              var mssg = {
+                username: 'BotBai', 
+                text: 'Here is a list of meetings',
+                attachments: attachments
+              }
+              bot.reply(message, mssg);
+            }
+          clear_cache && delete cache[message.user];
+        });
+      };
+    });
+  }
+}
 
 controller.get_source_user = function(message) {
   return message.user;
@@ -368,6 +428,10 @@ controller.set_cache = function(usr, obj) {
 
 controller.get_cache = function(usr) {
   return cache[usr];
+}
+
+controller.delete_cache = function(usr) {
+  delete cache[usr];
 }
 
 exports.bot = root_bot;
