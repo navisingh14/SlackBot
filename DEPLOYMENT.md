@@ -8,10 +8,16 @@
 * `mongo >= 3.20` Not required now
 
 ### Setup
-* Clone the repo
-* Navigate to BotBai. `cd BotBai`
-* Copy `utilities/config_example.js` to `utilities/config.js`
-* Run `npm install`
+* ***Manual***:
+	* Clone the repo
+	* Navigate to BotBai. `cd BotBai`
+	* Copy `utilities/config_example.js` to `utilities/config.js`
+	* Run `npm install`
+* ***Automatic***:
+	* Install ansible on your server.
+	* Download [ansible.yml](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/BotBai/ansible.yml)
+	* Edit the `homeDir` variable.
+	* Run `ansible-playbook -s ansible.yml`
 
 ### Run
 * Start server
