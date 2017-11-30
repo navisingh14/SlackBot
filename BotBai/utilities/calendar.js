@@ -99,11 +99,11 @@ var create_meeting = function(schedule, user, cb) {
                 summary: 'Botbai Event',
                 start: {
                     dateTime: moment(schedule.start.timestamp).format(),
-                    timeZone: tz.tz.guess()
+                    timeZone: 'America/New_York'
                 },
                 end: {
                     dateTime: moment(schedule.end.timestamp).format(),
-                    timeZone: tz.tz.guess()
+                    timeZone: 'America/New_York'
                 },
                 attendees: emails,
                 reminders: {
@@ -148,11 +148,11 @@ var update_meeting = function(schedule, user, cb) {
                 summary: 'Botbai Event',
                 start: {
                     dateTime: moment(schedule.start.timestamp).format(),
-                    timeZone: tz.tz.guess()
+                    timeZone: 'America/New_York'
                 },
                 end: {
                     dateTime: moment(schedule.end.timestamp).format(),
-                    timeZone: tz.tz.guess()
+                    timeZone: 'America/New_York'
                 },
                 attendees: emails,
                 reminders: {
