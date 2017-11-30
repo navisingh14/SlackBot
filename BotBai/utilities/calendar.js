@@ -47,8 +47,8 @@ var list_meeting = function(usr, start_time, end_time, cb) {
     google_calendar.events.list({
         auth: auth_client,
         calendarId: 'primary',
-        timeMin: moment(start_time.timestamp).format(),
-        timeMax: moment(end_time.timestamp).format(),
+        timeMin: tz(start_time.timestamp).tz('America/New_York').format(),
+        timeMax: tz(end_time.timestamp).tz('America/New_York').format(),
        //timeMin: (new Date()).toISOString(),
         //timeMax: (),
         maxResults: 10,
