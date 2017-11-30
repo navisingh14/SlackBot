@@ -282,7 +282,7 @@ var process_schedule = function(schedule, message, bot){
         else {
           calendar.list_meeting(user, schedule.start, schedule.end, function(meetings){
               if (meetings.length == 0)
-                bot.reply(message, "You do not have any scheduled meeting or you're not the creator of the meeting");
+                bot.reply(message, "You do not have any scheduled meetings in this time range.");
               else {
                 var mssg = {
                   username: 'BotBai', 
