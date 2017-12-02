@@ -80,7 +80,7 @@ Walkthrough of the usecases: https://youtu.be/ZhdEK4n88nY
 * `git >= 2.13.6`
 * `npm >= 3.10.10` 
 * `node >= v6.11.5`
-* `mongo >= 3.20` Not required now
+* `mongo >= 3.20` 
 
 ### Setup
 * ***Manual***:
