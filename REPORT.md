@@ -1,14 +1,12 @@
-# BOTBAI Project Report
 
-
-## Presentation
+# Presentation
 
 [Presentation Video](https://www.youtube.com/watch?v=TrGm6JbKymk&t=176s)
 
 
-## Report
+# Report
 
-### Problem statement:
+## Problem statement:
 In this fast moving software world, the success of a software company can be related to how efficiently the employees use their time. Scheduling meetings is one of the many important things that the employees need to do on a daily basis. Hence, the time invested in planning meetings is a lot. If we can manage to come up with a software that can help us reduce the time spent in planning meetings, it will give the employees more time to invest in productive work.
 
 Secondly, once the meeting is planned, if a particular attendant of the meeting notifies about his unavailability, more time is wasted for rescheduling and requesting all other attendees for approval of a rescheduled time. Human effort is also another valuable resource that is invested in this unproductive job of rescheduling meetings, which can affect the business negatively.
@@ -16,28 +14,27 @@ Secondly, once the meeting is planned, if a particular attendant of the meeting 
 So if the process of planning, resolving conflicts and rescheduling is automated using an interactive bot, the time and efforts can be invested in more productive work which would enhance the business of the company. The managers and the employees would no longer need to waste time looking for a time frame suitable for all employees and asking their approval for the same.
 
 
-### Primary features:
+## Primary features:
 
-#### 1. Register User
+### 1. Register User
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register.png)        
 
 <br />
-<br />
 
-#### Success
+### Success
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register%20op.png)
 
 <br />
 
-#### 2. Create a meeting
+### 2. Create a meeting
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule.png)    
 
 <br />
 
-#### Success
+### Success
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule%20op.png)
 
@@ -48,8 +45,44 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 
 <br />
 
-* List a meeting
-* Swap meetings
+
+
+### 3. List meetings
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/List.png)    
+
+<br />
+
+### Success
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/List%20op.png)
+
+<br />
+
+
+
+### 4. Swap 2 meetings
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%201.png)    
+
+<br />
+
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%202.png) 
+
+<br />
+
+### Success
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op.png)
+
+<br />
+
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op%202.png)
+
+<br />
+
 * Delete a meeting
 
 
