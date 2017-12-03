@@ -18,6 +18,12 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 
 ### 1. Register User
 
+
+We ask new users to register so that our bot can access their google calendars.   
+
+<br />
+
+
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register.png)        
 
 <br />
@@ -29,6 +35,8 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 <br />
 
 ### 2. Create a meeting
+
+We ask the creator for the time slot and members for the meeting.
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule.png)    
 
@@ -49,6 +57,9 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 
 ### 3. List meetings
 
+We have created 2 meetings. We can list all the meetings in a given time frame.
+
+
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/List.png)    
 
 <br />
@@ -63,7 +74,12 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 
 ### 4. Swap 2 meetings
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%201.png)    
+Now, we try to swap Botbai Event 1 with Botbai Event 2.
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%201.png)   
+<br />
+
+We click on first event.
 
 <br />
 
@@ -71,8 +87,14 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%202.png) 
 
 <br />
+Then we click on second event.
+
+<br />
 
 ### Success
+
+You can see that we have swapped the two events.
+
 
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op.png)
 
@@ -82,8 +104,31 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 ![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op%202.png)
 
 <br />
+ 
 
-* Delete a meeting
+
+### 5. Delete a meeting
+
+We delete Botbai event 2. 
+<br />
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Delete.png)    
+
+<br />
+
+
+### Success
+Botbai event 2 has been deleted and the time slot of that event is now free.
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Delete%20op%202.png)
+
+<br />
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/delete%20op.png)
+
+<br />
+
+
 
 
 ### Developement process:
