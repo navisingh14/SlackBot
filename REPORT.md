@@ -28,5 +28,5 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 ### Developement process:
 
 ### Limitations and future work:
- * Conflict resolution: To add the logic to resolve conflicts between the attendees while creating or swapping meetings as this is not being taken care of right now. This could be added through a voting or automatic alternative suggestions.
+ * *Conflict resolution*: To add the logic to resolve conflicts between the attendees while creating or swapping meetings as this is not being taken care of right now. This could be added through a voting or automatic alternative suggestions.
 
