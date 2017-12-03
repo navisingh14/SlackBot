@@ -24,3 +24,6 @@ Link to Milestone : Service - [Service.md](https://github.ncsu.edu/nsingh9/CSC51
 
 Link to Milestone : Deployment - [Deployment.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/DEPLOYMENT.md)   
 (Deployment milestone has been committed on "deployment" branch)
+
+
+Link to Milestone : Report - [Report.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/REPORT.md)
