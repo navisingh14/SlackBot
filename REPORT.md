@@ -18,8 +18,36 @@ So if the process of planning, resolving conflicts and rescheduling is automated
 
 ### Primary features:
 
-* Register
-* Create a meeting
+#### 1. Register User
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register.png)        
+
+<br />
+<br />
+
+#### Success
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register%20op.png)
+
+<br />
+
+#### 2. Create a meeting
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule.png)    
+
+<br />
+
+#### Success
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule%20op.png)
+
+<br />
+
+
+![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule%20op2.png)
+
+<br />
+
 * List a meeting
 * Swap meetings
 * Delete a meeting
