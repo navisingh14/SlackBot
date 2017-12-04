@@ -113,10 +113,10 @@ Botbai event 2 has been deleted and the time slot for that event is now free.
 ### Developement process:
 During the development process we had a lot of takeaways
 * Organizing each milestone as a sprint and each task under it as a user story.
-* Social and distributed coding where we distibuted tasks withing the same code base.
+* Social and distributed coding where we distibuted tasks within the same code base.
 * Design patterns like singleton, abstract and MVC.
-* Working on natiral language processing to parse text.
-* Regular complete feature delivery with zero downtime so that the not was always running.
+* Working on natural language processing to parse text.
+* Regular complete feature delivery with zero downtime so that the bot was always running.
 * Seamless deployment to run it on most OS.
 
 
