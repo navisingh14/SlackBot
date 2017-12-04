@@ -122,4 +122,5 @@ During the development process we had a lot of takeaways
 
 ### Limitations and future work:
  * *Conflict resolution*: To add the logic to resolve conflicts between the attendees while creating or swapping meetings as this is not being taken care of right now. This could be added through voting or automatic alternative suggestions.
-
+* *Unconditional Search*: Currently search for list, modify, delete and swap depends can be performed oly using time ranges. This can be altered to support attendees and creator.
+* *Location Support*: Meeting locations cannot be set in the current version of the bot. Google maps integration would be required to do this.
