@@ -27,7 +27,7 @@ We ask new users to register so that our bot can access their google calendars. 
 
 ### Success
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register%20op.png)
+![img](img/register%20op.png)
 
 <br />
 
@@ -35,17 +35,17 @@ We ask new users to register so that our bot can access their google calendars. 
 
 We ask the creator for the time slot and members for the meeting.
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule.png)    
+![img](img/Schedule.png)    
 
 <br />
 
 ### Success
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule%20op.png)
+![img](img/Schedule%20op.png)
 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Schedule%20op2.png)
+![img](img/Schedule%20op2.png)
 
 <br />
 
@@ -53,13 +53,13 @@ We ask the creator for the time slot and members for the meeting.
 
 We have created 2 meetings. We can list all the meetings in a given time frame.
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/List.png)    
+![img](img/List.png)    
 
 <br />
 
 ### Success
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/List%20op.png)
+![img](img/List%20op.png)
 
 <br />
 
@@ -67,12 +67,12 @@ We have created 2 meetings. We can list all the meetings in a given time frame.
 
 Now, we try to swap Botbai Event 1 with Botbai Event 2.
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%201.png)   
+![img](img/Swap%201.png)   
 We click on first event to be swapped.
 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%202.png) 
+![img](img/Swap%202.png) 
 
 Then we click on second meeting, which will be swapped with first meeting.
 
@@ -82,11 +82,11 @@ Then we click on second meeting, which will be swapped with first meeting.
 
 You can see that we have swapped the two events.
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op.png)
+![img](img/Swap%20op.png)
 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Swap%20op%202.png)
+![img](img/Swap%20op%202.png)
 
 <br />
 
@@ -95,18 +95,18 @@ You can see that we have swapped the two events.
 We delete a meeting. We click yes for Botbai event 2. 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Delete.png)    
+![img](img/Delete.png)    
 
 <br />
 
 ### Success
 Botbai event 2 has been deleted and the time slot for that event is now free.
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/Delete%20op%202.png)
+![img](img/Delete%20op%202.png)
 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/delete%20op.png)
+![img](img/delete%20op.png)
 
 <br />
 
