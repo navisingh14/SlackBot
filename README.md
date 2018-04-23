@@ -26,4 +26,4 @@ Link to Milestone : Deployment - [Deployment.md](https://github.com/navisingh14/
 (Deployment milestone has been committed on "deployment" branch)
 
 
-Link to Milestone : Report - [Report.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/REPORT.md)
+Link to Milestone : Report - [Report.md](https://github.com/navisingh14/SlackBot/blob/master/REPORT.md)
