@@ -21,7 +21,7 @@ We ask new users to register so that our bot can access their google calendars. 
 
 <br />
 
-![img](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/img/register.png)        
+![img](img/register.png)        
 
 <br />
 
