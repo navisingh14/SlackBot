@@ -18,11 +18,11 @@
 
 Link to Design - [Design.md](https://github.com/navisingh14/SlackBot/blob/master/Design.md)
 
-Link to MileStone : Bot - [Milestone Bot](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/BotBai/README.md)
+Link to MileStone : Bot - [Milestone Bot](https://github.com/navisingh14/SlackBot/blob/master/BotBai/README.md)
 
-Link to Milestone : Service - [Service.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/SERVICE.md)
+Link to Milestone : Service - [Service.md](https://github.com/navisingh14/SlackBot/blob/master/SERVICE.md)
 
-Link to Milestone : Deployment - [Deployment.md](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/deployment/DEPLOYMENT.md)   
+Link to Milestone : Deployment - [Deployment.md](https://github.com/navisingh14/SlackBot/blob/deployment/DEPLOYMENT.md)   
 (Deployment milestone has been committed on "deployment" branch)
 
 
