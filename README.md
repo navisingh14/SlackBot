@@ -16,7 +16,7 @@
 
 
 
-Link to Design - [Design.md](https://github.ncsu.edu/navisingh14/SlackBot/blob/master/Design.md)
+Link to Design - [Design.md](https://github.com/navisingh14/SlackBot/blob/master/Design.md)
 
 Link to MileStone : Bot - [Milestone Bot](https://github.ncsu.edu/nsingh9/CSC510-Bot/blob/master/BotBai/README.md)
 
